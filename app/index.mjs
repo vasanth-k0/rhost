@@ -1,32 +1,26 @@
 import express from 'express';
 import { User } from '../db/models/user.mjs';
 import bcrypt from 'bcrypt';
-import path from 'path';
-import { fileURLToPath } from 'url';
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-import fs from 'fs';
+import session from 'express-session';
+import apiRouter from './api/api.mjs';
+import Entrypoint from './helpers/Entrypoint.mjs';
+import './helpers/globals.mjs';
 
+log("Initializing rhost");
 const app = express();
 
-var settings = JSON.parse(fs.readFileSync(path.join(__dirname, 'system/settings.json')));
-let userAppsPath = path.join(__dirname, 'system/apps/');
-let systemAppsPath = path.join(__dirname, 'system/apps/');
-let consolePath = path.join(systemAppsPath, 'console/' + settings.ui);
-let sitePath = path.join(systemAppsPath, 'site/' + settings.site);
+app.use(session({
+    secret : Entrypoint.secrets.sessionSecret,
+    resave: false,
+    saveUninitialized: true,
+    cookie: { httpOnly: true, maxAge: 60 * 60 * 1000 }
+}));
 
-app.get('/', (req, res)=>{
-    if (settings.startup === 'site') {
-            res.sendFile(path.join(sitePath, 'index.html'));
-    } else {
-            res.sendFile(path.join(appsPath, settings.startup + '/index.html'));
-    }
-});
+app.get('/', Entrypoint.showStartupApp);
 
-app.get('/console', (req, res) => {
-    console.log(consolePath);
-    res.sendFile(path.join(consolePath, 'index.html'));
-});
+app.get('/console', Entrypoint.showConsole);
+
+app.use("/api", apiRouter);
 
 app.get('/register', async (req, res) =>{
     const newUser = User.build({
@@ -45,9 +39,9 @@ app.get('/register', async (req, res) =>{
     });
 });
 
-app.use(express.static(consolePath));
-app.use(express.static(userAppsPath));
+app.use(express.static(Entrypoint.consolePath));
+app.use(express.static(Entrypoint.userAppsPath));
 
-app.listen(3000,()=>{
-    console.log('Server is running on port 3000');
+app.listen(Entrypoint.port,()=>{
+    log('Server running at http://localhost:' + Entrypoint.port);
 })

@@ -40,3 +40,9 @@
 .read-the-docs {
   color: #888;
 }
+
+.ant-menu-title-content {
+  max-width: 70px;
+  text-align: left;
+  text-indent: 12px;
+}
