@@ -1,28 +1,36 @@
 import { Space } from "antd"
 import { FolderFilled } from '@ant-design/icons';
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
-const FolderBrick = ({name, path, colorPalette})=>{
+const FolderBrick = ({name, path, colorPalette, active, setActive})=>{
 
-    const [isFolderBrickHovered, setFolderBrickHovered] = useState(false);
+    const [isFolderBrickHovered, setFolderBrickHovered] = useState(null);
+    
+    useEffect(()=>{
+        setFolderBrickHovered((active==name)? true:false);
+    }, [active, name]);
+
+    const FolderClick = (e)=>{
+        setActive(name)
+    }
 
     return (<>
     <div path={path} name={name} className="space-align-block" style={{ 
                                     cursor: 'pointer',
                                     margin: 8,
                                     fontSize: 14, 
-                                    border: 'solid 2px transparent',
+                                    border: 'solid 1px transparent',
                                     borderRadius: 3,
-                                    borderLeftColor: !isFolderBrickHovered? 'transparent': colorPalette.CustomColor,
+                                    borderColor: !isFolderBrickHovered? 'transparent': colorPalette.CustomColorLite+'33' ,
                                     paddingLeft: '4px'
                                 }} 
-                    onMouseEnter={()=>{ setFolderBrickHovered(!isFolderBrickHovered) }} 
-                    onMouseLeave={()=>{ setFolderBrickHovered(!isFolderBrickHovered) }}
-                    onClick={(e)=>{console.log('clicked', e.currentTarget.getAttribute('name'))}}>
+                    onMouseEnter={()=>{ if (active!=name) {setFolderBrickHovered(!isFolderBrickHovered)} }} 
+                    onMouseLeave={()=>{ if (active!=name) {setFolderBrickHovered(!isFolderBrickHovered)} }}
+                    onClick={FolderClick}>
                                 <Space align='start' style={{margin:2, fontSize: 15}}>
-                                        <FolderFilled style={{ color: colorPalette.CustomColor }}/>
+                                        <FolderFilled style={{ color: (isFolderBrickHovered? colorPalette.CustomColor:colorPalette.CustomColorLite) }}/>
                                 </Space>
-                                <Space align='end' style={{margin:2}}>{name}</Space>
+                                <Space align='end' style={{margin:3}}>{name}</Space>
                             </div>
     </>)
 }

@@ -5,6 +5,7 @@ import session from 'express-session';
 import apiRouter from './api/api.mjs';
 import Entrypoint from './helpers/Entrypoint.mjs';
 import './helpers/globals.mjs';
+import filesRouter from './api/files.mjs';
 
 log("Initializing rhost");
 const app = express();
@@ -24,6 +25,7 @@ app.get('/', Entrypoint.showStartupApp);
 app.get('/console', Entrypoint.showConsole);
 
 app.use("/api", apiRouter);
+app.use('/files', filesRouter);
 
 app.get('/register', async (req, res) =>{
     const newUser = User.build({

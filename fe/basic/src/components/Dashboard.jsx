@@ -10,6 +10,7 @@ import {theme as Themer} from 'antd' ;
 import { MenuFoldOutlined, MenuUnfoldOutlined, LogoutOutlined } from '@ant-design/icons';
 import ActiveContent from './ActiveContent'; 
 import {useTheme} from './context/Theme'
+import * as antColour from '@ant-design/colors'
 
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -39,7 +40,13 @@ const Dashboard = () => {
   const [currentPath, setCurrentPath] = useState([{ title: 'Apps' }])
 
   const getCustomColor = ({theme, lite=null})=>{
-    let activeTheme  = theme.available[theme.active]
+    let colorTheme = theme.active;
+    let activeTheme  = theme.available[colorTheme]
+    colorTheme = colorTheme.toLowerCase(); // donot move
+     if (/^(?!#)/.test(activeTheme[0])) {
+      activeTheme[0] = antColour[colorTheme][activeTheme[0]];
+      activeTheme[1] = antColour[colorTheme][activeTheme[1]];
+    }
     return lite? activeTheme[1]: activeTheme[0]
   }
   const CustomColor = useMemo(()=>{
@@ -141,14 +148,14 @@ const Dashboard = () => {
                 collapsedWidth={'3.7rem'}
                 >
                 <div className="demo-logo-vertical" />
-                <Menu onClick={menuOnclick} theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />
+                <Menu onClick={menuOnclick} theme="dark" defaultSelectedKeys={['Apps']} mode="inline" items={items} />
               </Sider>
               <Layout>
                 <Header style={{ padding: 0, background: colorBgContainer }} >
                     <div style={ headerStyle }>
                         <Button
                             type="text"
-                            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+                            icon={collapsed ? <MenuUnfoldOutlined style={{ color: CustomColor }} /> : <MenuFoldOutlined style={{ color: CustomColorLite }} />}
                             onClick={() => setCollapsed(!collapsed)}
                             style={{
                             fontSize: '16px',
@@ -158,16 +165,16 @@ const Dashboard = () => {
                             }}
                         />
                         <Space size="large" style={{ marginRight: 'auto' }}>
-                                <span> rHost Console </span>
+                                <span style={{ margin: '16px 0', fontWeight:500, fontSize: '17px', color: antColour['grey'][7] }} > rHost Console </span>
                         </Space>
                         <Space>
-                                <LogoutOutlined onClick={confirm} style={{marginRight: 10}} />
+                                <LogoutOutlined onClick={confirm} style={{marginRight: 10, color: CustomColor}} />
                         </Space>
                     </div>    
                 </Header>
                 <Content style={{ margin: '0 16px' }} >
-                  <Breadcrumb style={{ margin: '16px 0' }} items={currentPath} />
-                  <ActiveContent activeContent={activeContent} colorPalette={{CustomColor, CustomColorLite}} />
+                  <Breadcrumb style={{ margin: '16px 0', fontWeight:500, fontSize: '17px' }} items={currentPath} />
+                  <ActiveContent activeContent={activeContent} colorPalette={{CustomColor, CustomColorLite}}/>
                 </Content>
                 <Footer style={{ textAlign: 'center' , padding: '12px' }}>
                   rHost Console ©{new Date().getFullYear()} Created by Vasanth.K

@@ -7,12 +7,28 @@
         "type": "dev"
     },
     "theme": {
-        "default": "Blue",
-        "active": "Blue",
+        "default": "Geekblue",
+        "active": "Geekblue",
         "available": {
-            "Blue": [
-                "#5528a8",
-                "#6430c2"
+            "Geekblue": [
+                4,
+                3
+            ],
+            "Red": [
+                5,
+                4
+            ],
+            "Orange": [
+                5,
+                4
+            ],
+            "Green": [
+                7,
+                6
+            ],
+            "Purple": [
+                6,
+                4
             ],
             "Teal": [
                 "#04a5b5",

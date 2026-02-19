@@ -20,13 +20,12 @@ const ActiveContent = ({activeContent, colorPalette}) => {
     return (
         <Flex 
             style={{
-              padding: 24,
               minHeight: '72.5vh',
               background: colorBgContainer,
               borderRadius: borderRadiusLG,
             }}
           >
-          <Suspense fallback={<div><Spin /></div>}>
+          <Suspense fallback={<Flex align='center' style={{ width: '100%', justifyContent: 'center' }}><Spin /></Flex>}>
             {Page ? <Page colorPalette={colorPalette} /> : <div>Page not found</div>}
           </Suspense>
         </Flex>
