@@ -1,5 +1,8 @@
 import { Router } from 'express';
 import Authorizer from './auth.mjs';
+import Entrypoint from '../helpers/Entrypoint.mjs';
+import fs from 'node:fs';
+
 const apiRouter = Router();
 
 apiRouter.route('/login').get( async (req, res) => {
@@ -14,5 +17,19 @@ apiRouter.route('/logout').get((req, res) => {
     req.session.destroy();
     res.json({ userDetails: req.session, logout: true });
 })
+
+apiRouter.route('/theme')
+    .get((req, res)=>{
+        res.json(Entrypoint.settings.theme);
+    })
+    .post((req, res)=>{    
+       const activeTheme = req.body.active;
+        const availableThemes = Object.keys(Entrypoint.settings.theme.available)
+        if (availableThemes.includes(activeTheme)) {
+            Entrypoint.settings.theme.active = activeTheme;
+            fs.writeFileSync('app/system/settings.json', JSON.stringify(Entrypoint.settings, null, 4), 'utf-8');
+            res.sendStatus(200);
+        }
+    });
 
 export default apiRouter;

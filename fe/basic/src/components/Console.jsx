@@ -1,11 +1,13 @@
 import {useEffect, useState } from 'react';
-import { Modal } from 'antd';
+import { Spin } from 'antd';
 import Dashboard from './Dashboard';
 import SiginIn from './Signin';
+import {Theme} from './context/Theme'
 
 export default function Console(){
     const [url , setUrl] = useState("/api/login");
     const [login, setLoginStatus] = useState(null);
+
     useEffect(() => {
         (async ()=>{
             let res = await fetch(url);
@@ -21,23 +23,24 @@ export default function Console(){
 }
 
 const ConsoleHome = () => {
-    const [modal, contextHolder] = Modal.useModal();
 
-  const confirm = () => {
-    modal.confirm({
-      title: 'Confirm',
-      content: 'You are about to sign out. Do you want to continue?',
-      okText: 'Signout',
-      cancelText: 'Cancel',
-      async onOk() {
-            let res = await fetch('/api/logout');
-            res = await res.json();
-            if (res.logout === true) {
-                window.location.reload();
-            }
-      },
-    });
-  };
+  /**
+   * Get default theme
+   */
+    const [theme, setTheme] = useState(null);
+
+    useEffect(()=>{
+      (async ()=> {
+        const themeUrl= "/api/theme"
+        let res = await fetch(themeUrl);
+        res = await res.json();
+        setTheme(res);
+      })();
+    }, []);
+
+    if (!theme) {
+      return <Spin />;
+    }
 
     const dasboardStyle = {
         width: '100%',
@@ -45,12 +48,11 @@ const ConsoleHome = () => {
     }
   return (
     <>
-    
     <div style={dasboardStyle}>
-        <Dashboard />
+      <Theme.Provider value={{ theme, setTheme }}>
+          <Dashboard />
+      </Theme.Provider>
     </div>
-     
-      {contextHolder}
     </>
   );
 }

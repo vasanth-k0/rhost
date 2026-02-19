@@ -16,6 +16,9 @@ app.use(session({
     cookie: { httpOnly: true, maxAge: 60 * 60 * 1000 }
 }));
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.get('/', Entrypoint.showStartupApp);
 
 app.get('/console', Entrypoint.showConsole);

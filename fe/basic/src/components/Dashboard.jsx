@@ -1,16 +1,15 @@
-import { useState } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import {
   DesktopOutlined,
   FileOutlined,
   AppstoreOutlined ,
   UserOutlined,
 } from '@ant-design/icons';
-import { Breadcrumb, Layout, Menu, Button, Space, theme, ConfigProvider } from 'antd';
+import { Breadcrumb, Layout, Menu, Button, Space, ConfigProvider, Modal } from 'antd';
+import {theme as Themer} from 'antd' ;
 import { MenuFoldOutlined, MenuUnfoldOutlined, LogoutOutlined } from '@ant-design/icons';
 import ActiveContent from './ActiveContent'; 
-
-const CustomColor = '#683fcf';
-const CustomColorLite = '#bca2fcab';
+import {useTheme} from './context/Theme'
 
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -30,9 +29,64 @@ const items = [
   ]),
   getItem('System', 'Systems', <DesktopOutlined />),
 ];
+
+
 const Dashboard = () => {
 
-    const [ activeContent, setActiveContent ] = useState('Apps')
+  const { theme, setTheme } = useTheme();
+  const [modal, contextHolder] = Modal.useModal();
+  const [ activeContent, setActiveContent ] = useState('Apps')
+  const [currentPath, setCurrentPath] = useState([{ title: 'Apps' }])
+
+  const getCustomColor = ({theme, lite=null})=>{
+    let activeTheme  = theme.available[theme.active]
+    return lite? activeTheme[1]: activeTheme[0]
+  }
+  const CustomColor = useMemo(()=>{
+    return getCustomColor({theme})
+  },[theme]);
+
+  const CustomColorLite =useMemo(()=>{
+    return getCustomColor({theme, lite:true})
+  }, [theme])
+
+  const FirstRender = useRef(true);
+  useEffect(()=>{
+      if (FirstRender.current) {
+        FirstRender.current = false;
+        return
+      }
+      (
+        async () => {
+          await fetch('/api/theme',
+                {
+                    'method': 'POST',
+                     headers: {
+                        'Content-Type': 'application/json'
+                      },
+                    'body': JSON.stringify({
+                        'active': theme.active
+                    })
+                }
+            )}
+        )();
+  },[theme]);
+
+    const confirm = () => {
+      modal.confirm({
+        title: 'Confirm',
+        content: 'You are about to sign out. Do you want to continue?',
+        okText: 'Signout',
+        cancelText: 'Cancel',
+        async onOk() {
+              let res = await fetch('/api/logout');
+              res = await res.json();
+              if (res.logout === true) {
+                  window.location.reload();
+              }
+        },
+      });
+    };
 
     const headerStyle = {
         display: 'flex',
@@ -47,9 +101,7 @@ const Dashboard = () => {
 
     const {
         token: { colorBgContainer },
-    } = theme.useToken();
-
-    const [currentPath, setCurrentPath] = useState([{ title: 'Apps' }])
+    } = Themer.useToken();
 
   const menuOnclick = ({ key,keyPath })=>{
     setActiveContent(key);
@@ -69,6 +121,9 @@ const Dashboard = () => {
             darkItemHoverBg: CustomColorLite,
             darkSubMenuItemBg: CustomColor,
             darkPopupBg: CustomColor, 
+        },
+        MenuItem: {
+          paddingLeft : '1px'
         },
         Tooltip: {
           colorBgSpotlight: CustomColor, 
@@ -110,15 +165,16 @@ const Dashboard = () => {
                         </Space>
                     </div>    
                 </Header>
-                <Content style={{ margin: '0 16px' }}>
+                <Content style={{ margin: '0 16px' }} >
                   <Breadcrumb style={{ margin: '16px 0' }} items={currentPath} />
-                  <ActiveContent activeContent={activeContent}/>
+                  <ActiveContent activeContent={activeContent} colorPalette={{CustomColor, CustomColorLite}} />
                 </Content>
                 <Footer style={{ textAlign: 'center' , padding: '12px' }}>
                   rHost Console ©{new Date().getFullYear()} Created by Vasanth.K
                 </Footer>
               </Layout>
             </Layout>
+      {contextHolder}
   </ConfigProvider>
   );
 };

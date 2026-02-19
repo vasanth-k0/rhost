@@ -46,3 +46,12 @@
   text-align: left;
   text-indent: 12px;
 }
+
+.ant-menu-item {
+  border-left:  2px solid rgba(255, 255, 255, 0) !important;
+}
+
+.ant-menu-item-selected {
+    border-color:  white !important;
+    border-radius: 1px !important;
+}

@@ -9,7 +9,7 @@ const PageList = {
   Systems: lazy(() => import('./content/SystemsPage')),
 };
 
-const ActiveContent = ({activeContent}) => {
+const ActiveContent = ({activeContent, colorPalette}) => {
 
   const Page = PageList[activeContent]
 
@@ -18,7 +18,7 @@ const ActiveContent = ({activeContent}) => {
     } = theme.useToken();
         
     return (
-        <Flex justify="center" align="center" 
+        <Flex 
             style={{
               padding: 24,
               minHeight: '72.5vh',
@@ -27,7 +27,7 @@ const ActiveContent = ({activeContent}) => {
             }}
           >
           <Suspense fallback={<div><Spin /></div>}>
-            {Page ? <Page /> : <div>Page not found</div>}
+            {Page ? <Page colorPalette={colorPalette} /> : <div>Page not found</div>}
           </Suspense>
         </Flex>
     );
