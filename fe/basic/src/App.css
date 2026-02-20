@@ -55,3 +55,7 @@
     border-color:  white !important;
     border-radius: 1px !important;
 }
+
+.ant-breadcrumb-item, .ant-breadcrumb-separator {
+  color: #00000070 !important;
+}

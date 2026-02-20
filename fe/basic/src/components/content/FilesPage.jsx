@@ -21,7 +21,7 @@ const FilesPage = ({colorPalette}) => {
             <Flex vertical gap="middle" style={{ width: '100%'}}>
                 <Splitter
                     onResize={setSizes}
-                    style={{ height: '72vh', }}
+                    style={{ height: '75vh', }}
                 >
                     <Splitter.Panel size={sizes[0]} resizable={true}>
                         <div className="space-align-container" style={{padding: '10px'}}>

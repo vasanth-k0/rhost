@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useRef } from 'react';
+import { useState, useEffect, useContext, useMemo, useRef } from 'react';
 import {
   DesktopOutlined,
   FileOutlined,
@@ -8,9 +8,10 @@ import {
 import { Breadcrumb, Layout, Menu, Button, Space, ConfigProvider, Modal } from 'antd';
 import {theme as Themer} from 'antd' ;
 import { MenuFoldOutlined, MenuUnfoldOutlined, LogoutOutlined } from '@ant-design/icons';
-import ActiveContent from './ActiveContent'; 
+import ContentList from './ContentList';
 import {useTheme} from './context/Theme'
 import * as antColour from '@ant-design/colors'
+import PathCrumb from './context/PathCrumb';
 
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -21,6 +22,7 @@ function getItem(label, key, icon, children) {
     label,
   };
 }
+
 const items = [
   getItem('Apps', 'Apps', <AppstoreOutlined />),
   getItem('Files', 'Files', <FileOutlined />),
@@ -28,7 +30,7 @@ const items = [
     getItem('Account', 'Accounts'),
     getItem('Members', 'Members'),
   ]),
-  getItem('System', 'Systems', <DesktopOutlined />),
+  getItem('System', 'System', <DesktopOutlined />),
 ];
 
 
@@ -37,7 +39,6 @@ const Dashboard = () => {
   const { theme, setTheme } = useTheme();
   const [modal, contextHolder] = Modal.useModal();
   const [ activeContent, setActiveContent ] = useState('Apps')
-  const [currentPath, setCurrentPath] = useState([{ title: 'Apps' }])
 
   const getCustomColor = ({theme, lite=null})=>{
     let colorTheme = theme.active;
@@ -56,6 +57,8 @@ const Dashboard = () => {
   const CustomColorLite =useMemo(()=>{
     return getCustomColor({theme, lite:true})
   }, [theme])
+
+  const Crumb = useContext(PathCrumb)
 
   const FirstRender = useRef(true);
   useEffect(()=>{
@@ -101,7 +104,7 @@ const Dashboard = () => {
         alignItems: 'left',
         zIndex: 1000,
         marginRight: 20,
-        height: '4rem'
+        height: '3.5rem'
         };
 
   const [collapsed, setCollapsed] = useState(true);
@@ -111,8 +114,12 @@ const Dashboard = () => {
     } = Themer.useToken();
 
   const menuOnclick = ({ key,keyPath })=>{
+    let level = 2;
     setActiveContent(key);
-    setCurrentPath([{title: key}])
+    
+    Crumb.path[1]['title'] = key
+    Crumb.path.length = level;
+    Crumb.setPath([...Crumb.path])
   }
 
   return (
@@ -145,38 +152,50 @@ const Dashboard = () => {
                 collapsed={collapsed}
                 onCollapse={value => setCollapsed(value)}
                 width={'170px'}
-                collapsedWidth={'3.7rem'}
+                collapsedWidth={'3.8rem'}
                 >
                 <div className="demo-logo-vertical" />
                 <Menu onClick={menuOnclick} theme="dark" defaultSelectedKeys={['Apps']} mode="inline" items={items} />
               </Sider>
-              <Layout>
-                <Header style={{ padding: 0, background: colorBgContainer }} >
+              <Layout style={{ backgroundColor: CustomColorLite+'07' }} >
+                <Header style={{ padding: 0, background: colorBgContainer, height: '3.5rem' }} >
                     <div style={ headerStyle }>
                         <Button
                             type="text"
-                            icon={collapsed ? <MenuUnfoldOutlined style={{ color: CustomColor }} /> : <MenuFoldOutlined style={{ color: CustomColorLite }} />}
+                            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
                             onClick={() => setCollapsed(!collapsed)}
                             style={{
-                            fontSize: '16px',
-                            width: 64,
-                            height: 64,
+                            fontSize: '19px',
+                            width: 55,
+                            height: 55,
                             outline: 'none',
+                            color: antColour['grey'][6]
                             }}
                         />
                         <Space size="large" style={{ marginRight: 'auto' }}>
-                                <span style={{ margin: '16px 0', fontWeight:500, fontSize: '17px', color: antColour['grey'][7] }} > rHost Console </span>
+                                <span style={{ fontWeight:500, fontSize: '19px', color: antColour['grey'][6] }} >
+                                   rHost 
+                                   <span style={{ fontSize: '14px' }}> Console </span>
+                                </span>
+                                <Breadcrumb style={{ 
+                                    margin: '12px 21px', 
+                                    fontWeight: 500, 
+                                    fontSize: '13px',
+                                    borderRadius: '5rem',
+                                    border: 'solid 1px ' + CustomColor+'10',
+                                    backgroundColor : CustomColorLite+'08',
+                                    padding: '5px 15px'
+                                    }} items={Crumb.path} />
                         </Space>
                         <Space>
                                 <LogoutOutlined onClick={confirm} style={{marginRight: 10, color: CustomColor}} />
                         </Space>
                     </div>    
                 </Header>
-                <Content style={{ margin: '0 16px' }} >
-                  <Breadcrumb style={{ margin: '16px 0', fontWeight:500, fontSize: '17px' }} items={currentPath} />
-                  <ActiveContent activeContent={activeContent} colorPalette={{CustomColor, CustomColorLite}}/>
+                <Content style={{ margin: '10px 10px 0 10px' }} >
+                  <ContentList activeContent={activeContent} colorPalette={{CustomColor, CustomColorLite}} />
                 </Content>
-                <Footer style={{ textAlign: 'center' , padding: '12px' }}>
+                <Footer style={{ textAlign: 'center' , padding: '8px'  }}>
                   rHost Console ©{new Date().getFullYear()} Created by Vasanth.K
                 </Footer>
               </Layout>

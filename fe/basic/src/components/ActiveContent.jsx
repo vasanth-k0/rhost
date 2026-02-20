@@ -6,7 +6,7 @@ const PageList = {
   Files: lazy(() => import('./content/FilesPage')),
   Accounts: lazy(() => import('./content/AccountsPage')),
   Members: lazy(() => import('./content/MembersPage')),
-  Systems: lazy(() => import('./content/SystemsPage')),
+  System: lazy(() => import('./content/SystemPage')),
 };
 
 const ActiveContent = ({activeContent, colorPalette}) => {
@@ -20,7 +20,7 @@ const ActiveContent = ({activeContent, colorPalette}) => {
     return (
         <Flex 
             style={{
-              minHeight: '72.5vh',
+              minHeight: '82.8vh',
               background: colorBgContainer,
               borderRadius: borderRadiusLG,
             }}

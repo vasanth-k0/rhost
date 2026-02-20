@@ -1,6 +1,7 @@
 import { Space } from "antd"
 import { FolderFilled } from '@ant-design/icons';
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
+import PathCrumb from "../context/PathCrumb";
 
 const FolderBrick = ({name, path, colorPalette, active, setActive})=>{
 
@@ -10,8 +11,13 @@ const FolderBrick = ({name, path, colorPalette, active, setActive})=>{
         setFolderBrickHovered((active==name)? true:false);
     }, [active, name]);
 
+    const Crumb = useContext(PathCrumb)
+
     const FolderClick = (e)=>{
         setActive(name)
+        let level = 3;
+        Crumb.path[level-1] = {'title': name};
+        Crumb.setPath([...Crumb.path])
     }
 
     return (<>

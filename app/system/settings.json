@@ -8,13 +8,13 @@
     },
     "theme": {
         "default": "Geekblue",
-        "active": "Teal",
+        "active": "Cyan-Lace",
         "available": {
             "Geekblue": [
                 4,
                 3
             ],
-            "Red": [
+            "Lime": [
                 5,
                 4
             ],
@@ -23,12 +23,16 @@
                 4
             ],
             "Green": [
-                7,
-                6
+                4,
+                3
+            ],
+            "Red": [
+                4,
+                3
             ],
             "Purple": [
-                6,
-                4
+                4,
+                3
             ],
             "Teal": [
                 "#04a5b5",
@@ -38,9 +42,29 @@
                 "#9c6603",
                 "#c98404"
             ],
+            "Gray": [
+                1,
+                0
+            ],
             "Black": [
                 "#30353b",
                 "#444c54"
+            ],
+            "Grey-Green": [
+                "#666B6A",
+                "#72A276"
+            ],
+            "Cyan-Lace": [
+                "#1B9AAA",
+                "#ACA98E"
+            ],
+            "Brown-Grass": [
+                "#954D0F",
+                "#769B08"
+            ],
+            "Blue-Lace": [
+                "#44ADDA",
+                "#ACA98E"
             ]
         }
     }

@@ -3,6 +3,9 @@ import { Spin } from 'antd';
 import Dashboard from './Dashboard';
 import SiginIn from './Signin';
 import {Theme} from './context/Theme'
+import PathCrumb from './context/PathCrumb'
+import { HomeOutlined } from '@ant-design/icons';
+
 
 export default function Console(){
     const [url , setUrl] = useState("/api/login");
@@ -25,9 +28,10 @@ export default function Console(){
 const ConsoleHome = () => {
 
   /**
-   * Get default theme
+   * Get default theme and path
    */
     const [theme, setTheme] = useState(null);
+    const [path, setPath] = useState([{ title: <HomeOutlined style={{ color: 'rgb(43 43 43)', fontSize: '12px' }} /> }, { title: 'Apps' }])
 
     useEffect(()=>{
       (async ()=> {
@@ -46,11 +50,14 @@ const ConsoleHome = () => {
         width: '100%',
         height: '100%',
     }
-  return (
+
+    return (
     <>
     <div style={dasboardStyle}>
       <Theme.Provider value={{ theme, setTheme }}>
-          <Dashboard />
+          <PathCrumb.Provider value={{'path': path, 'setPath': setPath}} >
+              <Dashboard />
+          </PathCrumb.Provider>
       </Theme.Provider>
     </div>
     </>
