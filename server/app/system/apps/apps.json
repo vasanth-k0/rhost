@@ -1,0 +1,7 @@
+{
+    "docker": {
+        "name": "Docker",
+        "icon": "<DockerOutlined />",
+        "path": ""
+    }
+}

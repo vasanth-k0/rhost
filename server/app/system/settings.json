@@ -1,0 +1,71 @@
+{
+    "port": 3000,
+    "ui": "basic",
+    "startup": "site",
+    "site": "insite",
+    "env": {
+        "type": "dev"
+    },
+    "theme": {
+        "default": "Geekblue",
+        "active": "Grey-Brown",
+        "available": {
+            "Geekblue": [
+                4,
+                3
+            ],
+            "Lime": [
+                5,
+                4
+            ],
+            "Orange": [
+                5,
+                4
+            ],
+            "Green": [
+                4,
+                3
+            ],
+            "Red": [
+                4,
+                3
+            ],
+            "Purple": [
+                4,
+                3
+            ],
+            "Teal": [
+                "#04a5b5",
+                "#06bfd1"
+            ],
+            "Brown": [
+                "#9c6603",
+                "#c98404"
+            ],
+            "Gray": [
+                1,
+                0
+            ],
+            "Black": [
+                "#30353b",
+                "#444c54"
+            ],
+            "Grey-Green": [
+                "#666B6A",
+                "#72A276"
+            ],
+            "Grey-Blue": [
+                "#666B6A",
+                "#6c89d9"
+            ],
+            "Grey-Cyan": [
+                "#666B6A",
+                "#1B9AAA"
+            ],
+            "Grey-Brown": [
+                "#666B6A",
+                "#c98404"
+            ]
+        }
+    }
+}
