@@ -1,0 +1,20 @@
+{
+    "notepad": {
+        "name": "Notepad",
+        "icon": "EditFilled",
+        "users": ["admin"],
+        "router": {
+            "api": "apps/notepad/index.mjs",
+            "web": "apps/notepad/index.html"
+        }
+    },
+    "docker": {
+        "name": "Docker",
+        "icon": "DockerOutlined",
+        "users": ["admin"],
+        "router": {
+            "api": "apps/docker/index.mjs",
+            "web": "apps/docker/index.html"
+        }
+    }
+}

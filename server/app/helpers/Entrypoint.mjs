@@ -7,26 +7,18 @@ class Entrypoint{
     static __filename = fileURLToPath(import.meta.url);
     static __dirname = path.dirname(path.dirname(Entrypoint.__filename));
     
-    static settings = JSON.parse(fs.readFileSync(path.join(Entrypoint.__dirname, 'system/settings.json')));
-    static secrets = JSON.parse(fs.readFileSync(path.join(Entrypoint.__dirname, 'system/secrets.json')));
+    static appsPath = path.join(Entrypoint.__dirname, 'apps/');
+    static consolePath = path.join(Entrypoint.appsPath, 'console/');
 
+    static settings = JSON.parse(fs.readFileSync(path.join(Entrypoint.consolePath, 'settings.json')));
+    static secrets = JSON.parse(fs.readFileSync(path.join(Entrypoint.consolePath, 'secrets.json')));
+    static apps = JSON.parse(fs.readFileSync(path.join(Entrypoint.appsPath, 'apps.json'), 'utf-8'));
+
+    static uiPath = path.join(Entrypoint.consolePath, 'ui/' + Entrypoint.settings.ui);
     static port = Entrypoint.settings.port;
 
-    static userAppsPath = path.join(Entrypoint.__dirname, 'user/apps/');
-    static systemAppsPath = path.join(Entrypoint.__dirname, 'system/apps/');
-    static indexPath = path.join(Entrypoint.systemAppsPath, 'index/' + Entrypoint.settings.ui);
-    static sitePath = path.join(Entrypoint.systemAppsPath, 'site/' + Entrypoint.settings.site);
-    
-    static showStartupApp(req, res) {
-        if (Entrypoint.settings.startup === 'site') {
-                res.sendFile(path.join(Entrypoint.sitePath, 'index.html'));
-        } else {
-                res.sendFile(path.join(Entrypoint.userAppsPath, Entrypoint.settings.startup + '/index.html'));
-        }
-    }
-
     static showIndex(req, res) {
-        res.sendFile(path.join(Entrypoint.indexPath, 'index.html'));
+        res.sendFile(path.join(Entrypoint.uiPath, 'index.html'));
     }
 }
 
