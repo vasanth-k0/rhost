@@ -1,0 +1,7 @@
+{
+    "executor": "python3",
+    "dir": "app/apps/register",
+    "actions": {
+        "test" : "test.py"
+    }
+}

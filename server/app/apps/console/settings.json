@@ -8,7 +8,7 @@
     },
     "theme": {
         "default": "Geekblue",
-        "active": "Grey-Brown",
+        "active": "Geekblue",
         "available": {
             "Geekblue": [
                 4,
@@ -23,20 +23,20 @@
                 4
             ],
             "Green": [
-                4,
-                3
+                "#009485",
+                "#0ab2a0"
             ],
             "Red": [
-                4,
-                3
+                6,
+                5
             ],
             "Purple": [
                 4,
                 3
             ],
             "Teal": [
-                "#04a5b5",
-                "#06bfd1"
+                "#008894",
+                "#07a0ae"
             ],
             "Brown": [
                 "#9c6603",
@@ -58,7 +58,7 @@
                 "#666B6A",
                 "#6c89d9"
             ],
-            "Grey-Cyan": [
+            "Grey-Teal": [
                 "#666B6A",
                 "#1B9AAA"
             ],

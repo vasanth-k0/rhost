@@ -189,7 +189,14 @@ const Dashboard = () => {
                 collapsedWidth={'3.8rem'}
                 >
                 <div className="demo-logo-vertical" />
-                <Menu onClick={menuOnclick} theme="dark" selectedKeys={[activeContent]} defaultSelectedKeys={['Apps']} mode="inline" items={menuItems} />
+                <Menu 
+                    onClick={menuOnclick} 
+                    theme="dark" 
+                    selectedKeys={[activeContent]} 
+                    defaultSelectedKeys={['Apps']} 
+                    mode="inline" 
+                    items={menuItems} 
+                />
               </Sider>
               <Layout style={{ backgroundColor: CustomColorLite+'07' }} >
                 <Header style={{ padding: 0, background: colorBgContainer, height: '3.5rem' }} >

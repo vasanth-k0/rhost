@@ -5,9 +5,9 @@ import * as antColour from '@ant-design/colors'
 import FileExplorer from "../FileExplorer.jsx";
 
 const FoldersList = {
-        'Internal': ['internal/admin', true],
+        'Internal': ['internal/user/admin', true],
         'External': ['external', true],
-        'Mysite': ['mysite', true],
+        'Mysite': ['internal/mysite', true],
         'Network': ['network', true],
         'Shared': ['shared', true]
     }
@@ -39,7 +39,7 @@ const FilesPage = ({colorPalette}) => {
         }
 
         useEffect(()=>{
-            openDirectory('internal/admin');
+            openDirectory('internal/user/admin');
         },[]);
 
     return (

@@ -8,13 +8,12 @@
             "web": "apps/notepad/index.html"
         }
     },
-    "docker": {
-        "name": "Docker",
-        "icon": "DockerOutlined",
+    "register": {
+        "name": "Register",
+        "icon": "UserAddOutlined",
         "users": ["admin"],
         "router": {
-            "api": "apps/docker/index.mjs",
-            "web": "apps/docker/index.html"
+            "web": "apps/register/index.html"
         }
     }
 }

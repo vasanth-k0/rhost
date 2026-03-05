@@ -7,7 +7,6 @@ import ApiRouter from './api/routers/ApiRouter.mjs';
 import FilesRouter from './api/routers/FilesRouter.mjs';
 import AppRouter from './api/routers/AppRouter.mjs';
 
-
 log("Initializing rhost");
 const app = express();
 
