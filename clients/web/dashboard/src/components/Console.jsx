@@ -18,8 +18,9 @@ export default function Console(){
             setLoginStatus(res.login);
         })();
     }, [url]);
+    
     return (
-        <div>
+        <div style={{ height: '100%', width: '100%' }}>
             {login === true ? (<ConsoleHome />) : ( login === false ? <SiginIn setUrl={setUrl} /> : null )}
         </div>
     );
@@ -56,14 +57,12 @@ const ConsoleHome = () => {
     }
 
     return (
-    <>
-    <div style={dasboardStyle}>
+    <div id='console' style={dasboardStyle}>
       <Theme.Provider value={{ theme, setTheme }}>
           <PathCrumb.Provider value={{'path': path, 'setPath': setPath}} >
               <Dashboard />
           </PathCrumb.Provider>
       </Theme.Provider>
     </div>
-    </>
   );
 }

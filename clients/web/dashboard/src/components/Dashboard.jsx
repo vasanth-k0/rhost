@@ -5,7 +5,7 @@ import {
   AppstoreOutlined ,
   UserOutlined,
 } from '@ant-design/icons';
-import { Breadcrumb, Layout, Menu, Button, Space, ConfigProvider, Modal } from 'antd';
+import { Breadcrumb, Layout, Menu, Button, Space, ConfigProvider, Modal, Divider } from 'antd';
 import {theme as Themer} from 'antd' ;
 import { 
   MenuFoldOutlined,
@@ -177,28 +177,8 @@ const Dashboard = () => {
           setActiveContent,
           selectedKeys,
           setSelectedKeys
-          }}>
-          <Layout style={{ minHeight: '100vh' }}>
-              <Sider 
-                trigger={null}
-                collapsible
-                collapsed={collapsed}
-                onCollapse={value => setCollapsed(value)}
-                width={'170px'}
-                collapsedWidth={'3.8rem'}
-                style={{ paddingTop: '3px' }}
-                >
-                <div className="demo-logo-vertical" />
-                <Menu 
-                    onClick={menuOnclick} 
-                    theme="dark" 
-                    selectedKeys={[activeContent]} 
-                    defaultSelectedKeys={['Apps']} 
-                    mode="inline" 
-                    items={menuItems} 
-                />
-              </Sider>
-              <Layout style={{ backgroundColor: CustomColorLite+'07' }} >
+          }}>             
+              <Layout style={{ display: 'block', height: '100%', width: '100%', backgroundColor: CustomColorLite+'10' }} >
                 <Header style={{ padding: 0, background: colorBgContainer, height: '3.5rem' }} >
                     <div style={ headerStyle }>
                         <Button
@@ -237,14 +217,45 @@ const Dashboard = () => {
                         </Space>
                     </div>    
                 </Header>
-                <Content style={{ margin: '10px 10px 0 10px' }} >
-                  <ContentList activeContent={activeContent} colorPalette={{CustomColor, CustomColorLite}} />
-                </Content>
-                <Footer style={{ textAlign: 'center' , padding: '8px'  }}>
+                <div style={{ display: 'flex', width: '100%', }}>
+                      <Content style={{ width: '35%', height: '84.5vh', padding: '7px'}} >
+                      <div style={{ borderRadius: '7px' , height: '100%', display: 'flex' , overflow: 'hidden', backgroundColor: 'white' }}>
+                            <Sider 
+                                  trigger={null}
+                                  collapsible
+                                  collapsed={collapsed}
+                                  onCollapse={value => setCollapsed(value)}
+                                  width={'170px'}
+                                  collapsedWidth={'3.8rem'}
+                                  >
+                                  <div className="demo-logo-vertical" />
+                                  <Menu 
+                                      onClick={menuOnclick} 
+                                      theme="dark" 
+                                      selectedKeys={[activeContent]} 
+                                      defaultSelectedKeys={['Apps']} 
+                                      mode="inline" 
+                                      items={menuItems} 
+                                  />
+                            </Sider>
+                            <div style={{padding: '10px', width: '100%', height: '100%', alignContent: 'flex-start', textAlign: 'left' }}>
+                                  {activeContent}
+                                  <Divider style={{ margin: '10px 0px' }} />
+                                  <ContentList context='controls' activeContent={activeContent} colorPalette={{CustomColor, CustomColorLite}} />
+                              </div>
+                      </div>
+                    </Content>
+                    <Content style={{ width: '65%', height: '84.5vh', padding: '7px 7px 7px 0px'}} >
+                        <div style={{ borderRadius: '7px' , height: '100%', display: 'flex' , overflow: 'hidden'}}>
+                            <ContentList context='pages' activeContent={activeContent} colorPalette={{CustomColor, CustomColorLite}} />
+                        </div>
+                    </Content>
+                
+                </div>
+                <Footer style={{ textAlign: 'center' , padding: '8px' , backgroundColor: colorBgContainer }}>
                   rHost Console ©{new Date().getFullYear()} Created by Vasanth.K
                 </Footer>
-              </Layout>
-            </Layout>
+           </Layout>
       {contextHolder}  
     </MenuItemContext.Provider>
   </ConfigProvider>

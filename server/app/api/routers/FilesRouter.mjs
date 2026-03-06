@@ -7,7 +7,7 @@ FilesRouter.route('/').get((req, res)=>{
     res.json({
         'response': 'Root file system'
     });
-})
+});
 
 FilesRouter.route('/scandir').post((req, res)=>{
     let dir = req.body.dir;
@@ -27,10 +27,12 @@ FilesRouter.route('/scandir').post((req, res)=>{
                 msg = 'error'
             }
             let outp={};
-             files.forEach((file, index)=>{ 
+             if (files != undefined && files.length > 0) {
+                    files.forEach((file, index)=>{ 
                             let path = dir.replace(basepath, '') + "/" + file;
                             outp[file] = [ path , fs.lstatSync(dir+"/"+file).isDirectory() ]  
                         });
+            }
             res.json({
                 'response': outp
             });

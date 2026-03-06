@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import * as AntIcons from '@ant-design/icons';
 import { Flex } from "antd";
-import AppBrick from "../sub_components/AppBrick";
+import AppBrick from "../../sub_components/AppBrick";
 
 const AppsPage = ({colorPalette}) => {
 

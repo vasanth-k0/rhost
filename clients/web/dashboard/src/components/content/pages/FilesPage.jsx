@@ -1,8 +1,8 @@
-import FolderBrick from "../sub_components/FolderBrick.jsx"
+import FolderBrick from "../../sub_components/FolderBrick.jsx"
 import {useState, useEffect} from 'react';
 import { Flex, Splitter,  } from 'antd';
 import * as antColour from '@ant-design/colors'
-import FileExplorer from "../FileExplorer.jsx";
+import FileExplorer from "../../FileExplorer.jsx";
 
 const FoldersList = {
         'Internal': ['internal/user/admin', true],
@@ -14,7 +14,7 @@ const FoldersList = {
 
 const FilesPage = ({colorPalette}) => {
 
-  const [sizes, setSizes] = useState(['12%', '88%']);
+  const [sizes, setSizes] = useState(['15%', '85%']);
   const [activeFileType, setActiveFileType] = useState('Internal')
   const [scanResponse, setScanResponse] = useState({});
   const [fileCount, setFileCount] = useState(0);

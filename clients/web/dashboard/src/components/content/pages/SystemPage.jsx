@@ -1,5 +1,5 @@
 import { Flex, Radio, Divider } from 'antd';
-import {useTheme} from '../context/Theme'
+import {useTheme} from '../../context/Theme'
 
 const SystemPage = () => {
 
@@ -25,7 +25,7 @@ const colorOptions = colorThemesList.map((color, index)=>{
                             })
 
     return (
-        <div style={{textAlign: 'left', padding: '15px', width:  '41%'}}>
+        <div style={{textAlign: 'left', padding: '15px', }}>
             <h3 style={{ fontWeight: 'normal'}}>Themes</h3>
             <Divider />
             <div style={{ marginLeft: 10}}>
@@ -38,7 +38,8 @@ const colorOptions = colorThemesList.map((color, index)=>{
                             backgroundColor: theme.available[theme.active][0]+"08",
                             fontSize: '11px',
                             padding: 12,
-                            borderRadius: 3
+                            borderRadius: 10,
+                            overflow: 'hidden'
                          }}
                     >
                         <Radio.Group

@@ -1,8 +1,15 @@
+body {
+  height: 100vh;
+  width: 100vw;
+}
+
 #root {
-  max-width: 1280px;
+  width: 100%;
+  height: 100%;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 0;
   text-align: center;
+  align-self: stretch;
 }
 
 .logo {
@@ -48,12 +55,13 @@
 }
 
 .ant-menu-item {
-  border-left:  2px solid rgba(255, 255, 255, 0) !important;
+  border-left:  0px solid rgba(255, 255, 255, 0) !important;
+  overflow: hidden;
 }
 
 .ant-menu-item-selected {
     border-color:  white !important;
-    border-radius: 1px !important;
+    border-radius: 7px !important;
 }
 
 .ant-breadcrumb-item, .ant-breadcrumb-separator {
@@ -62,5 +70,5 @@
 
 [data-menu-id="rc-menu-uuid-System"] {
     position: absolute !important;
-    bottom: 10px !important;
+    bottom: 0px !important;
 }

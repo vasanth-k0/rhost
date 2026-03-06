@@ -4,15 +4,28 @@ import { useContext, useState } from 'react';
 import MenuItemContext from './context/MenuItemContext';
 import {CloseCircleFilled, PlusCircleFilled} from '@ant-design/icons';
 
+/**
+ * Notice: Webpack requires static imports. no dynamic imports supported.
+ */
 const PageList = {
-  Apps: lazy(() => import('./content/AppsPage')),
-  Files: lazy(() => import('./content/FilesPage')),
-  Accounts: lazy(() => import('./content/AccountsPage')),
-  Members: lazy(() => import('./content/MembersPage')),
-  System: lazy(() => import('./content/SystemPage')),
+  Apps: lazy(() => import('./content/pages/AppsPage.jsx')),
+  Files: lazy(() => import('./content/pages/FilesPage.jsx')),
+  Accounts: lazy(() => import('./content/pages/AccountsPage.jsx')),
+  Members: lazy(() => import('./content/pages/MembersPage.jsx')),
+  System: lazy(() => import('./content/pages/SystemPage.jsx')),
 };
 
-const ShowContent = ({content, colorPalette}) => {
+
+const ControlList = {
+  Apps: lazy(() => import('./content/controls/AppsControl.jsx')),
+  Files: lazy(() => import('./content/controls/FilesControl.jsx')),
+  Accounts: lazy(() => import('./content/controls/AccountsControl.jsx')),
+  Members: lazy(() => import('./content/controls/MembersControl.jsx')),
+  System: lazy(() => import('./content/controls/SystemControl.jsx')),
+};
+
+
+const ShowContent = ({content, colorPalette, context}) => {
 
   const {showContentList, setShowContentList, setActiveContent} = useContext(MenuItemContext);
   const [onHover, setOnHover] = useState({
@@ -52,22 +65,22 @@ const ShowContent = ({content, colorPalette}) => {
   }
 
   if (showContentList.default.includes(content)) {
-      const Page = PageList[content];
+      const Page = context=='pages' ?  PageList[content] : ControlList[content];
       ContentComponent = <Suspense 
                   fallback={<Flex align='center' style={{ width: '100%', justifyContent: 'center' }}><Spin /></Flex>}
                   >
                     {Page ? <Page colorPalette={colorPalette} /> : <div>Page not found</div>}
                   </Suspense>
   } else {
-    ContentComponent = <>
+    ContentComponent = <div style={{ width: '100%', height: '100%', position: 'relative' }}>
         <iframe 
             src= {"/" + content} 
             style = {{width: '100%', height: 'auto', padding: '10px', border: 'none'}}
           ></iframe>
           <div style={{
                 position: 'absolute',
-                top: '17px',
-                right: '17px',
+                top: '10px',
+                left: '10px',
                 backgroundColor: colorPalette.CustomColorLite + '10',
                 borderColor: colorPalette.CustomColor + '10',
                 borderRadius: '5px',
@@ -80,14 +93,14 @@ const ShowContent = ({content, colorPalette}) => {
                       onClick={closeContent} {...commonProps('close')}
                 />
               </Tooltip>
-           <Divider size="small" />
+           <Divider size="small" style={{ margin: '3px 0px' }} />
            <Tooltip title="Publish" placement="left"> 
                   <PlusCircleFilled 
                         onClick={()=>{console.log('published')}} {...commonProps('publish')}
                   />
            </Tooltip>
           </div>   
-    </>
+    </div>
   }
 
     const {
@@ -97,10 +110,9 @@ const ShowContent = ({content, colorPalette}) => {
     return (
         <Flex 
             style={{
-              minHeight: '82.8vh',
-              background: colorBgContainer,
+              height: '100%',
+              background: 'white',
               borderRadius: borderRadiusLG,
-              position: 'relative',
             }}
           >
           {ContentComponent}
