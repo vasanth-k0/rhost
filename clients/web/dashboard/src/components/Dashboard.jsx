@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext, useMemo, useRef } from 'react';
 import {
-  DesktopOutlined,
+  SettingOutlined,
   FileOutlined,
   AppstoreOutlined ,
   UserOutlined,
@@ -38,9 +38,8 @@ const items = [
     getItem('Account', 'Accounts'),
     getItem('Members', 'Members'),
   ]),
-  getItem('System', 'System', <DesktopOutlined />),
+  getItem('System Settings', 'System', <SettingOutlined />),
 ];
-
 
 const Dashboard = () => {
 
@@ -187,6 +186,7 @@ const Dashboard = () => {
                 onCollapse={value => setCollapsed(value)}
                 width={'170px'}
                 collapsedWidth={'3.8rem'}
+                style={{ paddingTop: '3px' }}
                 >
                 <div className="demo-logo-vertical" />
                 <Menu 

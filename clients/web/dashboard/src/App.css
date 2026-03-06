@@ -59,3 +59,8 @@
 .ant-breadcrumb-item, .ant-breadcrumb-separator {
   color: #00000070 !important;
 }
+
+[data-menu-id="rc-menu-uuid-System"] {
+    position: absolute !important;
+    bottom: 10px !important;
+}

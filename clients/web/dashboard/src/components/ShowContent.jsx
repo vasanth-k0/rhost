@@ -1,8 +1,8 @@
-import {theme, Spin, Flex} from 'antd';
+import {theme, Spin, Flex, Divider, Tooltip} from 'antd';
 import {Suspense, lazy} from 'react';
 import { useContext, useState } from 'react';
 import MenuItemContext from './context/MenuItemContext';
-import {CloseCircleFilled} from '@ant-design/icons';
+import {CloseCircleFilled, PlusCircleFilled} from '@ant-design/icons';
 
 const PageList = {
   Apps: lazy(() => import('./content/AppsPage')),
@@ -15,7 +15,10 @@ const PageList = {
 const ShowContent = ({content, colorPalette}) => {
 
   const {showContentList, setShowContentList, setActiveContent} = useContext(MenuItemContext);
-  const [onHover, setOnHover] = useState(false);
+  const [onHover, setOnHover] = useState({
+    close: false,
+    publish: false
+  });
   const {menuItems, setMenuItems} = useContext(MenuItemContext);
 
   let ContentComponent;
@@ -30,6 +33,24 @@ const ShowContent = ({content, colorPalette}) => {
     setMenuItems(newMenuItems)
   }
   
+  const commonStyle = (tool)=>{ 
+        return {
+            fontSize: '17px',
+            color:  ( onHover[tool] 
+                              ? colorPalette.CustomColor
+                              : colorPalette.CustomColorLite
+                        )              
+        }
+  }
+
+  const commonProps = (tool) => {
+      return {
+          style: commonStyle(tool), 
+          onMouseEnter: ()=>{ setOnHover({...onHover, [tool]: true}) },
+          onMouseLeave: ()=>{ setOnHover({...onHover, [tool]: false}) }
+      }
+  }
+
   if (showContentList.default.includes(content)) {
       const Page = PageList[content];
       ContentComponent = <Suspense 
@@ -43,18 +64,29 @@ const ShowContent = ({content, colorPalette}) => {
             src= {"/" + content} 
             style = {{width: '100%', height: 'auto', padding: '10px', border: 'none'}}
           ></iframe>
-          <CloseCircleFilled 
-              style={{ 
+          <div style={{
                 position: 'absolute',
                 top: '17px',
                 right: '17px',
-                fontSize: '17px',
-                color:  (onHover ? colorPalette.CustomColor + "ff" : colorPalette.CustomColorLite + "aa")
-              }} 
-              onClick={closeContent} 
-              onMouseEnter={()=>{ setOnHover(true) }} 
-              onMouseLeave={()=>{ setOnHover(false) }}
-           />
+                backgroundColor: colorPalette.CustomColorLite + '10',
+                borderColor: colorPalette.CustomColor + '10',
+                borderRadius: '5px',
+                padding: '5px',
+              }}
+              
+              >
+              <Tooltip title="Close" placement="left">
+                <CloseCircleFilled 
+                      onClick={closeContent} {...commonProps('close')}
+                />
+              </Tooltip>
+           <Divider size="small" />
+           <Tooltip title="Publish" placement="left"> 
+                  <PlusCircleFilled 
+                        onClick={()=>{console.log('published')}} {...commonProps('publish')}
+                  />
+           </Tooltip>
+          </div>   
     </>
   }
 
