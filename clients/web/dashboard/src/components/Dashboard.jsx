@@ -178,23 +178,12 @@ const Dashboard = () => {
           selectedKeys,
           setSelectedKeys
           }}>             
-              <Layout style={{ display: 'block', height: '100%', width: '100%', backgroundColor: CustomColorLite+'10' }} >
+              <Layout style={{ display: 'block', height: '100%', width: '100%', backgroundColor: CustomColor+'15' }} >
                 <Header style={{ padding: 0, background: colorBgContainer, height: '3.5rem' }} >
                     <div style={ headerStyle }>
-                        <Button
-                            type="text"
-                            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-                            onClick={() => setCollapsed(!collapsed)}
-                            style={{
-                            fontSize: '19px',
-                            width: 55,
-                            height: 55,
-                            outline: 'none',
-                            color: antColour['grey'][6]
-                            }}
-                        />
+                        
                         <Space size="large" style={{ marginRight: 'auto' }}>
-                                <span style={{ fontWeight:500, fontSize: '19px', color: antColour['grey'][6] }} >
+                                <span style={{ marginLeft: 10, fontWeight:500, fontSize: '19px', color: antColour['grey'][6] }} >
                                    rHost 
                                    <span style={{ fontSize: '14px' }}> Console </span>
                                 </span>
@@ -218,7 +207,7 @@ const Dashboard = () => {
                     </div>    
                 </Header>
                 <div style={{ display: 'flex', width: '100%', }}>
-                      <Content style={{ width: '35%', height: '84.5vh', padding: '7px'}} >
+                      <Content style={{ width: '25%', height: '84.5vh', padding: '5px'}} >
                       <div style={{ borderRadius: '7px' , height: '100%', display: 'flex' , overflow: 'hidden', backgroundColor: 'white' }}>
                             <Sider 
                                   trigger={null}
@@ -239,13 +228,27 @@ const Dashboard = () => {
                                   />
                             </Sider>
                             <div style={{padding: '10px', width: '100%', height: '100%', alignContent: 'flex-start', textAlign: 'left' }}>
-                                  {activeContent}
+                              <Button
+                                    type="text"
+                                    icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+                                    onClick={() => setCollapsed(!collapsed)}
+                                    style={{
+                                    fontSize: '19px',
+                                    width: 17,
+                                    height: 17,
+                                    outline: 'none',
+                                    color: antColour['grey'][6],
+                                    marginRight: 7, 
+                                    marginTop: 3
+                                    }}
+                                />
+                                  <span style={{ padding: '0 7px', float: 'right' }}>{activeContent}</span>
                                   <Divider style={{ margin: '10px 0px' }} />
                                   <ContentList context='controls' activeContent={activeContent} colorPalette={{CustomColor, CustomColorLite}} />
                               </div>
                       </div>
                     </Content>
-                    <Content style={{ width: '65%', height: '84.5vh', padding: '7px 7px 7px 0px'}} >
+                    <Content style={{ width: '75%', height: '84.5vh', padding: '5px 5px 5px 0px'}} >
                         <div style={{ borderRadius: '7px' , height: '100%', display: 'flex' , overflow: 'hidden'}}>
                             <ContentList context='pages' activeContent={activeContent} colorPalette={{CustomColor, CustomColorLite}} />
                         </div>
