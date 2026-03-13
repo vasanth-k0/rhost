@@ -2,7 +2,7 @@ import { Button, Card, Form, Input, } from 'antd';
 
 const SiginIn = ({setUrl}) => { 
     const onFinish = formData => {
-        setUrl('/api/login?username=' + formData.username + '&password=' + formData.password);
+        setUrl('/system/login?username=' + formData.username + '&password=' + formData.password);
     };
     const onFinishFailed = errorInfo => {
         console.log('Failed:', errorInfo);

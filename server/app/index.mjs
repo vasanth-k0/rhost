@@ -1,13 +1,13 @@
 import express from 'express';
 import session from 'express-session';
 import Entrypoint from './helpers/Entrypoint.mjs';
-import './helpers/globals.mjs';
+import './helpers/Globals.mjs';
 import { specs, swaggerUi }  from './helpers/swagger.mjs';
 
 
-import ApiRouter from './api/routers/ApiRouter.mjs';
-import FilesRouter from './api/routers/FilesRouter.mjs';
-import AppRouter from './api/routers/AppRouter.mjs';
+import SystemRouter from './routers/SystemRouter.mjs';
+import FilesRouter from './routers/FilesRouter.mjs';
+import AppRouter from './routers/AppRouter.mjs';
 
 log("Initializing rhost");
 const app = express();
@@ -26,7 +26,7 @@ app.use(express.static(Entrypoint.uiPath));
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 let knownRoutes = {
-    "/api": ApiRouter,
+    "/system": SystemRouter,
     "/files": FilesRouter,
     '{/:endpoint}': AppRouter
 }

@@ -82,7 +82,7 @@ const Dashboard = () => {
       }
       (
         async () => {
-          await fetch('/api/theme',
+          await fetch('/system/theme',
                 {
                     'method': 'POST',
                      headers: {
@@ -103,7 +103,7 @@ const Dashboard = () => {
         okText: 'Signout',
         cancelText: 'Cancel',
         async onOk() {
-              let res = await fetch('/api/logout');
+              let res = await fetch('/system/logout');
               res = await res.json();
               if (res.logout === true) {
                   window.location.reload();

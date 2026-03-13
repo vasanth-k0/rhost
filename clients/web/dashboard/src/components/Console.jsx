@@ -8,7 +8,7 @@ import { HomeOutlined } from '@ant-design/icons';
 
 
 export default function Console(){
-    const [url , setUrl] = useState("/api/login");
+    const [url , setUrl] = useState("/system/login");
     const [login, setLoginStatus] = useState(null);
 
     useEffect(() => {
@@ -40,7 +40,7 @@ const ConsoleHome = () => {
 
     useEffect(()=>{
       (async ()=> {
-        const themeUrl= "/api/theme"
+        const themeUrl= "/system/theme"
         let res = await fetch(themeUrl);
         res = await res.json();
         setTheme(res);

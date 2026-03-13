@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   build: {
-    outDir: '../../../server/app/apps/console/ui/dashboard',
+    outDir: '../../../server/app/console/ui/dashboard',
     emptyOutDir: true
   },
   plugins: [
