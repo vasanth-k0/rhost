@@ -8,7 +8,7 @@
     },
     "theme": {
         "default": "Geekblue",
-        "active": "Green",
+        "active": "Grey-Brown",
         "available": {
             "Geekblue": [
                 4,
@@ -19,8 +19,8 @@
                 4
             ],
             "Orange": [
-                5,
-                4
+                "#efa04b",
+                "#f7a854"
             ],
             "Green": [
                 "#009485",

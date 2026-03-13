@@ -1,0 +1,9 @@
+{
+    "image": "python:3.12-slim",
+    "dir": "app/apps/pyrun-lite",
+    "executor": "python3",
+    "target": "/app.py",
+    "actions": {
+        "test" : "test.py"
+    }
+}

@@ -1,8 +1,6 @@
 import express from 'express';
 import Entrypoint from '../../helpers/Entrypoint.mjs';
-import fs from 'fs';
-import {spawn} from 'child_process'
-import path from 'path';
+import AppRunner from '../../helpers/AppRunner.mjs';
 
 const appRouter = express.Router({ mergeParams: true });
 
@@ -15,30 +13,15 @@ appRouter.route('/list').get((req, res) => {
     res.json(appsList);
 });
 
-appRouter.route('/{:action}').get((req, res) => {
+appRouter.route('/{:action}').get(async (req, res) => {
      let appName = req.params.endpoint;
      let file = Entrypoint.apps
     if (appName in file) {
         if (req.params.action) {
-            let service = fs.readFileSync(`app/apps/${req.params.endpoint}/service.json`);
-            service = JSON.parse(service);
-            // let exe = spawn(service.executor, [ path.join(service.dir, service.actions[req.params.action]) ] );
-            let exe = spawn ('docker',[
-                'run', '--rm', '-v',
-                `${process.cwd()}/${path.join(service.dir, service.actions[req.params.action])}:/app.py`,
-                'python:3.12-slim',
-                'python3',
-                '/app.py'
-            ]);
-
-            exe.stdout.on('data', (data) => {
-                res.send(`Output: ${data}`);
-            });
-
-            exe.stderr.on('data', (data) => {
-                res.send(`Error: ${data}`);
-            });
-
+            let serviceFile = `app/apps/${req.params.endpoint}/service.json`
+            let appExecutor = new AppRunner(serviceFile, req.params.action)
+            let outp = await appExecutor.exe();
+            res.send(outp)
         } else {
             res.sendFile(file[appName].router.web, { root: Entrypoint.__dirname });
         }

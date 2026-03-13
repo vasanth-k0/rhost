@@ -1,1 +1,0 @@
-import{K as r,L as e}from"./index-DXuQ8vOv.js";const s=()=>{const o=r.c(1);let t;return o[0]===Symbol.for("react.memo_cache_sentinel")?(t=e.jsx(e.Fragment,{children:"AccountsControl"}),o[0]=t):t=o[0],t};export{s as default};

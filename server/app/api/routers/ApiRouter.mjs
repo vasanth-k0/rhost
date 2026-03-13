@@ -7,6 +7,12 @@ import bcrypt from 'bcrypt';
 
 const apiRouter = Router();
 
+/**
+ * @swagger
+ * /api/login:
+ *   get:
+ *     summary: Check if user is logged in
+ */
 apiRouter.route('/login').get( async (req, res) => {
     if (await Authorizer.validateSession(req) === true) {
         res.json({ userDetails: req.session, login: true });
@@ -15,11 +21,48 @@ apiRouter.route('/login').get( async (req, res) => {
     }
 });
 
+/**
+ * @swagger
+ * /api/logout:
+ *  get:   
+ *    summary: Logout the user and destroy the session
+ */
 apiRouter.route('/logout').get((req, res) => {
     req.session.destroy();
     res.json({ userDetails: req.session, logout: true });
 })
 
+/**
+ * @swagger
+ * /api/theme:
+ *  get:
+ *      summary: Get the current active theme
+ *      responses:
+ *          200:
+ *              description: Successfully retrieved the active theme
+ *  post:
+ *      summary: Set the active theme
+ *      requestBody:
+ *              required: true
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          properties:
+ *                              active:
+ *                                  type: string
+ *                                  description: The name of the theme to set as active
+ *                      examples:
+ *                          default: 
+ *                              value: |-
+ *                                  {
+ *                                      "active": "dark"
+ *                                  }   
+ *         
+ *      responses:
+ *          200:
+ *              description: Successfully set the active theme
+ */
 apiRouter.route('/theme')
     .get((req, res)=>{
         res.json(Entrypoint.settings.theme);
@@ -34,6 +77,12 @@ apiRouter.route('/theme')
         }
     });
 
+    /**
+     * @swagger
+     * /api/register:
+     *  get:
+     *   summary: Register a new user with username, email and password as query parameters
+     */
 apiRouter.get('/register', async (req, res) =>{
     const newUser = User.build({
         username: req.query.username,

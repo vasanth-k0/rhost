@@ -2,6 +2,8 @@ import express from 'express';
 import session from 'express-session';
 import Entrypoint from './helpers/Entrypoint.mjs';
 import './helpers/globals.mjs';
+import { specs, swaggerUi }  from './helpers/swagger.mjs';
+
 
 import ApiRouter from './api/routers/ApiRouter.mjs';
 import FilesRouter from './api/routers/FilesRouter.mjs';
@@ -21,6 +23,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(Entrypoint.uiPath));
 
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(specs));
+
 let knownRoutes = {
     "/api": ApiRouter,
     "/files": FilesRouter,
@@ -31,6 +35,11 @@ Object.entries(knownRoutes).forEach(([route, router]) => {
     app.use(route, router);
 });
 
-app.listen(Entrypoint.port,()=>{
-    log('Server running at http://localhost:' + Entrypoint.port);
-})
+// Export app for testing
+export default app;
+
+if (process.env.NODE_ENV !== 'test') {
+    app.listen(Entrypoint.port,()=>{
+        log('Server running at http://localhost:' + Entrypoint.port);
+    })
+}

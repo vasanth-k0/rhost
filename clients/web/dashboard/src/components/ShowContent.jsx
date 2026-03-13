@@ -94,7 +94,7 @@ const ShowContent = ({content, colorPalette, context}) => {
                 />
               </Tooltip>
            <Divider size="small" style={{ margin: '3px 0px' }} />
-           <Tooltip title="Publish" placement="left"> 
+           <Tooltip title="Publish" placement="right"> 
                   <PlusCircleFilled 
                         onClick={()=>{console.log('published')}} {...commonProps('publish')}
                   />

@@ -8,12 +8,12 @@
             "web": "apps/notepad/index.html"
         }
     },
-    "register": {
-        "name": "Register",
-        "icon": "UserAddOutlined",
+    "pyrun-lite": {
+        "name": "PyRun-Lite",
+        "icon": "PythonOutlined",
         "users": ["admin"],
         "router": {
-            "web": "apps/register/index.html"
+            "web": "apps/pyrun-lite/index.html"
         }
     }
 }
