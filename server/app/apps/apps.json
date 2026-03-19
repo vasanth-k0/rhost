@@ -8,12 +8,12 @@
             "web": "apps/notepad/index.html"
         }
     },
-    "pyrun-lite": {
-        "name": "PyRun-Lite",
-        "icon": "PythonOutlined",
+    "coderun-lite": {
+        "name": "Coderun-Lite",
+        "icon": "CodeFilled",
         "users": ["admin"],
         "router": {
-            "web": "apps/pyrun-lite/index.html"
+            "web": "apps/coderun-lite/index.html"
         }
     }
 }

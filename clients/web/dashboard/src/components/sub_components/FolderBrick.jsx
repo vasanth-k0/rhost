@@ -22,7 +22,8 @@ const FolderBrick = ({name, path, dir, colorPalette, active, setActive,FolderCli
     }
 
     const itemStyle= {
-        color: (isFolderBrickHovered? colorPalette.CustomColor:colorPalette.CustomColorLite)
+        color: (isFolderBrickHovered? colorPalette.CustomColor:colorPalette.CustomColorLite),
+        filter: 'brightness(0.5)'
     }
     
     return (<>

@@ -1,5 +1,5 @@
 import {theme, Spin, Flex, Divider, Tooltip} from 'antd';
-import {Suspense, lazy} from 'react';
+import {Suspense, lazy, useEffect, useRef} from 'react';
 import { useContext, useState } from 'react';
 import MenuItemContext from './context/MenuItemContext';
 import {CloseCircleFilled, PlusCircleFilled} from '@ant-design/icons';
@@ -40,7 +40,7 @@ const ShowContent = ({content, colorPalette, context}) => {
     let newShowContentList = structuredClone(showContentList);
     let newMenuItems = menuItems.filter((item) => item.key != content);
 
-    newShowContentList.user.splice(newShowContentList.user.indexOf(content), 1);
+    delete newShowContentList[content];
     setShowContentList(newShowContentList)
     setActiveContent('Apps')
     setMenuItems(newMenuItems)
@@ -64,7 +64,9 @@ const ShowContent = ({content, colorPalette, context}) => {
       }
   }
 
-  if (showContentList.default.includes(content)) {
+  const iframeStyle = {width: '100%', height: '100%', padding: '10px', border: 'none'}
+
+  if (Object.keys(showContentList.default).includes(content)) {
       const Page = context=='pages' ?  PageList[content] : ControlList[content];
       ContentComponent = <Suspense 
                   fallback={<Flex align='center' style={{ width: '100%', justifyContent: 'center' }}><Spin /></Flex>}
@@ -72,35 +74,40 @@ const ShowContent = ({content, colorPalette, context}) => {
                     {Page ? <Page colorPalette={colorPalette} /> : <div>Page not found</div>}
                   </Suspense>
   } else {
-    ContentComponent = <div style={{ width: '100%', height: '100%', position: 'relative' }}>
-        <iframe 
-            src= {"/" + content} 
-            style = {{width: '100%', height: 'auto', padding: '10px', border: 'none'}}
-          ></iframe>
-          <div style={{
-                position: 'absolute',
-                top: '10px',
-                left: '10px',
-                backgroundColor: colorPalette.CustomColorLite + '10',
-                borderColor: colorPalette.CustomColor + '10',
-                borderRadius: '5px',
-                padding: '5px',
-              }}
-              
-              >
-              <Tooltip title="Close" placement="left">
-                <CloseCircleFilled 
-                      onClick={closeContent} {...commonProps('close')}
-                />
+    if (context=='pages') {
+        ContentComponent = <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+            <iframe 
+                src= {"/" + content} 
+                style = {iframeStyle}
+              ></iframe>
+              <div style={{
+                    position: 'absolute',
+                    top: '10px',
+                    right: '10px',
+                    backgroundColor: colorPalette.CustomColorLite + '10',
+                    borderColor: colorPalette.CustomColor + '10',
+                    filter: 'brightness(0.7)',
+                    borderRadius: '5px',
+                    padding: '5px',
+                  }}
+                  
+                  >
+                  <Tooltip title="Close" placement="left">
+                    <CloseCircleFilled 
+                          onClick={closeContent} {...commonProps('close')}
+                    />
+                  </Tooltip>
+              <Divider size="small" style={{ margin: '3px 0px' }} />
+              <Tooltip title="Publish" placement="right"> 
+                      <PlusCircleFilled 
+                            onClick={()=>{console.log('published')}} {...commonProps('publish')}
+                      />
               </Tooltip>
-           <Divider size="small" style={{ margin: '3px 0px' }} />
-           <Tooltip title="Publish" placement="right"> 
-                  <PlusCircleFilled 
-                        onClick={()=>{console.log('published')}} {...commonProps('publish')}
-                  />
-           </Tooltip>
-          </div>   
-    </div>
+              </div>   
+        </div>
+    } else {
+      ContentComponent = <iframe src={`/${content}/about`} style={iframeStyle}></iframe>
+    }
   }
 
     const {

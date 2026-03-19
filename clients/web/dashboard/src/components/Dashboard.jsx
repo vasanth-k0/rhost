@@ -48,8 +48,8 @@ const Dashboard = () => {
   const [ activeContent, setActiveContent ] = useState('Apps')
   const [ menuItems , setMenuItems ] = useState(items)
   const [showContentList, setShowContentList] = useState({
-                "default" : ['Apps', 'Files', 'Accounts', 'Members', 'System'],
-                "user": []
+                "default" : {'Apps':'Apps', 'Files':'Files', 'Accounts':'Accounts', 'Members': 'Members', 'System':'System'},
+                "user": {}
               });
   const [selectedKeys, setSelectedKeys] = useState(['Apps']);
 
@@ -178,7 +178,7 @@ const Dashboard = () => {
           selectedKeys,
           setSelectedKeys
           }}>             
-              <Layout style={{ display: 'block', height: '100%', width: '100%', backgroundColor: CustomColor+'15' }} >
+              <Layout style={{ display: 'block', height: '100%', width: '100%', background: 'linear-gradient(to top, ' + CustomColor + '10, ' + CustomColor + '15' + ')' }} >
                 <Header style={{ padding: 0, background: colorBgContainer, height: '3.5rem' }} >
                     <div style={ headerStyle }>
                         
@@ -242,7 +242,7 @@ const Dashboard = () => {
                                     marginTop: 3
                                     }}
                                 />
-                                  <span style={{ padding: '0 7px', float: 'right' }}>{activeContent}</span>
+                                  <span style={{ padding: '0 7px', float: 'right' }}>{ showContentList['default'][activeContent] ? showContentList['default'][activeContent] : showContentList['user'][activeContent] }</span>
                                   <Divider style={{ margin: '10px 0px' }} />
                                   <ContentList context='controls' activeContent={activeContent} colorPalette={{CustomColor, CustomColorLite}} />
                               </div>
