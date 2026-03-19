@@ -2,7 +2,8 @@ import {theme, Spin, Flex, Divider, Tooltip} from 'antd';
 import {Suspense, lazy, useEffect, useRef} from 'react';
 import { useContext, useState } from 'react';
 import MenuItemContext from './context/MenuItemContext';
-import {CloseCircleFilled, PlusCircleFilled} from '@ant-design/icons';
+import {CloseCircleFilled, PlusCircleFilled, FullscreenOutlined} from '@ant-design/icons';
+import FullScreener from './sub_components/FullScreener.jsx'
 
 /**
  * Notice: Webpack requires static imports. no dynamic imports supported.
@@ -64,7 +65,8 @@ const ShowContent = ({content, colorPalette, context}) => {
       }
   }
 
-  const iframeStyle = {width: '100%', height: '100%', padding: '10px', border: 'none'}
+  const iframeStyle = { width: '100%', height: '100%', border: 'none', padding: '0px', background: 'white' }
+  const iframeRef = useRef(null);
 
   if (Object.keys(showContentList.default).includes(content)) {
       const Page = context=='pages' ?  PageList[content] : ControlList[content];
@@ -77,6 +79,8 @@ const ShowContent = ({content, colorPalette, context}) => {
     if (context=='pages') {
         ContentComponent = <div style={{ width: '100%', height: '100%', position: 'relative' }}>
             <iframe 
+                ref = {iframeRef}
+                allow="fullscreen"
                 src= {"/" + content} 
                 style = {iframeStyle}
               ></iframe>
@@ -86,7 +90,7 @@ const ShowContent = ({content, colorPalette, context}) => {
                     right: '10px',
                     backgroundColor: colorPalette.CustomColorLite + '10',
                     borderColor: colorPalette.CustomColor + '10',
-                    filter: 'brightness(0.7)',
+                    filter: 'brightness(0.8)',
                     borderRadius: '5px',
                     padding: '5px',
                   }}
@@ -102,6 +106,15 @@ const ShowContent = ({content, colorPalette, context}) => {
                       <PlusCircleFilled 
                             onClick={()=>{console.log('published')}} {...commonProps('publish')}
                       />
+              </Tooltip>
+              <Divider size="small" style={{ margin: '3px 0px' }} />
+              <Tooltip title="Fullscreen" placement="right"> 
+                      <FullScreener fullscreenstyle={{ 
+                            color: 'white', 
+                            margin: '0px', 
+                            backgroundColor: colorPalette.CustomColorLite, 
+                            borderRadius: '5rem', 
+                            padding: '2px' }} element={iframeRef} />
               </Tooltip>
               </div>   
         </div>

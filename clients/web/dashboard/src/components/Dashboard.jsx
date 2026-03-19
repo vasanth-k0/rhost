@@ -11,14 +11,13 @@ import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   LogoutOutlined,
-  FullscreenOutlined,
-  FullscreenExitOutlined 
 } from '@ant-design/icons';
 import ContentList from './ContentList';
 import {useTheme} from './context/Theme'
 import * as antColour from '@ant-design/colors'
 import PathCrumb from './context/PathCrumb';
 import MenuItemContext from './context/MenuItemContext';
+import FullScreener from './sub_components/FullScreener';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -122,7 +121,6 @@ const Dashboard = () => {
         };
 
   const [collapsed, setCollapsed] = useState(true);
-  const [fullscreen, setFullScreen] = useState(false);
 
     const {
         token: { colorBgContainer },
@@ -132,17 +130,6 @@ const Dashboard = () => {
     Crumb.path[1]['title'] = key;
     Crumb.setPath([...Crumb.path])
     setActiveContent(key);
-  }
-
-  const toggleFullscreen = () => {
-    setFullScreen(!fullscreen)
-    if (!fullscreen) {
-      document.documentElement.requestFullscreen().catch(err => {
-            console.error(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
-        });
-    } else {
-      document.exitFullscreen();
-    }
   }
 
   return (
@@ -198,10 +185,7 @@ const Dashboard = () => {
                                     }} items={ (activeContent!='Files') ? Crumb.path.slice(0,2): Crumb.path } />
                         </Space>
                         <Space>
-                                { fullscreen 
-                                        ? <FullscreenExitOutlined onClick= {toggleFullscreen} style={{ margin: '10px' }} />
-                                        :  <FullscreenOutlined onClick= {toggleFullscreen} style={{ margin: '10px' }} />
-                                }
+                                <FullScreener fullscreenstyle={{ margin: '10px' }} />
                                 <LogoutOutlined onClick={confirm} style={{marginRight: 10, color: CustomColor}} />
                         </Space>
                     </div>    
@@ -242,7 +226,11 @@ const Dashboard = () => {
                                     marginTop: 3
                                     }}
                                 />
-                                  <span style={{ padding: '0 7px', float: 'right' }}>{ showContentList['default'][activeContent] ? showContentList['default'][activeContent] : showContentList['user'][activeContent] }</span>
+                                  <span style={{ fontWeight: '500', padding: '0 7px', float: 'right' }}>
+                                      { showContentList['default'][activeContent] 
+                                            ? showContentList['default'][activeContent] 
+                                            : showContentList['user'][activeContent] }
+                                  </span>
                                   <Divider style={{ margin: '10px 0px' }} />
                                   <ContentList context='controls' activeContent={activeContent} colorPalette={{CustomColor, CustomColorLite}} />
                               </div>

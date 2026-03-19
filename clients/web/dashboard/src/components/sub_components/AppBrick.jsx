@@ -57,7 +57,7 @@ const AppBrick = ({colorPalette, Icon, app, appName}) => {
                                     onMouseEnter={ () => { setAppHovered(true) }} 
                                     onMouseLeave={ () => { setAppHovered(false) }}
                                     >
-                                        <Icon style={{fontSize: '17px', filter: 'brightness(0.5)'}} />
+                                        <Icon style={{fontSize: '17px', filter: 'brightness(0.7)'}} />
                                         <span style={{color: 'rgb(50, 50, 50)'}}>{appName}</span>
         </div>
 }

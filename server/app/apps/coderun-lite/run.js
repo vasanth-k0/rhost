@@ -1,5 +1,5 @@
 const test = 'Test';
-console.log( `${test} js script running on Coderun-Lite\n<br>\n`);
+console.log( `Viyath's ${test} js script running on Coderun-Lite\n<br>\n`);
 let i = 1;
 const MAX_COUNT =  10;
 
