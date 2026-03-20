@@ -5,17 +5,17 @@
         "py" : {
         "image": "python:3.12-slim",
         "executor": "python3",
-        "script": "/run.py"
+        "script": "/default/run.py"
         },
         "php" : {
         "image": "php:8.4.19-cli-alpine3.22",
         "executor": "php",
-        "script": "/run.php"
+        "script": "/default/run.php"
         },
         "js" : {
         "image": "node:25.8-alpine",
         "executor": "node",
-        "script": "/run.js"
+        "script": "/default/run.js"
         }
     }
 }

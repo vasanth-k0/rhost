@@ -23,6 +23,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(Entrypoint.uiPath));
 
+Object.keys(Entrypoint.apps).forEach((appName)=>{
+    app.use(express.static( `${process.cwd()}/app/apps/${appName}/view`))
+})
+
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 let knownRoutes = {

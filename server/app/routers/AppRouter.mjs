@@ -1,7 +1,7 @@
 import express from 'express';
 import Entrypoint from '../helpers/Entrypoint.mjs';
-import AppRunner from '../helpers/AppRunner.mjs';
 import path from 'path';
+import fs from 'fs';
 
 const appRouter = express.Router({ mergeParams: true });
 
@@ -28,16 +28,24 @@ appRouter.route('/about')
     });
 
 appRouter.route('/{:action}')
-    .get(async (req, res) => {
+    .all(async (req, res) => {
         let appName = req.params.endpoint;
         let file = Entrypoint.apps
         if (appName in file) {
             if (req.params.action) {
-                let appExecutor = new AppRunner(req.params.endpoint, req.params.action)
-                let outp = await appExecutor.exe();
-                res.send(outp)
+                let relativePath = `${path.join("app/apps/", req.params.endpoint)}`;
+                let AppExecutorPath = `${process.cwd()}/${relativePath}/controller/exe.mjs`;
+                if (fs.existsSync(AppExecutorPath)) {
+                    let AppExecutorModule = await import(AppExecutorPath);
+                    let appExecutor = new AppExecutorModule.default(req.params, JSON.stringify({ ...req.query, ...req.body}))
+                    let outp = await appExecutor.exe();
+                    res.send(outp)
+                } else {
+                    res.send("App executor is not present")
+                }
             } else {
-                res.sendFile(file[appName].router.web, { root: Entrypoint.__dirname });
+                let appFolder = `${process.cwd()}/app/apps/${appName}/view`;
+                res.sendFile(`${appFolder}/index.html`);
             }
         } else {
             Entrypoint.showIndex(req, res)
