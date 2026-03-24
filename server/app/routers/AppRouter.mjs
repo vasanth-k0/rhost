@@ -37,7 +37,8 @@ appRouter.route('/{:action}')
                 let AppExecutorPath = `${process.cwd()}/${relativePath}/controller/exe.mjs`;
                 if (fs.existsSync(AppExecutorPath)) {
                     let AppExecutorModule = await import(AppExecutorPath);
-                    let appExecutor = new AppExecutorModule.default(req.params, JSON.stringify({ ...req.query, ...req.body}))
+                    let param = JSON.stringify({ ...req.query, ...req.body});
+                    let appExecutor = new AppExecutorModule.default(req.params, param)
                     let outp = await appExecutor.exe();
                     res.send(outp)
                 } else {

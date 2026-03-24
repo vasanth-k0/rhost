@@ -12,9 +12,9 @@ const SystemPage = () => {
     const colorThemesList = Object.keys(theme.available)
 
     const labelStyle = {
-  height: 32,
-  lineHeight: '32px',
-};
+        height: 32,
+        lineHeight: '32px',
+        };
 
 const colorOptions = colorThemesList.map((color, index)=>{
                                 return {
@@ -36,10 +36,11 @@ const colorOptions = colorThemesList.map((color, index)=>{
                     <Flex gap="middle"
                         style={{ 
                             backgroundColor: theme.available[theme.active][0]+"08",
-                            fontSize: '11px',
+                            fontSize: '13px',
                             padding: 12,
                             borderRadius: 10,
-                            overflow: 'hidden'
+                            overflow: 'hidden',
+                            maxWidth: '70%'
                          }}
                     >
                         <Radio.Group

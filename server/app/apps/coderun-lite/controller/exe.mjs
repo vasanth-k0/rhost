@@ -12,7 +12,6 @@ class Exe {
     });
 
     constructor (app, data, container = Exe.container.DOCKER) {
-        console.log(app);
         let serviceFile = `app/apps/coderun-lite/service.json`
         this.service = JSON.parse(fs.readFileSync(serviceFile));
         this.endpoint = app.action;
