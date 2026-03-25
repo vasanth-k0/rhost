@@ -52,6 +52,7 @@ const ScriptPanel = ({defaults, lang})=>{
                       <Splitter.Panel defaultSize="65%" min="35%" max="65%">
                         <div style={{padding: '10px',}} >
                             <CodeMirror
+                            style={{ borderRadius: '5px', overflow: 'hidden' }}
                                 value={code}
                                 autoFocus={true}
                                 extensions={[
@@ -67,8 +68,8 @@ const ScriptPanel = ({defaults, lang})=>{
                   <Splitter.Panel defaultSize="35%" min="35%" max="65%">
                     <div style={{padding: '10px',}} >
                         <div>
-                          <span style={{ backgroundColor: '#1677ff10', borderRadius: '1rem', padding: '3px 10px' }}> {defaults[lang]['name']} • Output Terminal • STDOUT</span>
-                          <PlayCircleFilled onClick={runCode}  style={{ color: '#1677ff', float: 'right', fontSize: '1.3rem', margin: '2px 10px' }} />
+                          <span style={{ backgroundColor: '#1677ff10', borderRadius: '1rem', padding: '3px 10px' }}> Output Terminal • {defaults[lang]['name']} • STDOUT</span>
+                          <PlayCircleFilled onClick={runCode}  style={{ color: '#1677ff', float: 'right', fontSize: '1.25rem', margin: '2px 10px' }} />
                           <span style={{ float: 'right' }}>{showShortcut && <>[ <small style={{color: '#1677ff'}}>Alt+s</small> ] •</>} Execute</span>
                           
                       </div>
