@@ -2,6 +2,7 @@
     "notepad": {
         "name": "Notepad",
         "icon": "EditFilled",
+        "published": false,
         "users": ["admin"],
         "router": {
             "api": "apps/notepad/index.mjs",
@@ -11,7 +12,8 @@
     "coderun-lite": {
         "name": "Coderun-Lite",
         "icon": "CodeFilled",
-        "users": ["admin"],
+        "published": true,
+        "users": [],
         "router": {
             "web": "apps/coderun-lite/index.html"
         }

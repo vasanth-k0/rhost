@@ -2,7 +2,7 @@ import {theme, Spin, Flex, Divider, Tooltip} from 'antd';
 import {Suspense, lazy, useEffect, useRef} from 'react';
 import { useContext, useState } from 'react';
 import MenuItemContext from './context/MenuItemContext';
-import {CloseCircleFilled, PlusCircleFilled, FullscreenOutlined} from '@ant-design/icons';
+import {CloseCircleFilled, PlusCircleFilled, LayoutFilled} from '@ant-design/icons';
 import FullScreener from './sub_components/FullScreener.jsx'
 
 /**
@@ -107,6 +107,12 @@ const ShowContent = ({content, colorPalette, context}) => {
               <Tooltip title="Publish" placement="right"> 
                       <PlusCircleFilled 
                             onClick={()=>{console.log('published')}} {...commonProps('publish')}
+                      />
+              </Tooltip>
+              <Divider size="small" style={{ margin: '3px 0px' }} />
+              <Tooltip title="Publish" placement="right"> 
+                      <LayoutFilled 
+                            onClick={()=>{open("/" + content, '_blank') }} {...commonProps('publish')}
                       />
               </Tooltip>
               <Divider size="small" style={{ margin: '3px 0px' }} />
