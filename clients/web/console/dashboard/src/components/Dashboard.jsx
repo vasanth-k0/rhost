@@ -268,7 +268,9 @@ const Dashboard = () => {
   
       if (!gotoConsole) { 
             setGotoConsole(true); 
-            setActiveContent('Accounts'); 
+            if (!login) {
+                setActiveContent('Accounts'); 
+            } 
       } else { 
             setGotoConsole(false); 
       }  
@@ -315,7 +317,7 @@ const Dashboard = () => {
                         <Space size="large" style={{ marginRight: 'auto' }}>
                                 <span style={{ marginLeft: 10, fontWeight:500, fontSize: '19px', color: antColour['grey'][6] }} >
                                    { consoleLogin
-                                        ? <>rHost <span style={{ fontSize: '14px' }}> Console </span></> 
+                                        ? <>{settings['name']}  <small style={{marginLeft: '15px'}}>rHost <span style={{ fontSize: '14px' }}> Console </span></small></> 
                                         : settings['name'] 
                                     }
                                 </span>
