@@ -45,6 +45,7 @@ const ScriptPanel = ({defaults, lang})=>{
         const res = await(outp.text());
         setOutput(` ${res.replace('\n','<br>')}`);
   };
+  const colorPick = '#1677ff';
 
   return <div style={{ height: '100%' }}>
     
@@ -68,12 +69,33 @@ const ScriptPanel = ({defaults, lang})=>{
                   <Splitter.Panel defaultSize="35%" min="35%" max="65%">
                     <div style={{padding: '10px',}} >
                         <div>
-                          <span style={{ backgroundColor: '#1677ff10', borderRadius: '1rem', padding: '3px 10px' }}> Output Terminal • {defaults[lang]['name']} • STDOUT</span>
-                          <PlayCircleFilled onClick={runCode}  style={{ color: '#1677ff', float: 'right', fontSize: '1.25rem', margin: '2px 10px' }} />
-                          <span style={{ float: 'right' }}>{showShortcut && <>[ <small style={{color: '#1677ff'}}>Alt+s</small> ] •</>} Execute</span>
+                          <span style={{ 
+                                  backgroundColor: colorPick + '10', 
+                                  borderRadius: '1rem', 
+                                  padding: '3px 10px' 
+                            }}> Output Terminal • {defaults[lang]['name']} • STDOUT</span>
+                          <PlayCircleFilled onClick={runCode}  style={{ 
+                                  color: colorPick + '', 
+                                  float: 'right', 
+                                  fontSize: '1.25rem', 
+                                  margin: '2px 10px' 
+                          }} />
+                          <span style={{ float: 'right' }}>
+                                { showShortcut 
+                                        && <>[ <small style={{color: colorPick + ''}}>Alt+s</small> ] •</>
+                                } Execute
+                          </span>
                           
                       </div>
-                      <div style={{ width: '96.5%', backgroundColor: '#1677ff05', borderRadius: '5px', marginTop: '10px', padding: '10px', minHeight: '4.5rem'}}  dangerouslySetInnerHTML={{ __html: output }} >
+                      
+                      <div style={{ 
+                              width: '96.5%', 
+                              backgroundColor: colorPick + '05', 
+                              borderRadius: '5px', 
+                              marginTop: '10px', 
+                              padding: '10px', 
+                              minHeight: '4.5rem'
+                          }}  dangerouslySetInnerHTML={{ __html: output }} >
                       </div>
                     </div>
                     
