@@ -77,6 +77,13 @@ SystemRouter.route('/theme')
         }
     });
 
+    SystemRouter.route('/settings')
+    .get((req, res)=>{
+        let result = { ...Entrypoint.settings };
+        delete result.theme;
+        res.json(result);
+    });
+
     /**
      * @swagger
      * /system/register:

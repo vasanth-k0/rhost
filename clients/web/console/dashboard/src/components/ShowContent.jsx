@@ -1,5 +1,5 @@
 import {theme, Spin, Flex, Divider, Tooltip} from 'antd';
-import {Suspense, lazy, useEffect, useRef} from 'react';
+import {Suspense, lazy, useRef} from 'react';
 import { useContext, useState } from 'react';
 import MenuItemContext from './context/MenuItemContext';
 import {CloseCircleFilled, PlusCircleFilled, LayoutFilled} from '@ant-design/icons';
@@ -26,7 +26,7 @@ const ControlList = {
 };
 
 
-const ShowContent = ({content, colorPalette, context}) => {
+const ShowContent = ({content, tools='show', colorPalette, context}) => {
 
   const {showContentList, setShowContentList, setActiveContent} = useContext(MenuItemContext);
   const [onHover, setOnHover] = useState({
@@ -86,40 +86,43 @@ const ShowContent = ({content, colorPalette, context}) => {
                 src= {"/" + content} 
                 style = {iframeStyle}
               ></iframe>
-              <div style={{
-                    position: 'absolute',
-                    top: '10px',
-                    right: '10px',
-                    backgroundColor: colorPalette.CustomColorLite + '10',
-                    borderColor: colorPalette.CustomColor + '10',
-                    filter: 'brightness(0.8)',
-                    borderRadius: '5px',
-                    padding: '5px',
-                  }}
-                  
-                  >
-                  <Tooltip title="Close" placement="left">
-                    <CloseCircleFilled 
-                          onClick={closeContent} {...commonProps('close')}
-                    />
-                  </Tooltip>
-              <Divider size="small" style={{ margin: '3px 0px' }} />
-              <Tooltip title="Publish" placement="right"> 
-                      <PlusCircleFilled 
-                            onClick={()=>{console.log('published')}} {...commonProps('publish')}
-                      />
-              </Tooltip>
-              <Divider size="small" style={{ margin: '3px 0px' }} />
-              <Tooltip title="Publish" placement="right"> 
-                      <LayoutFilled 
-                            onClick={()=>{open("/" + content, '_blank') }} {...commonProps('publish')}
-                      />
-              </Tooltip>
-              <Divider size="small" style={{ margin: '3px 0px' }} />
-              <Tooltip title="Fullscreen" placement="right"> 
-                    <FullScreener element={iframeRef} icon='true' {...commonProps('fullscreen')} />
-              </Tooltip>
-              </div>   
+              {
+                tools == 'show' 
+                  && <div style={{
+                              position: 'absolute',
+                              top: '10px',
+                              right: '10px',
+                              backgroundColor: colorPalette.CustomColorLite + '10',
+                              borderColor: colorPalette.CustomColor + '10',
+                              filter: 'brightness(0.8)',
+                              borderRadius: '5px',
+                              padding: '5px',
+                            }}
+                            
+                            >
+                                  <Tooltip title="Close" placement="left">
+                                        <CloseCircleFilled 
+                                              onClick={closeContent} {...commonProps('close')}
+                                        />
+                                      </Tooltip>
+                                  <Divider size="small" style={{ margin: '3px 0px' }} />
+                                  <Tooltip title="Publish" placement="right"> 
+                                          <PlusCircleFilled 
+                                                onClick={()=>{alert('published')}} {...commonProps('publish')}
+                                          />
+                                  </Tooltip>
+                                  <Divider size="small" style={{ margin: '3px 0px' }} />
+                                  <Tooltip title="Open in new Tab" placement="right"> 
+                                          <LayoutFilled 
+                                                onClick={()=>{open("/" + content, '_blank') }} {...commonProps('publish')}
+                                          />
+                                  </Tooltip>
+                                  <Divider size="small" style={{ margin: '3px 0px' }} />
+                                  <FullScreener element={iframeRef} icon='true' {...commonProps('fullscreen')} />
+
+                        </div>   
+              }
+              
         </div>
     } else {
       ContentComponent = <iframe src={`/${content}/about`} style={iframeStyle}></iframe>

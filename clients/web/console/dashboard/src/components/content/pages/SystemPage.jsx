@@ -1,9 +1,10 @@
 import { Flex, Radio, Divider } from 'antd';
-import {useTheme} from '../../context/Theme'
+import ThemeContext from '../../context/ThemeContext'
+import {useContext} from "react";
 
 const SystemPage = () => {
 
-    const { theme, setTheme } = useTheme();
+    const { theme, setTheme } = useContext(ThemeContext);
 
     const onChange = e => {
         setTheme({...theme, active: e.target.value});

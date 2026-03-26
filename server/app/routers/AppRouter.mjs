@@ -15,6 +15,14 @@ appRouter.route('/list')
         res.json(appsList);
     });
 
+appRouter.route('/publish')
+    .get((req, res)=>{
+        const app = req.params.endpoint;
+        Entrypoint.apps[app].published = Boolean(Number(req.query.set));
+        fs.writeFileSync(path.join(Entrypoint.appsPath, 'apps.json'), JSON.stringify(Entrypoint.apps, null, 4), 'utf-8')
+        res.sendStatus(200);
+    });
+
 appRouter.route('/config')
     .get((req, res)=>{
         res.json(new AppRunner(req.params.endpoint).getConfig());

@@ -3,6 +3,7 @@ import {
     FullscreenExitOutlined,
     UpCircleFilled 
 } from '@ant-design/icons';
+import { Tooltip } from 'antd';
 import { useState } from 'react';
 
 const FullScreener = ({element = document.documentElement,  onMouseEnter, onMouseLeave, fullscreenstyle = {}, icon = null})=>{
@@ -20,17 +21,19 @@ const FullScreener = ({element = document.documentElement,  onMouseEnter, onMous
   }
 
     return <>
-            {
-                icon ? <UpCircleFilled onClick= {toggleFullscreen} style={fullscreenstyle} onMouseEnter={onMouseEnter}
-                       onMouseLeave={onMouseLeave} />
-                    : (
-                        fullscreen 
-                            ? <FullscreenExitOutlined onClick= {toggleFullscreen} style={fullscreenstyle} onMouseEnter={onMouseEnter}
-                       onMouseLeave={onMouseLeave} />
-                            :  <FullscreenOutlined onClick= {toggleFullscreen} style={fullscreenstyle} onMouseEnter={onMouseEnter}
-                       onMouseLeave={onMouseLeave} />
-                    )
-            }
+            <Tooltip title="Fullscreen" placement="right"> 
+                {
+                    icon ? <UpCircleFilled onClick= {toggleFullscreen} style={fullscreenstyle} onMouseEnter={onMouseEnter}
+                        onMouseLeave={onMouseLeave} />
+                        : (
+                            fullscreen 
+                                ? <FullscreenExitOutlined onClick= {toggleFullscreen} style={fullscreenstyle} onMouseEnter={onMouseEnter}
+                        onMouseLeave={onMouseLeave} />
+                                :  <FullscreenOutlined onClick= {toggleFullscreen} style={fullscreenstyle} onMouseEnter={onMouseEnter}
+                        onMouseLeave={onMouseLeave} />
+                        )
+                }
+            </Tooltip>
     </> 
 }
 

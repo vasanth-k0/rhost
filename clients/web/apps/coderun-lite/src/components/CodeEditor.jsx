@@ -86,17 +86,17 @@ const ScriptPanel = ({defaults, lang})=>{
 const CodeEditor = () => {
 
   const defaults = {
-    php : {
-      name: 'PHP',
-      code: "echo 'Hello World..!';" + "\n".repeat(11)
+    py : {
+      name: 'Python',
+      code: "print('Hello World...!')" + "\n".repeat(11)
     },
     js : {
       name: 'JavaScript',
       code: "console.log('Hello World...!');" + "\n".repeat(11)
     },
-    py : {
-      name: 'Python',
-      code: "print('Hello World...!')" + "\n".repeat(11)
+    php : {
+      name: 'PHP',
+      code: "echo 'Hello World..!';" + "\n".repeat(11)
     }
   }
 

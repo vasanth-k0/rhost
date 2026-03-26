@@ -1,8 +1,11 @@
 {
+    "name": "CodeRun-Lite Labs",
     "port": 3000,
+    "contactAdmin": "vasanth.k08@gmail.com",
     "ui": "dashboard",
+    "defaultApp": "coderun-lite",
     "env": {
-        "type": "dev"
+        "type": "prod"
     },
     "theme": {
         "default": "Geekblue",

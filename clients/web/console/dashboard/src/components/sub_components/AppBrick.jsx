@@ -1,17 +1,18 @@
-import { useState } from "react"
-import { useContext } from "react"
+import { useState, useEffect, useContext } from "react"
 import MenuItemContext from "../context/MenuItemContext"
+import UserContext from '../context/UserContext';
 
 const AppBrick = ({colorPalette, Icon, app, appName}) => {
 
     const [isAppHovered, setAppHovered] = useState(false);
     const {menuItems, setMenuItems} = useContext(MenuItemContext);
     const {showContentList, setShowContentList} = useContext(MenuItemContext);
-    const {activeContent, setActiveContent} = useContext(MenuItemContext);
-    const {selectedKeys, setSelectedKeys} = useContext(MenuItemContext);
+    const {setActiveContent} = useContext(MenuItemContext);
+    const {setSelectedKeys} = useContext(MenuItemContext);
+    const {login} = useContext(UserContext);
 
     const openApp = ()=>{
-         let newMenuItems = [...menuItems];
+        let newMenuItems = [...menuItems];
         let newShowContentList = structuredClone(showContentList)
 
          let isAppOpen = false;
@@ -32,6 +33,7 @@ const AppBrick = ({colorPalette, Icon, app, appName}) => {
         setActiveContent(app)
         setShowContentList(newShowContentList);
         setSelectedKeys(app)
+        console.log(newMenuItems);
     }
 
     const itemStyle = {
