@@ -43,7 +43,7 @@ const ScriptPanel = ({defaults, lang})=>{
                                   body: JSON.stringify({script: code.trim()})
                                 });
         const res = await(outp.text());
-        setOutput(` ${res.replace('\n','<br>')}`);
+        setOutput(` ${res}`);
   };
   const colorPick = '#1677ff';
 
@@ -87,14 +87,15 @@ const ScriptPanel = ({defaults, lang})=>{
                           </span>
                           
                       </div>
-                      
+
                       <div style={{ 
                               width: '96.5%', 
                               backgroundColor: colorPick + '05', 
                               borderRadius: '5px', 
                               marginTop: '10px', 
                               padding: '10px', 
-                              minHeight: '4.5rem'
+                              minHeight: '4.5rem',
+                              whiteSpace: 'pre-line'
                           }}  dangerouslySetInnerHTML={{ __html: output }} >
                       </div>
                     </div>

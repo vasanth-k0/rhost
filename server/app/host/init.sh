@@ -65,13 +65,74 @@ create secrets.json file
 npx sequelize-cli db:migrate
 
 cd app
-pm2 start index.mjs --name "rhost"
+sudo pm2 start index.mjs --name "rhost" // aws not letting to run on port 80 for non root users
 
 NODE_ENV="production"
 for peristant 
  nano ~/.bashrc
  export NODE_ENV="production"
 
-change port to 80 in settings
+install reverse proxy nginx and certbot for ssl
+sudo apt update
+sudo apt install nginx certbot python3-certbot-nginx -y
 
+
+nginx configuration
+
+sudo nano /etc/nginx/sites-available/cloudpc.in
+
+server {
+    listen 80;
+    server_name cloudpc.in www.cloudpc.in;
+
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+}
+
+start nginx
+
+sudo ln -s /etc/nginx/sites-available/yourdomain.com /etc/nginx/sites-enabled/
+sudo nginx -t && sudo systemctl restart nginx
+
+sudo rm /etc/nginx/sites-enabled/default
+remove default site
+
+server configuration
+----------------------
+server {
+    server_name cloudpc.in www.cloudpc.in;
+
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/cloudpc.in/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/cloudpc.in/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+}
+server {
+    if ($host = cloudpc.in) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    listen 80;
+    server_name cloudpc.in www.cloudpc.in;
+    return 301 https://$host$request_uri;
+
+}
 EOF
