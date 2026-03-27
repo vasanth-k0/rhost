@@ -184,10 +184,9 @@ if (Apps.length!=0) {
 
   const logStyle = { 
                                 cursor: 'pointer',
-                                color: CustomColor,
                                 backgroundColor: CustomColorLite + '0f',
                                 height: '27px',
-                                padding: '6px 10px',
+                                padding: '6px 12px',
                                 display: 'flex',
                                 alignItems: 'center',
                                 borderRadius: '3rem',
@@ -354,12 +353,12 @@ if (Apps.length!=0) {
                                               </div>
                                               <div onClick={confirm} style={logStyle} >
                                                     <span>Logout •</span>
-                                                    <LogoutOutlined  />
+                                                    <LogoutOutlined  style={{color: CustomColor}} />
                                               </div>
                                         </> 
                                       : <div onClick={toggleSite} style={logStyle} >
                                               <span>{ consoleLogin ? 'Home • ' : 'Login •' }</span>
-                                              <LoginOutlined  />
+                                              <LoginOutlined style={{color: CustomColor}} />
                                         </div>
                                   }
                         </Space>
