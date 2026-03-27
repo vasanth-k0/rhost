@@ -184,10 +184,9 @@ if (Apps.length!=0) {
 
   const logStyle = { 
                                 cursor: 'pointer',
-                                color: CustomColor,
-                                backgroundColor: CustomColorLite + '0f',
+                                backgroundColor: CustomColorLite + '08',
                                 height: '27px',
-                                padding: '6px 10px',
+                                padding: '6px 12px',
                                 display: 'flex',
                                 alignItems: 'center',
                                 borderRadius: '3rem',
@@ -320,7 +319,7 @@ if (Apps.length!=0) {
           selectedKeys,
           setSelectedKeys
           }}>             
-              <Layout style={{ display: 'block', height: '100%', width: '100%', background: 'linear-gradient(to top, ' + CustomColor + '10, ' + CustomColor + '15' + ')' }} >
+              <Layout style={{ display: 'block', height: '100%', width: '100%', background: 'linear-gradient(to top, ' + CustomColor + '05, ' + CustomColor + '08' + ')' }} >
                 <Header style={{ padding: 0, background: colorBgContainer, height: '3.5rem' }} >
                     <div style={ headerStyle }>
                         
@@ -354,12 +353,12 @@ if (Apps.length!=0) {
                                               </div>
                                               <div onClick={confirm} style={logStyle} >
                                                     <span>Logout •</span>
-                                                    <LogoutOutlined  />
+                                                    <LogoutOutlined  style={{color: CustomColor}} />
                                               </div>
                                         </> 
                                       : <div onClick={toggleSite} style={logStyle} >
                                               <span>{ consoleLogin ? 'Home • ' : 'Login •' }</span>
-                                              <LoginOutlined  />
+                                              <LoginOutlined style={{color: CustomColor}} />
                                         </div>
                                   }
                         </Space>

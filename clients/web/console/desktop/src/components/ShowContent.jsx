@@ -147,21 +147,30 @@ const ShowContent = ({content, tools='show', colorPalette, context}) => {
                     {
                         key: '1',
                         label: 'Info',
-                        children: <p>More Info</p>,
-                    },
-                    {
-                        key: '2',
-                        label: 'Settings • ' + ( service.readonly ? "ReadOnly":"Read/Write"),
-                        children:  <ReactJsonView
+                        children: <ReactJsonView
                                   style={{ fontSize: '11px' }}
                                   theme='grayscale:inverted'
-                                  src={service}
+                                  src={Apps[content]}
                                   iconStyle='circle'
                                   enableClipboard={false}
                                   displayObjectSize={false}
                                   displayDataTypes={false}
                                   showComma={false}
                                 />,
+                    },
+                    {
+                        key: '2',
+                        label: 'Settings • ' + ( service.readonly ? "ReadOnly":"Read/Write"),
+                        children:  <ReactJsonView
+                                            style={{ fontSize: '11px' }}
+                                            theme='grayscale:inverted'
+                                            src={service}
+                                            iconStyle='circle'
+                                            enableClipboard={false}
+                                            displayObjectSize={false}
+                                            displayDataTypes={false}
+                                            showComma={false}
+                                        />,
                     }
                   ];
 

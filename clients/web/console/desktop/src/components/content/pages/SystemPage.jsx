@@ -34,28 +34,35 @@ const SystemPage = () => {
             setRelease(await rel.json());
         })();
     },[]);
-
+    
+    const lightBg = theme.available[theme.active][1] + "08";
+    const lightBgStyle = { backgroundColor: lightBg }
     const systemData= [
         {
             label: 'Version',
             span: 'filled',
             children: settings.rhost.release,
+            labelStyle: lightBgStyle
         },
         {
             label: 'Last Update',
             span: 'filled',
             children: settings.rhost.last_update,
+            labelStyle: lightBgStyle
         },
         {
-            label: (new Date(release.published_at) > new Date(settings.rhost.last_update)) 
+            label: '' ,
+            span: 2,
+            children: (new Date(release.published_at) > new Date(settings.rhost.last_update)) 
                             ? <Badge status="processing" text="Update available" /> 
-                            : <Badge status="success" text='Running on latest version' /> ,
+                            : <Badge status="success" text='Running on latest version' />,
+            labelStyle: {display: 'none', ...lightBgStyle }
         }
     ]
 
     const cardStyle={
-        margin: '21px',
-        width: '65%'
+        width: '50%',
+        borderColor: lightBg
     }
 
     return (
@@ -65,12 +72,14 @@ const SystemPage = () => {
                 display: 'flex', 
                 justifyContent: 'center', 
                 alignContent: 'center' , 
-                overflow: 'scroll' 
+                overflow: 'scroll', 
+                margin: '3rem',
+                gap: '3rem'
         }}>
-            <Card style={cardStyle} bodyPadding='15' headerPadding='15' type='inner' title='rHost Software' size='small' >
+            <Card style={cardStyle} bodyPadding='15' headerPadding='15' title='rHost Software' size='small' headerBg={lightBg} >
                 <Descriptions bordered title="System Info" items={systemData} size='small' />
             </Card>
-            <Card style={cardStyle} bodyPadding='15' headerPadding='15' type='inner' title='Themes' size='small' >
+            <Card style={cardStyle} bodyPadding='15' headerPadding='15' title='Themes' size='small' headerBg={lightBg} >
                     <div style={{ marginLeft: 10}}>
                         <div style={{ fontSize: 16, fontWeight: 500, marginBottom: 10, marginTop: 15 }}>
                             <span style={{ color: theme.available[theme.active][0] }}>◈</span>  Color
@@ -78,7 +87,7 @@ const SystemPage = () => {
                         <div>
                             <Flex gap="middle"
                                 style={{ 
-                                    backgroundColor: theme.available[theme.active][0]+"08",
+                                    backgroundColor: lightBg,
                                     fontSize: '13px',
                                     padding: 12,
                                     borderRadius: 10,
