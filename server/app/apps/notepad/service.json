@@ -1,0 +1,12 @@
+{
+    "type": "run-once",
+    "readonly": true,
+    "dir": "app/apps/coderun-lite",
+
+    "actions": {
+        "create": "",
+        "read": "",
+        "update": "",
+        "delete": ""
+    }
+}
