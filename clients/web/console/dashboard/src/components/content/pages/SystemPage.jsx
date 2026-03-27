@@ -57,7 +57,6 @@ const SystemPage = () => {
     ]
 
     const cardStyle={
-        margin: '21px',
         width: '65%'
     }
 
@@ -68,7 +67,9 @@ const SystemPage = () => {
                 display: 'flex', 
                 justifyContent: 'center', 
                 alignContent: 'center' , 
-                overflow: 'scroll' 
+                overflow: 'scroll', 
+                margin: '21px',
+                gap: '21px'
         }}>
             <Card style={cardStyle} bodyPadding='15' headerPadding='15' type='inner' title='rHost Software' size='small' >
                 <Descriptions bordered title="System Info" items={systemData} size='small' />
