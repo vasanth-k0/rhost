@@ -40,7 +40,7 @@ const ShowContent = ({content, tools='show', colorPalette, context}) => {
                       setService(await res.json());
                   })();
           }
-      });
+      },[]);
 
       const {showContentList, setShowContentList, setActiveContent} = useContext(MenuItemContext);
       const [onHover, setOnHover] = useState({
