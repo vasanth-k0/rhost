@@ -25,7 +25,9 @@ appRouter.route('/publish')
 
 appRouter.route('/config')
     .get((req, res)=>{
-        res.json(new AppRunner(req.params.endpoint).getConfig());
+        let relativePath = `${path.join("app/apps/", req.params.endpoint)}`;
+        let serviceFile = `${process.cwd()}/${relativePath}/service.json`;
+        res.sendFile(serviceFile)
     });
 
 appRouter.route('/about')
