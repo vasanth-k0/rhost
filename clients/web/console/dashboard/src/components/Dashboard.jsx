@@ -184,7 +184,7 @@ if (Apps.length!=0) {
 
   const logStyle = { 
                                 cursor: 'pointer',
-                                backgroundColor: CustomColorLite + '0f',
+                                backgroundColor: CustomColorLite + '08',
                                 height: '27px',
                                 padding: '6px 12px',
                                 display: 'flex',
@@ -319,7 +319,7 @@ if (Apps.length!=0) {
           selectedKeys,
           setSelectedKeys
           }}>             
-              <Layout style={{ display: 'block', height: '100%', width: '100%', background: 'linear-gradient(to top, ' + CustomColor + '10, ' + CustomColor + '15' + ')' }} >
+              <Layout style={{ display: 'block', height: '100%', width: '100%', background: 'linear-gradient(to top, ' + CustomColor + '05, ' + CustomColor + '08' + ')' }} >
                 <Header style={{ padding: 0, background: colorBgContainer, height: '3.5rem' }} >
                     <div style={ headerStyle }>
                         
