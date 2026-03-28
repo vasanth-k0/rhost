@@ -9,13 +9,13 @@
     "contactAdmin": "vasanth.k08@gmail.com",
     "ui": "desktop",
     "defaultApp": "coderun-lite",
-    "wallp": "1",
+    "wallp": "3",
     "env": {
-        "type": "dev"
+        "type": "prod"
     },
     "theme": {
         "default": "Geekblue",
-        "active": "Grey • Brown",
+        "active": "Geekblue",
         "available": {
             "Geekblue": [
                 4,

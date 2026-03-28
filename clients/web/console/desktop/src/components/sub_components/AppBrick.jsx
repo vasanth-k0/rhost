@@ -37,7 +37,7 @@ const AppBrick = ({colorPalette, Icon, app, appName}) => {
 
     const itemStyle = {
         color: (isAppHovered? colorPalette.CustomColor:colorPalette.CustomColorLite),
-        borderColor: (isAppHovered? colorPalette.CustomColor+'33':'white'),
+        borderColor: (isAppHovered? '#ffffff25' : colorPalette.CustomColor+'25'),
     }
     return <div 
                                 align="start" 
@@ -53,7 +53,7 @@ const AppBrick = ({colorPalette, Icon, app, appName}) => {
                                     borderRadius: 5,
                                     padding: '10px 7px',
                                     fontSize: '12px',
-                                    background: '#ffffff75',
+                                    background: '#ffffff60',
                                     backdropFilter: 'blur(10px)',
                                     width: '5.5rem',
                                     ...itemStyle}} 

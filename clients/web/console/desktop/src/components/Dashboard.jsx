@@ -195,7 +195,7 @@ if (Apps.length!=0) {
 
   const consoleLogin = (login && gotoConsole) || gotoConsole;
   const Dash = <>
-                            <div style={{ borderRadius: '7px' , height: '100%', display: 'flex' , overflow: 'hidden', backgroundColor: 'transparent' }}>
+                            <div style={{ height: '100%', display: 'flex' , overflow: 'hidden', backgroundColor: 'transparent' }}>
                             <Sider 
                                   trigger={null}
                                   collapsible
@@ -206,7 +206,6 @@ if (Apps.length!=0) {
                                   style={{ 
                                             height: '100%', 
                                             margin: 'auto', 
-                                            borderRadius: '8px', 
                                             overflow: 'hidden' 
                                           }}
                                   >
@@ -279,8 +278,8 @@ if (Apps.length!=0) {
 
   const contentStyle = {
     width: consoleLogin ? 'auto':'100%', 
-    height: ( login ? '84' : '88' ) + '.5vh', 
-    padding: '5px'
+    height: ( login ? '84' : '90' ) + '.5vh', 
+    padding: '0'
   }
 
   return (
@@ -372,7 +371,6 @@ if (Apps.length!=0) {
                               boxShadow: '0 5px 10px rgba(0, 0, 0, 0.2)', 
                               padding: 0,
                               margin: '14px',
-                              border: 'solid 1px #a7a7a7',
                               borderRadius: '8px',
                               backgroundImage: `url(${wallp})`,
                               backgroundSize: 'cover'
@@ -387,12 +385,13 @@ if (Apps.length!=0) {
 
                     {
                       (consoleLogin) && <>
-                        <Content style={{ width: '75%', height: ( login ? '84' : '90' ) + '.5vh', padding: '5px 5px 5px 0px' }} >
-                          <div style={{ borderRadius: '7px' , height: '100%', display: 'flex' , overflow: 'hidden'}}>
+                        <Content style={{ width: '75%', height: ( login ? '84' : '90' ) + '.5vh' }} >
+                          <div style={{ height: '100%', display: 'flex' , overflow: 'hidden'}}>
                               <ContentList context='pages' activeContent={activeContent} colorPalette={{CustomColor, CustomColorLite}} />
                           </div>
                       </Content>
-                      <div style={{padding: '10px', width: '25%', height: ( login ? '84' : '90' ) + '.5vh', alignContent: 'flex-start', textAlign: 'left' }}>
+                      <div style={{padding: '10px', width: '25%', height: ( login ? '84' : '90' ) + '.5vh', alignContent: 'flex-start', textAlign: 'left', background: '#ffffff60',
+                                    backdropFilter: 'blur(10px)' }}>
                               <Button
                                     type="text"
                                     icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
