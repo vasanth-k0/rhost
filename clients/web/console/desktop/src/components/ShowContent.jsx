@@ -175,7 +175,7 @@ const ShowContent = ({content, tools='show', colorPalette, context}) => {
                   ];
 
               ContentComponent = <div style={{ display: 'block', overflow: 'scroll', fontSize: '13px' , height: '92.5%'}}>
-                    <iframe src={`/${content}/about`} style={{...iframeStyle, height: '75%'}}></iframe>
+                    <iframe src={`/${content}/about`} style={{...iframeStyle, height: '75%', backgroundColor: "transparent"}}></iframe>
                     <Collapse size='small' ghost items={items} onChange={onChange} />
               </div>
           }
@@ -189,7 +189,7 @@ const ShowContent = ({content, tools='show', colorPalette, context}) => {
           <Flex 
               style={{
                 height: '100%',
-                background: 'white',
+                background: 'transparent',
                 borderRadius: borderRadiusLG,
               }}
             >

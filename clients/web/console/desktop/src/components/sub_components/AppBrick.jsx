@@ -37,7 +37,7 @@ const AppBrick = ({colorPalette, Icon, app, appName}) => {
 
     const itemStyle = {
         color: (isAppHovered? colorPalette.CustomColor:colorPalette.CustomColorLite),
-        borderColor: (isAppHovered? colorPalette.CustomColor+'33':'transparent'),
+        borderColor: (isAppHovered? colorPalette.CustomColor+'33':'white'),
     }
     return <div 
                                 align="start" 
@@ -46,13 +46,16 @@ const AppBrick = ({colorPalette, Icon, app, appName}) => {
                                     display: 'flex',
                                     flexDirection: 'column',
                                     alignItems: 'center',
-                                    gap: '8px',
+                                    gap: '5px',
                                     cursor: 'pointer', 
-                                    margin: '7px', 
-                                    border: 'solid 1px transparent',
+                                    margin: '0', 
+                                    border: 'solid 1px white',
                                     borderRadius: 5,
                                     padding: '10px 7px',
                                     fontSize: '12px',
+                                    background: '#ffffff75',
+                                    backdropFilter: 'blur(10px)',
+                                    width: '5.5rem',
                                     ...itemStyle}} 
                                     onClick={openApp}
                                     onMouseEnter={ () => { setAppHovered(true) }} 

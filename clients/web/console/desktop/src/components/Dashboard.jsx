@@ -195,7 +195,7 @@ if (Apps.length!=0) {
 
   const consoleLogin = (login && gotoConsole) || gotoConsole;
   const Dash = <>
-                            <div style={{ borderRadius: '7px' , height: '100%', display: 'flex' , overflow: 'hidden', backgroundColor: 'white' }}>
+                            <div style={{ borderRadius: '7px' , height: '100%', display: 'flex' , overflow: 'hidden', backgroundColor: 'transparent' }}>
                             <Sider 
                                   trigger={null}
                                   collapsible
@@ -203,6 +203,12 @@ if (Apps.length!=0) {
                                   onCollapse={value => setCollapsed(value)}
                                   width={'170px'}
                                   collapsedWidth={'3.8rem'}
+                                  style={{ 
+                                            height: '100%', 
+                                            margin: 'auto', 
+                                            borderRadius: '8px', 
+                                            overflow: 'hidden' 
+                                          }}
                                   >
                                   <div className="demo-logo-vertical" />
                                   <Menu 
@@ -214,35 +220,18 @@ if (Apps.length!=0) {
                                       items={menuItems} 
                                   />
                             </Sider>
-                            <div style={{padding: '10px', width: '100%', height: '100%', alignContent: 'flex-start', textAlign: 'left' }}>
-                              <Button
-                                    type="text"
-                                    icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-                                    onClick={() => setCollapsed(!collapsed)}
-                                    style={{
-                                    fontSize: '19px',
-                                    width: 17,
-                                    height: 17,
-                                    outline: 'none',
-                                    color: antColour['grey'][6],
-                                    marginRight: 7, 
-                                    marginTop: 3
-                                    }}
-                                />
-                                  <span style={{ fontWeight: '500', padding: '0 7px', float: 'right' }}>
-                                      { showContentList['default'][activeContent] 
-                                            ? showContentList['default'][activeContent] 
-                                            : showContentList['user'][activeContent] }
-                                  </span>
-                                  <Divider style={{ margin: '10px 0px' }} />
-                                  <ContentList context={consoleLogin ? 'controls':'pages'} activeContent={activeContent} colorPalette={{CustomColor, CustomColorLite}} />
-                              </div>
+                            
                       </div>
   </>
   
   const [ siteApp, setSiteApp ] = useState(settings['defaultApp']);
 
-  const Site = <div style={{ width: '100%', height: '100%', display: 'flex', gap: '0.21rem' }}>
+  const Site = <div style={{ 
+                              width: '100%', 
+                              height: '100%', 
+                              display: 'flex', 
+                              gap: '0.21rem', 
+                }}>
                             <Sider 
                                   trigger={null}
                                   collapsible
@@ -286,6 +275,14 @@ if (Apps.length!=0) {
 
   }
 
+  const wallp = '/resources/vx-' + settings.wallp + '.webp';
+
+  const contentStyle = {
+    width: consoleLogin ? 'auto':'100%', 
+    height: ( login ? '84' : '88' ) + '.5vh', 
+    padding: '5px'
+  }
+
   return (
     <ConfigProvider
     theme={{
@@ -318,12 +315,17 @@ if (Apps.length!=0) {
           setActiveContent,
           selectedKeys,
           setSelectedKeys
-          }}>             
-              <Layout style={{ display: 'block', height: '100%', width: '100%', background: 'linear-gradient(to top, ' + CustomColor + '05, ' + CustomColor + '08' + ')' }} >
-                <Header style={{ padding: 0, background: colorBgContainer, height: '3.5rem' }} >
+          }}>     
+              <Layout style={{ 
+                  display: 'block', 
+                  height: '100%', 
+                  width: '100%', 
+                  backgroundColor: 'white'
+                  }} 
+              >
+                <Header style={{ padding: 0, background: consoleLogin ? 'transparent':'#ffffff10', backdropFilter: 'blur(21px)', height: '40px' }} >
                     <div style={ headerStyle }>
-                        
-                        <Space size="large" style={{ marginRight: 'auto' }}>
+                        <Space size="large" style={{ marginRight: 'auto', height: '40px' }}>
                                 <span style={{ marginLeft: 10, fontWeight:500, fontSize: '19px', color: antColour['grey'][6] }} >
                                    { consoleLogin
                                         ? <>{settings['name']}  <small style={{marginLeft: '15px'}}>rHost <span style={{ fontSize: '14px' }}> Console </span></small></> 
@@ -344,7 +346,7 @@ if (Apps.length!=0) {
                                 }
                                 
                         </Space>
-                        <Space>
+                        <Space style={{ height: '40px' }}>
                                 <FullScreener fullscreenstyle={{ margin: '5px' }} />
                                 { login 
                                       ? <>
@@ -364,27 +366,60 @@ if (Apps.length!=0) {
                         </Space>
                     </div>    
                 </Header>
-                <div style={{ display: 'flex', width: '100%', }}>
+                <div style={{ 
+                              display: 'flex', 
+                              width: '97.5%', 
+                              boxShadow: '0 5px 10px rgba(0, 0, 0, 0.2)', 
+                              padding: 0,
+                              margin: '14px',
+                              border: 'solid 1px #a7a7a7',
+                              borderRadius: '8px',
+                              backgroundImage: `url(${wallp})`,
+                              backgroundSize: 'cover'
+                }}>
                  
-                    <Content style={{ display: (consoleLogin ? 'block' : 'none' ), width: consoleLogin ? '25%':'100%' , height: ( login ? '84' : '90' ) + '.5vh', padding: '5px'}} >
+                    <Content style={{ display: (consoleLogin ? 'block' : 'none' ), ...contentStyle }} >
                          { Dash }
                     </Content>
-                    <Content style={{ display: (consoleLogin ? 'none' : 'block' ), width: consoleLogin ? '25%':'100%' , height: ( login ? '84' : '90' ) + '.5vh', padding: '5px'}} >
+                    <Content style={{ display: (consoleLogin ? 'none' : 'block' ), ...contentStyle }} >
                          { Site }
                     </Content>
 
                     {
-                      (consoleLogin) && 
-                        <Content style={{ width: '75%', height: ( login ? '84' : '90' ) + '.5vh', padding: '5px 5px 5px 0px'}} >
+                      (consoleLogin) && <>
+                        <Content style={{ width: '75%', height: ( login ? '84' : '90' ) + '.5vh', padding: '5px 5px 5px 0px' }} >
                           <div style={{ borderRadius: '7px' , height: '100%', display: 'flex' , overflow: 'hidden'}}>
                               <ContentList context='pages' activeContent={activeContent} colorPalette={{CustomColor, CustomColorLite}} />
                           </div>
                       </Content>
+                      <div style={{padding: '10px', width: '25%', height: ( login ? '84' : '90' ) + '.5vh', alignContent: 'flex-start', textAlign: 'left' }}>
+                              <Button
+                                    type="text"
+                                    icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+                                    onClick={() => setCollapsed(!collapsed)}
+                                    style={{
+                                    fontSize: '19px',
+                                    width: 17,
+                                    height: 17,
+                                    outline: 'none',
+                                    color: antColour['grey'][6],
+                                    marginRight: 7, 
+                                    marginTop: 3
+                                    }}
+                                />
+                                  <span style={{ fontWeight: '500', padding: '0 7px', float: 'right' }}>
+                                      { showContentList['default'][activeContent] 
+                                            ? showContentList['default'][activeContent] 
+                                            : showContentList['user'][activeContent] }
+                                  </span>
+                                  <Divider style={{ margin: '10px 0px' }} />
+                                  <ContentList context={consoleLogin ? 'controls':'pages'} activeContent={activeContent} colorPalette={{CustomColor, CustomColorLite}} />
+                              </div></>
                     }
                     
                 </div>
                 { login 
-                      && <Footer style={{ textAlign: 'center' , padding: '8px' , backgroundColor: colorBgContainer }}>
+                      && <Footer style={{ textAlign: 'center' , padding: '8px' , backgroundColor: 'transparent' }}>
                                   rHost Console ©{new Date().getFullYear()} Created by Vasanth.K
                              </Footer>
                 }

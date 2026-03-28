@@ -11,7 +11,8 @@ const AppsPage = ({colorPalette}) => {
     const {Apps} = useContext(AppContext)
 
     return (<div style={{width: '100%', height: '100%', padding: '8px'}}>
-        <Flex align="start" style={{padding: 15, gap: 15, flexWrap: 'wrap'}}>
+        <Flex align="start" style={{padding: 15, gap: 15, flexWrap: 'wrap',flexDirection: 'column',
+  alignContent: 'flex-start' }}>
             {Object.keys(Apps).filter( app => login || Apps[app].published ).map((app) => {
                 let Icon = AntIcons[Apps[app].icon];
                 return <AppBrick colorPalette={colorPalette} Icon={Icon} app={app} appName={Apps[app].name} />
