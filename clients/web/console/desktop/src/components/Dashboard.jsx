@@ -396,7 +396,7 @@ if (Apps.length!=0) {
 
                     {
                       (consoleLogin) && <>
-                        <Content style={{ width: '75%', height: 'auto'  }} >
+                        <Content style={{ width: '90%', height: 'auto'  }} >
                           <div style={{ height: '100%', display: 'flex' , overflow: 'hidden'}}>
                               <ContentList context='pages' activeContent={activeContent} colorPalette={{CustomColor, CustomColorLite}} />
                           </div>
