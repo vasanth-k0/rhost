@@ -95,7 +95,7 @@ const SignIn = () => {
         
         <div style={{ position: 'relative', width: '100%' }}>
                 <div style={ loginFormStyle }>
-                        <Tabs tabPlacement='top'  defaultActiveKey="1" items={items} onChange={()=>{console.log('')}} />
+                        <Tabs style={{ height: '50%', padding: '21px', background: 'white' }} tabPlacement='top'  defaultActiveKey="1" items={items} onChange={()=>{console.log('')}} />
                 </div>
         </div>
         

@@ -131,8 +131,7 @@ const ShowContent = ({content, tools='show', colorPalette, context}) => {
                                               />
                                       </Tooltip>
                                       <Divider size="small" style={{ margin: '3px 0px' }} />
-                                      <FullScreener element={iframeRef} icon='true' {...commonProps('fullscreen')} />
-
+                                      { iframeRef && <FullScreener element={iframeRef} icon='true' {...commonProps('fullscreen')} /> }
                             </div>   
                   }
                   

@@ -51,18 +51,24 @@ const AppBrick = ({colorPalette, Icon, app, appName}) => {
                                     margin: '0', 
                                     border: 'solid 1px white',
                                     borderRadius: 5,
-                                    padding: '10px 7px',
+                                    padding: '19px 7px',
                                     fontSize: '12px',
                                     background: '#ffffffca',
                                     backdropFilter: 'blur(10px)',
-                                    width: '5.5rem',
+                                    width: '4.5rem',
                                     ...itemStyle}} 
                                     onClick={openApp}
                                     onMouseEnter={ () => { setAppHovered(true) }} 
                                     onMouseLeave={ () => { setAppHovered(false) }}
                                     >
                                         <Icon style={{fontSize: '17px', filter: 'brightness(0.7)'}} />
-                                        <span style={{color: 'rgb(50, 50, 50)'}}>{appName}</span>
+                                        <span style={{
+                                                                color: 'rgb(50, 50, 50)', 
+                                                                height: '1rem', 
+                                                                overflow: 'hidden', 
+                                                                textOverflow: 'ellipsis',
+                                                                whiteSpace: 'nowrap' 
+                                            }}>{appName}</span>
         </div>
 }
 

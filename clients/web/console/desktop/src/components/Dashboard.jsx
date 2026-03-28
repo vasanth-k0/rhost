@@ -59,6 +59,8 @@ adminMenuItems[2] = temp;
 
 const Dashboard = () => {
 
+  const deskRef = useRef(null);
+  const [deskRefReady, setDeskRefReady] = useState(false);
   const { theme } = useContext(ThemeContext);
   const { Apps } = useContext(AppsContext);
   const [ modal, contextHolder ] = Modal.useModal();
@@ -144,6 +146,12 @@ if (Apps.length!=0) {
       localStorage.setItem('theme', JSON.stringify(theme));
 
   },[theme]);
+
+  useEffect(()=>{
+    if(deskRef.current) {
+      setDeskRefReady(true);
+    }
+  },[]);
 
     const confirm = () => {
       modal.confirm({
@@ -278,7 +286,7 @@ if (Apps.length!=0) {
 
   const contentStyle = {
     width: consoleLogin ? 'auto':'100%', 
-    height: ( login ? '84' : '90' ) + '.5vh', 
+    height: 'auto', 
     padding: '0'
   }
 
@@ -346,7 +354,7 @@ if (Apps.length!=0) {
                                 
                         </Space>
                         <Space style={{ height: '40px' }}>
-                                <FullScreener fullscreenstyle={{ margin: '5px' }} />
+                                { deskRefReady && <FullScreener element={deskRef} fullscreenstyle={{ margin: '5px' }} /> }
                                 { login 
                                       ? <>
                                               <div onClick={toggleSite} style={logStyle} >
@@ -365,16 +373,19 @@ if (Apps.length!=0) {
                         </Space>
                     </div>    
                 </Header>
-                <div style={{ 
+                <div ref={deskRef}
+                  style={{ 
                               display: 'flex', 
-                              width: '97.5%', 
+                              width: '97.5%',
+                              height: ( login ? '81%' : '89%' ),
                               boxShadow: '0 5px 10px rgba(0, 0, 0, 0.3)', 
                               padding: 0,
                               margin: '14px',
-                              borderRadius: '8px',
+                              borderRadius: '3px',
                               backgroundImage: `url(${wallp})`,
-                              backgroundSize: 'cover'
-                }}>
+                              backgroundSize: 'cover',
+                              overflow: 'hidden'
+                  }}>
                  
                     <Content style={{ display: (consoleLogin ? 'block' : 'none' ), ...contentStyle }} >
                          { Dash }
@@ -385,12 +396,12 @@ if (Apps.length!=0) {
 
                     {
                       (consoleLogin) && <>
-                        <Content style={{ width: '75%', height: ( login ? '84' : '90' ) + '.5vh' }} >
+                        <Content style={{ width: '75%', height: 'auto'  }} >
                           <div style={{ height: '100%', display: 'flex' , overflow: 'hidden'}}>
                               <ContentList context='pages' activeContent={activeContent} colorPalette={{CustomColor, CustomColorLite}} />
                           </div>
                       </Content>
-                      <div style={{padding: '10px', width: '25%', height: ( login ? '84' : '90' ) + '.5vh', alignContent: 'flex-start', textAlign: 'left', background: '#ffffffca',
+                      <div style={{padding: '10px', width: '25%', height: 'auto', alignContent: 'flex-start', textAlign: 'left', background: '#ffffffca',
                                     backdropFilter: 'blur(10px)' }}>
                               <Button
                                     type="text"
