@@ -8,8 +8,9 @@ import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   LogoutOutlined,
+  InfoCircleOutlined 
 } from '@ant-design/icons';
-import { Breadcrumb, Layout, Menu, Button, Space, ConfigProvider, Modal, Divider } from 'antd';
+import { Breadcrumb, Layout, Menu, Button, Space, ConfigProvider, Modal, Divider, notification, Tooltip } from 'antd';
 import {theme as Themer} from 'antd' ;
 import ContentList from './ContentList';
 import ThemeContext from './context/ThemeContext'
@@ -179,6 +180,7 @@ if (Apps.length!=0) {
         };
 
   const [collapsed, setCollapsed] = useState(true);
+  const [controlCollapsed, setControlCollapsed] = useState(true);
 
     const {
         token: { colorBgContainer },
@@ -188,7 +190,10 @@ if (Apps.length!=0) {
     Crumb.path[1]['title'] = key;
     Crumb.setPath([...Crumb.path])
     setActiveContent(key);
-  }
+    if (key=='System') {
+        setCollapsed(!collapsed) 
+    }
+  };
 
   const logStyle = { 
                                 cursor: 'pointer',
@@ -242,8 +247,7 @@ if (Apps.length!=0) {
                             <Sider 
                                   trigger={null}
                                   collapsible
-                                  collapsed={collapsed}
-                                  onCollapse={value => setCollapsed(value)}
+                                  collapsed={true}
                                   width={'170px'}
                                   collapsedWidth={'3.8rem'}
                                   style= {{ background: colorBgContainer }}
@@ -290,6 +294,8 @@ if (Apps.length!=0) {
     padding: '0'
   }
 
+  const deskStyle = consoleLogin ? {position: 'absolute', width: '100%', bottom: 6 } : {}
+
   return (
     <ConfigProvider
     theme={{
@@ -327,10 +333,10 @@ if (Apps.length!=0) {
                   display: 'block', 
                   height: '100%', 
                   width: '100%', 
-                  backgroundColor: 'white'
+                  backgroundColor: CustomColorLite + "08"
                   }} 
               >
-                <Header style={{ padding: 0, background: consoleLogin ? 'transparent':'#ffffffca', backdropFilter: 'blur(21px)', height: '40px' }} >
+                <Header style={{ padding: 0, background: consoleLogin ? 'transparent':'#ffffffca', height: '40px', ...deskStyle }} >
                     <div style={ headerStyle }>
                         <Space size="large" style={{ marginRight: 'auto', height: '40px' }}>
                                 <span style={{ marginLeft: 10, fontWeight:500, fontSize: '19px', color: antColour['grey'][6] }} >
@@ -357,6 +363,14 @@ if (Apps.length!=0) {
                                 { deskRefReady && <FullScreener element={deskRef} fullscreenstyle={{ margin: '5px' }} /> }
                                 { login 
                                       ? <>
+                                              <Tooltip  title={"rHost © " + new Date().getFullYear() + " Created by Vasanth.K"} placement="right" >
+                                                      <InfoCircleOutlined onClick={ ()=>{  notification.info({
+                                                          message: 'rHost',
+                                                          description: `Cloudpc.in is powered by rHost web operating system. Designed, developed and managed by Vasanth.K`,
+                                                          placement: 'bottomRight',
+                                                          duration: 3, 
+                                                      });} }/>
+                                              </Tooltip>
                                               <div onClick={toggleSite} style={logStyle} >
                                                     <span>{ gotoConsole ? 'Home •' : 'Console •'  }</span>
                                               </div>
@@ -377,8 +391,8 @@ if (Apps.length!=0) {
                   style={{ 
                               display: 'flex', 
                               width: '97.5%',
-                              height: ( login ? '81%' : '89%' ),
-                              boxShadow: '0 5px 10px rgba(0, 0, 0, 0.3)', 
+                              height: '88%' ,
+                              boxShadow: '0 5px 10px rgba(0, 0, 0, 0.3)'  , 
                               padding: 0,
                               margin: '14px',
                               borderRadius: '3px',
@@ -396,43 +410,48 @@ if (Apps.length!=0) {
 
                     {
                       (consoleLogin) && <>
-                        <Content style={{ width: '90%', height: 'auto'  }} >
+                        <Content style={{ width: '100%', height: 'auto'  }} >
                           <div style={{ height: '100%', display: 'flex' , overflow: 'hidden'}}>
                               <ContentList context='pages' activeContent={activeContent} colorPalette={{CustomColor, CustomColorLite}} />
                           </div>
                       </Content>
-                      <div style={{padding: '10px', width: '25%', height: 'auto', alignContent: 'flex-start', textAlign: 'left', background: '#ffffffca',
-                                    backdropFilter: 'blur(10px)' }}>
+                      <div style={{
+                                            padding: '10px', 
+                                            width: controlCollapsed ? '2.5rem' : '35%', 
+                                            height: 'auto', 
+                                            alignContent: 'flex-start', 
+                                            textAlign: 'left', 
+                                            background: '#ffffffca',
+                                            backdropFilter: 'blur(10px)' 
+                          }}>
                               <Button
                                     type="text"
-                                    icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-                                    onClick={() => setCollapsed(!collapsed)}
+                                    icon={controlCollapsed ? <MenuFoldOutlined /> : <MenuUnfoldOutlined />}
+                                    onClick={() => setControlCollapsed(!controlCollapsed)}
                                     style={{
                                     fontSize: '19px',
                                     width: 17,
                                     height: 17,
                                     outline: 'none',
                                     color: antColour['grey'][6],
-                                    marginRight: 7, 
-                                    marginTop: 3
+                                    margin: 3,
+                                    float: 'right'
                                     }}
                                 />
-                                  <span style={{ fontWeight: '500', padding: '0 7px', float: 'right' }}>
+                                  <span style={{ fontWeight: '500', padding: '0 7px', display: controlCollapsed ? 'none':'block' }}>
                                       { showContentList['default'][activeContent] 
                                             ? showContentList['default'][activeContent] 
                                             : showContentList['user'][activeContent] }
                                   </span>
                                   <Divider style={{ margin: '10px 0px' }} />
-                                  <ContentList context={consoleLogin ? 'controls':'pages'} activeContent={activeContent} colorPalette={{CustomColor, CustomColorLite}} />
+                                  <div style={{ display : controlCollapsed ? 'none':'block' }} >
+                                        <ContentList context={consoleLogin ? 'controls':'pages'} activeContent={activeContent} colorPalette={{CustomColor, CustomColorLite}} />
+                                  </div>
+                                  
                               </div></>
                     }
                     
                 </div>
-                { login 
-                      && <Footer style={{ textAlign: 'center' , padding: '8px' , backgroundColor: 'transparent' }}>
-                                  rHost Console ©{new Date().getFullYear()} Created by Vasanth.K
-                             </Footer>
-                }
            </Layout>
       {contextHolder}  
     </MenuItemContext.Provider>
