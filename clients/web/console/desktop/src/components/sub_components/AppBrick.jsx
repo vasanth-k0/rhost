@@ -65,6 +65,7 @@ const AppBrick = ({colorPalette, Icon, app, appName}) => {
                                         <span style={{
                                                                 color: 'rgb(50, 50, 50)', 
                                                                 height: '1rem', 
+                                                                width: '3rem',
                                                                 overflow: 'hidden', 
                                                                 textOverflow: 'ellipsis',
                                                                 whiteSpace: 'nowrap' 
