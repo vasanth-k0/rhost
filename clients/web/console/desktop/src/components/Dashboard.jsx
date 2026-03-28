@@ -360,7 +360,7 @@ if (Apps.length!=0) {
                                 
                         </Space>
                         <Space style={{ height: '40px' }}>
-                                { deskRefReady && <FullScreener element={deskRef} fullscreenstyle={{ margin: '5px' }} /> }
+                                { deskRefReady && <FullScreener fullscreenstyle={{ margin: '5px' }} /> }
                                 { login 
                                       ? <>
                                               <Tooltip  title={"rHost © " + new Date().getFullYear() + " Created by Vasanth.K"} placement="right" >
