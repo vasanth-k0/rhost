@@ -53,7 +53,7 @@ const AppBrick = ({colorPalette, Icon, app, appName}) => {
                                     borderRadius: 5,
                                     padding: '10px 7px',
                                     fontSize: '12px',
-                                    background: '#ffffff60',
+                                    background: '#ffffffca',
                                     backdropFilter: 'blur(10px)',
                                     width: '5.5rem',
                                     ...itemStyle}} 

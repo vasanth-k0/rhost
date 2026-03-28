@@ -322,7 +322,7 @@ if (Apps.length!=0) {
                   backgroundColor: 'white'
                   }} 
               >
-                <Header style={{ padding: 0, background: consoleLogin ? 'transparent':'#ffffff10', backdropFilter: 'blur(21px)', height: '40px' }} >
+                <Header style={{ padding: 0, background: consoleLogin ? 'transparent':'#ffffffca', backdropFilter: 'blur(21px)', height: '40px' }} >
                     <div style={ headerStyle }>
                         <Space size="large" style={{ marginRight: 'auto', height: '40px' }}>
                                 <span style={{ marginLeft: 10, fontWeight:500, fontSize: '19px', color: antColour['grey'][6] }} >
@@ -368,7 +368,7 @@ if (Apps.length!=0) {
                 <div style={{ 
                               display: 'flex', 
                               width: '97.5%', 
-                              boxShadow: '0 5px 10px rgba(0, 0, 0, 0.2)', 
+                              boxShadow: '0 5px 10px rgba(0, 0, 0, 0.3)', 
                               padding: 0,
                               margin: '14px',
                               borderRadius: '8px',
@@ -390,7 +390,7 @@ if (Apps.length!=0) {
                               <ContentList context='pages' activeContent={activeContent} colorPalette={{CustomColor, CustomColorLite}} />
                           </div>
                       </Content>
-                      <div style={{padding: '10px', width: '25%', height: ( login ? '84' : '90' ) + '.5vh', alignContent: 'flex-start', textAlign: 'left', background: '#ffffff60',
+                      <div style={{padding: '10px', width: '25%', height: ( login ? '84' : '90' ) + '.5vh', alignContent: 'flex-start', textAlign: 'left', background: '#ffffffca',
                                     backdropFilter: 'blur(10px)' }}>
                               <Button
                                     type="text"
