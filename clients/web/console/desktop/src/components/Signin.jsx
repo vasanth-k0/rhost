@@ -101,7 +101,7 @@ const SignIn = () => {
                                                 padding: '3rem', 
                                                 borderRadius: '5px', 
                                                 backgroundColor: '#ffffffca',
-                                                backdropFilter: 'blur(10px)',
+                                                backdropFilter: 'blur(7px)',
                                                 alignItems: 'center'
                                              }} 
                                     tabPlacement='top'  

@@ -44,7 +44,7 @@ const FilesPage = ({colorPalette}) => {
 
     return (
         <>
-            <Flex vertical gap="middle" style={{ width: '100%'}}>
+            <Flex vertical gap="middle" style={{ width: '100%', background: '#ffffffca', backdropFilter: 'blur(7px)'  }}>
                 <Splitter
                     onResize={setSizes}
                     style={{ height: '82.5vh', }}

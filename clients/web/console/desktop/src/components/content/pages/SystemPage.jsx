@@ -62,7 +62,9 @@ const SystemPage = () => {
 
     const cardStyle={
         width: '50%',
-        borderColor: lightBg
+        borderColor: lightBg,
+        background: '#ffffffca',
+        backdropFilter: 'blur(7px)',
     }
 
     return (

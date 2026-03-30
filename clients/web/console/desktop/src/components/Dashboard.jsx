@@ -422,7 +422,7 @@ if (Apps.length!=0) {
                                             alignContent: 'flex-start', 
                                             textAlign: 'left', 
                                             background: '#ffffffca',
-                                            backdropFilter: 'blur(10px)' 
+                                            backdropFilter: 'blur(7px)' 
                           }}>
                               <Button
                                     type="text"
