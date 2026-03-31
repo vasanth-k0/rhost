@@ -41,7 +41,7 @@ const SignIn = () => {
                             name="basic"
                             labelCol={{ span: 8 }}
                             wrapperCol={{ span: 16 }}
-                            style={{ minWidth: 320, alignItems: 'center', margin: '15px'  }}
+                            style={{ minWidth: 320, alignItems: 'center', margin: '15px' }}
                             onFinish={onFinish}
                             onFinishFailed={onFinishFailed}
                             autoComplete="off"

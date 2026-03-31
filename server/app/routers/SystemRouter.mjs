@@ -4,6 +4,8 @@ import Entrypoint from '../helpers/Entrypoint.mjs';
 import fs from 'node:fs';
 import { User } from '../db/models/user.mjs';
 import bcrypt from 'bcrypt';
+import { exec } from 'child_process';
+import axios from 'axios';
 
 const SystemRouter = Router();
 
@@ -78,11 +80,35 @@ SystemRouter.route('/theme')
     });
 
     SystemRouter.route('/settings')
-    .get((req, res)=>{
-        let result = { ...Entrypoint.settings };
-        delete result.theme;
-        res.json(result);
-    });
+        .get((req, res)=>{
+            let result = { ...Entrypoint.settings };
+            delete result.theme;
+            res.json(result);
+        });
+
+    SystemRouter.route('/update')
+        .get(( req, res )=>{
+            res.sendStatus(200);
+            axios.get(`https://api.github.com/repos/${Entrypoint.settings.rhost.github_repo}/releases/latest`)
+                    .then((outp) => {
+                        if (outp.status == 200) {
+                            let release = outp.data;
+                            console.log(release);
+                            console.log(Entrypoint.settings.rhost.last_update);
+                            if (new Date(release.published_at) > new Date(Entrypoint.settings.rhost.last_update)) {
+                                console.log(process.cwd());
+                                res.sendStatus(200);
+                                exec('nohup bash -c "git restore . && git pull && sudo pm2 restart rhost" > /dev/null 2>&1 &', (error, stdout, stderr) => {
+                                    if (error) {
+                                        res.sendStatus(400);
+                                    }
+                                    res.sendStatus(200);
+                                });
+                            }
+                        }
+                        
+                    });
+        });
 
     /**
      * @swagger

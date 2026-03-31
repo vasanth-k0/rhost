@@ -5,7 +5,7 @@ import MenuItemContext from './context/MenuItemContext';
 
 const SignIn = () => {
 
-        const [url, setUrl] = useState('/system/login');
+    const [url, setUrl] = useState('/system/login');
     const {setLoginStatus} = useContext(UserContext);
     const {setActiveContent} = useContext(MenuItemContext)
 
@@ -41,7 +41,7 @@ const SignIn = () => {
                             name="basic"
                             labelCol={{ span: 8 }}
                             wrapperCol={{ span: 16 }}
-                            style={{ minWidth: 320, marginTop: '25px' }}
+                            style={{ minWidth: 320, alignItems: 'center', margin: '15px' }}
                             onFinish={onFinish}
                             onFinishFailed={onFinishFailed}
                             autoComplete="off"
@@ -75,7 +75,7 @@ const SignIn = () => {
             height: '100%',
             display: 'flex',
             justifyContent: 'center',
-            marginTop: '25px',
+            marginTop: '6rem',
             minWidth: '400px'
         }
 
@@ -95,7 +95,14 @@ const SignIn = () => {
         
         <div style={{ position: 'relative', width: '100%' }}>
                 <div style={ loginFormStyle }>
-                        <Tabs tabPlacement='top'  defaultActiveKey="1" items={items} onChange={()=>{console.log('')}} />
+                        <Tabs style={{ 
+                                                height: '56%', 
+                                                width : '30rem',
+                                                padding: '3rem', 
+                                                borderRadius: '5px', 
+                                                alignItems: 'center'
+                                            }} 
+                        tabPlacement='top'  defaultActiveKey="1" items={items} onChange={()=>{console.log('')}} />
                 </div>
         </div>
         
