@@ -103,7 +103,7 @@ SystemRouter.route('/theme')
                                         return;
                                     }
                                     exec(`git tag -l | grep ${new_release} | wc -l`, (err1, stdout1, stderr1)=>{
-                                        if (stdout=='1') {
+                                        if (parseInt(stdout)==1) {
                                             console.log("New release available locally");
                                             exec(`nohup bash -c "npm install --prefix ./server/ && git checkout ${new_release} && sudo pm2 restart rhost" > /dev/null 2>&1 &`, (err3, stdout3, stderr3) => {
                                                 if (err3) {
