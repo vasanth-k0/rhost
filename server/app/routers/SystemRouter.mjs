@@ -102,7 +102,7 @@ SystemRouter.route('/theme')
                                         return;
                                     }
                                     exec(`git tag -l | grep ${new_release} | wc -l`, (err1, stdout1, stderr1)=>{
-                                        console.log(stdout1);
+                                        stdout1.trim();
                                         if (err1) {
                                             res.status(500).json({ message: 'New release not available locally', error: stderr1 });
                                             return;
