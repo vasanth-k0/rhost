@@ -115,7 +115,8 @@ SystemRouter.route('/theme')
                                                 return;
                                             });
                                         } else {
-                                            console.log("New release not available locally");
+                                            res.status(500).json({ message: 'New release not available locally' });
+                                            return;
                                         }
                                     });
                                 });   
