@@ -96,7 +96,7 @@ SystemRouter.route('/theme')
                             let this_release = parseFloat(Entrypoint.settings.rhost.release);
                             if (new Date(release.published_at) > new Date(Entrypoint.settings.rhost.last_update)
                                     && new_release > this_release ) {
-                                exec("git stash && git restore . && git pull",(err, stdout, stderr)=>{
+                                exec("git stash && git restore . && git pull origin main",(err, stdout, stderr)=>{
                                     if (err) {
                                         res.status(500).json({ message: 'Unable to pull updates', error: err });
                                         console.log(stderr);
