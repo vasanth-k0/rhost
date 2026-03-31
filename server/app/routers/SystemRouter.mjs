@@ -98,7 +98,7 @@ SystemRouter.route('/theme')
                             if (new Date(release.published_at) > new Date(Entrypoint.settings.rhost.last_update)) {
                                 console.log(process.cwd());
                                 res.sendStatus(200);
-                                exec('nohup bash -c "git restore . && git pull && sudo pm2 restart rhost" > /dev/null 2>&1 &', (error, stdout, stderr) => {
+                                exec('nohup bash -c "git restore . && git pull && sudo npm install && sudo pm2 restart rhost" > /dev/null 2>&1 &', (error, stdout, stderr) => {
                                     if (error) {
                                         res.sendStatus(400);
                                     }
