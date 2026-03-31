@@ -88,22 +88,36 @@ SystemRouter.route('/theme')
 
     SystemRouter.route('/update')
         .get(( req, res )=>{
-            res.sendStatus(200);
             axios.get(`https://api.github.com/repos/${Entrypoint.settings.rhost.github_repo}/releases/latest`)
                     .then((outp) => {
                         if (outp.status == 200) {
                             let release = outp.data;
-                            console.log(release);
-                            console.log(Entrypoint.settings.rhost.last_update);
-                            if (new Date(release.published_at) > new Date(Entrypoint.settings.rhost.last_update)) {
-                                console.log(process.cwd());
+                            let new_release = parseFloat(release.tag_name);
+                            let this_release = parseFloat(Entrypoint.settings.rhost.release);
+                            if (new Date(release.published_at) > new Date(Entrypoint.settings.rhost.last_update)
+                                    && new_release > this_release ) {
                                 res.sendStatus(200);
-                                exec('nohup bash -c "git restore . && git pull && sudo npm install && sudo pm2 restart rhost" > /dev/null 2>&1 &', (error, stdout, stderr) => {
-                                    if (error) {
+                                exec("git restore . && git pull",(err, stdout)=>{
+                                    if (err) {
                                         res.sendStatus(400);
                                     }
-                                    res.sendStatus(200);
+                                    exec(`git tag -l | grep ${new_release} | wc -l`, (err, stdout)=>{
+                                        console.log(stdout);
+                                        if (stdout=='1') {
+                                            res.sendStatus(200);
+                                            exec('nohup bash -c "npm install --prefix ./server/ && sudo pm2 restart rhost" > /dev/null 2>&1 &', (error, stdout, stderr) => {
+                                                if (error) {
+                                                    res.sendStatus(400);
+                                                }
+                                                res.sendStatus(200);
+                                            });
+                                        }
+                                    });
                                 });
+
+                                 exec('git tag -l | grep 1.1 | wc -l', (err, stdout)=>{console.log(stdout)});
+   
+
                             }
                         }
                         

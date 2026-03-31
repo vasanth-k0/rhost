@@ -53,7 +53,8 @@ const SystemPage = () => {
         {
             label: '' ,
             span: 2,
-            children: (new Date(release.published_at) > new Date(settings.rhost.last_update)) 
+            children: ( new Date(release.published_at) > new Date(settings.rhost.last_update)
+                                &&  parseFloat(release.tag_name) > parseFloat(settings.rhost.release) ) 
                             ? <Badge status="processing" text="Update available" /> 
                             : <Badge status="success" text='Running on latest version' />,
             labelStyle: {display: 'none', ...lightBgStyle }
