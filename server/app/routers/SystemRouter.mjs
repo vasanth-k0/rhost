@@ -108,7 +108,7 @@ SystemRouter.route('/theme')
                                         }
                                         if (parseInt(stdout1.trim())==1) {
                                             console.log("New release available locally");
-                                            exec(`nohup bash -c "npm install --prefix ./server/ && sudo git checkout ${new_release} && sudo pm2 restart rhost" > /dev/null 2>&1 &`, (err3, stdout3, stderr3) => {
+                                            exec(`npm install --prefix ./server/ && sudo git checkout ${new_release} && sudo pm2 restart rhost`, (err3, stdout3, stderr3) => {
                                                 if (err3) {
                                                     res.status(500).json({ message: 'Unable to switch to new version', error: stderr3 });
                                                     return;
