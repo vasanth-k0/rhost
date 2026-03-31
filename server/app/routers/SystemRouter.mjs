@@ -96,27 +96,23 @@ SystemRouter.route('/theme')
                             let this_release = parseFloat(Entrypoint.settings.rhost.release);
                             if (new Date(release.published_at) > new Date(Entrypoint.settings.rhost.last_update)
                                     && new_release > this_release ) {
-                                res.sendStatus(200);
                                 exec("git restore . && git pull",(err, stdout)=>{
                                     if (err) {
-                                        res.sendStatus(400);
+                                        res.status(500).json({ message: 'Unable to pull updates' });
+                                        return;
                                     }
                                     exec(`git tag -l | grep ${new_release} | wc -l`, (err, stdout)=>{
-                                        console.log(stdout);
                                         if (stdout=='1') {
-                                            res.sendStatus(200);
-                                            exec('nohup bash -c "npm install --prefix ./server/ && sudo pm2 restart rhost" > /dev/null 2>&1 &', (error, stdout, stderr) => {
+                                            console.log('new tag available');
+                                            exec(`nohup bash -c "npm install --prefix ./server/ && git checkout ${new_release} && sudo pm2 restart rhost" > /dev/null 2>&1 &`, (error, stdout, stderr) => {
                                                 if (error) {
-                                                    res.sendStatus(400);
+                                                    res.status(500).json({ message: 'Unable to switch to new version' });
                                                 }
-                                                res.sendStatus(200);
+                                                res.status(200).json({ message: 'Update successful' });
                                             });
                                         }
                                     });
-                                });
-
-                                 exec('git tag -l | grep 1.1 | wc -l', (err, stdout)=>{console.log(stdout)});
-   
+                                });   
 
                             }
                         }
