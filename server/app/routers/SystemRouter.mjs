@@ -98,22 +98,20 @@ SystemRouter.route('/theme')
                                     && new_release > this_release ) {
                                 exec("git stash && git restore . && git pull origin main",(err, stdout, stderr)=>{
                                     if (err) {
-                                        res.status(500).json({ message: 'Unable to pull updates', error: err });
-                                        console.log(stderr);
+                                        res.status(500).json({ message: 'Unable to pull updates', error: stderr });
                                         return;
                                     }
                                     exec(`git tag -l | grep ${new_release} | wc -l`, (err1, stdout1, stderr1)=>{
+                                        console.log(stdout1);
                                         if (err1) {
-                                            res.status(500).json({ message: 'New release not available locally', error: err1, stdout: stdout1 });
-                                            console.log(stderr1);
+                                            res.status(500).json({ message: 'New release not available locally', error: stderr1 });
                                             return;
                                         }
                                         if (parseInt(stdout)==1) {
                                             console.log("New release available locally");
                                             exec(`nohup bash -c "npm install --prefix ./server/ && git checkout ${new_release} && sudo pm2 restart rhost" > /dev/null 2>&1 &`, (err3, stdout3, stderr3) => {
                                                 if (err3) {
-                                                    res.status(500).json({ message: 'Unable to switch to new version', error: err3 });
-                                                    console.log(stderr3);
+                                                    res.status(500).json({ message: 'Unable to switch to new version', error: stderr3 });
                                                     return;
                                                 }
                                                 res.status(200).json({ message: 'Update successful' });
