@@ -113,6 +113,8 @@ SystemRouter.route('/theme')
                                                     res.status(500).json({ message: 'Unable to switch to new version', error: stderr3 });
                                                     return;
                                                 }
+                                                Entrypoint.settings.rhost.release = new_release.toString();
+                                                fs.writeFileSync('app/console/settings.json', JSON.stringify(Entrypoint.settings, null, 4), 'utf-8');
                                                 res.status(200).json({ message: 'Update successful' });
                                                 return;
                                             });
