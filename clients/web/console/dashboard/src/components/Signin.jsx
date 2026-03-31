@@ -2,12 +2,14 @@ import { Button, Card, Form, Input, notification, Tabs } from 'antd';
 import { useState, useEffect, useContext } from 'react';
 import UserContext from './context/UserContext';
 import MenuItemContext from './context/MenuItemContext';
+import ThemeContext from './context/ThemeContext';
 
 const SignIn = () => {
 
     const [url, setUrl] = useState('/system/login');
     const {setLoginStatus} = useContext(UserContext);
     const {setActiveContent} = useContext(MenuItemContext)
+    const {theme} = useContext(ThemeContext)
 
     const onFinish = formData => {
         setUrl('/system/login?username=' + formData.username + '&password=' + formData.password);
@@ -63,7 +65,7 @@ const SignIn = () => {
                             </Form.Item>
 
                             <Form.Item label={null}>
-                            <Button type="primary" htmlType="submit">
+                            <Button type="primary" variant="filled" color={theme.available[theme.active][0]} htmlType="submit">
                                 Submit
                             </Button>
                             

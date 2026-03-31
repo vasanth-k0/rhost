@@ -57,7 +57,12 @@ const SystemPage = () => {
             span: 2,
             children: login ? ( new Date(release.published_at) > new Date(settings.rhost.last_update)
                                             &&  parseFloat(release.tag_name) > parseFloat(settings.rhost.release) ) 
-                                        ? <Badge status="processing" text={`New version rHost-${release.tag_name} available for update`} /> 
+                                        ? <>
+                                                <Badge status="processing" text={`New version rHost-${release.tag_name} available for update`} />
+                                                <Button type="primary" variant="filled" color={theme.available[theme.active][0]} onClick={()=>{console.log('update')}} >
+                                                    Update
+                                                </Button>
+                                        </> 
                                         : <Badge status="success" text='Running on latest version' />
                             : <Badge status="processing" text='Running on a previous version' />,
             labelStyle: {display: 'none', ...lightBgStyle }

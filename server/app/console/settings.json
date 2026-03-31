@@ -2,7 +2,7 @@
     "name": "Code Lab",
     "rhost": {
         "github_repo": "vasanth-k0/rhost",
-        "release": "1.0",
+        "release": "1.1",
         "last_update": "2026-03-27T09:52:52Z"
     },
     "port": 3000,
