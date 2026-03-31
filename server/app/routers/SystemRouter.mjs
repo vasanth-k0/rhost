@@ -95,7 +95,8 @@ SystemRouter.route('/theme')
                             let new_release = parseFloat(release.tag_name);
                             let this_release = parseFloat(Entrypoint.settings.rhost.release);
                             if (new Date(release.published_at) > new Date(Entrypoint.settings.rhost.last_update)
-                                    && new_release > this_release ) {
+                                    && new_release > this_release ) 
+                            {
                                 exec("git stash && git restore . && git pull origin main",(err, stdout, stderr)=>{
                                     if (err) {
                                         res.status(500).json({ message: 'Unable to pull updates', error: stderr });
@@ -124,7 +125,13 @@ SystemRouter.route('/theme')
                                         }
                                     });
                                 });   
+                            } else {
+                                res.status(200).json({ message: 'Already running on latest version' });
+                                return;
                             }
+                        } else {
+                            res.status(500).json({ message: 'Failed to get latest version details' });
+                            return;
                         }
                     });
         });
