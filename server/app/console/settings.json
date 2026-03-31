@@ -7,7 +7,7 @@
     },
     "port": 3000,
     "contactAdmin": "vasanth.k08@gmail.com",
-    "ui": "desktop",
+    "ui": "dashboard",
     "defaultApp": "coderun-lite",
     "wallp": "3",
     "env": {
