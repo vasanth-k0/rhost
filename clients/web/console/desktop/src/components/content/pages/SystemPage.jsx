@@ -37,14 +37,14 @@ const SystemPage = () => {
         })();
     },[]);
 
-    const updateSystem = ()=>{
-        this.setAttribute('load', '');
+    const updateSystem = (event)=>{
+        event.target.setAttribute('load', '');
         (async() => {
             const res = await fetch('/system/update');
             if(!res.ok) {
                 alert('error during update');
             }
-            this.removeAttribute('load');
+            event.target.removeAttribute('load');
         })();
     }
     
