@@ -135,4 +135,7 @@ server {
     return 301 https://$host$request_uri;
 
 }
+
+// copy key
+cp /home/admin/.ssh/id_ed25519 /root/.ssh/id_ed25519
 EOF
