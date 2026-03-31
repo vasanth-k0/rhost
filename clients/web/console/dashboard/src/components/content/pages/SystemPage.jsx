@@ -36,6 +36,17 @@ const SystemPage = () => {
             setRelease(await rel.json());
         })();
     },[]);
+
+    const updateSystem = ()=>{
+        this.setAttribute('load', '');
+        (async() => {
+            const res = await fetch('/system/update');
+            if(!res.ok) {
+                alert('error during update');
+            }
+            this.removeAttribute('load');
+        })();
+    }
     
     const lightBg = theme.available[theme.active][1] + "08";
     const lightBgStyle = { backgroundColor: lightBg }
@@ -72,17 +83,6 @@ const SystemPage = () => {
     const cardStyle={
         width: '50%',
         borderColor: lightBg
-    }
-
-    const updateSystem = ()=>{
-        this.setAttribute('load', '');
-        (async() => {
-            const res = await fetch('/system/update');
-            if(!res.ok) {
-                alert('error during update');
-            }
-            this.removeAttribute('load');
-        })();
     }
 
     return (
