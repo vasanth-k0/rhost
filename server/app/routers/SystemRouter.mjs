@@ -96,16 +96,18 @@ SystemRouter.route('/theme')
                             let this_release = parseFloat(Entrypoint.settings.rhost.release);
                             if (new Date(release.published_at) > new Date(Entrypoint.settings.rhost.last_update)
                                     && new_release > this_release ) {
-                                exec("git stash && git restore . && git pull",(err, stdout)=>{
+                                exec("git stash && git restore . && git pull",(err, stdout, stderr)=>{
                                     if (err) {
                                         res.status(500).json({ message: 'Unable to pull updates', error: err });
+                                        console.log(stderr);
                                         return;
                                     }
-                                    exec(`git tag -l | grep ${new_release} | wc -l`, (err, stdout)=>{
+                                    exec(`git tag -l | grep ${new_release} | wc -l`, (err1, stdout1, stderr1)=>{
                                         if (stdout=='1') {
-                                            exec(`nohup bash -c "npm install --prefix ./server/ && git checkout ${new_release} && sudo pm2 restart rhost" > /dev/null 2>&1 &`, (err1, stdout, stderr) => {
-                                                if (err1) {
-                                                    res.status(500).json({ message: 'Unable to switch to new version', error: err1 });
+                                            exec(`nohup bash -c "npm install --prefix ./server/ && git checkout ${new_release} && sudo pm2 restart rhost" > /dev/null 2>&1 &`, (err3, stdout3, stderr3) => {
+                                                if (err3) {
+                                                    res.status(500).json({ message: 'Unable to switch to new version', error: err3 });
+                                                    console.log(stderr3);
                                                     return;
                                                 }
                                                 res.status(200).json({ message: 'Update successful' });
@@ -114,10 +116,8 @@ SystemRouter.route('/theme')
                                         }
                                     });
                                 });   
-
                             }
                         }
-                        
                     });
         });
 
