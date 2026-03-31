@@ -59,7 +59,7 @@ const SystemPage = () => {
                                             &&  parseFloat(release.tag_name) > parseFloat(settings.rhost.release) ) 
                                         ? <>
                                                 <Badge status="processing" text={`New version rHost-${release.tag_name} available for update`} />
-                                                <Button type="primary" variant="filled" color={theme.available[theme.active][0]} onClick={()=>{console.log('update')}} >
+                                                <Button type="primary" variant="filled" onClick={()=>{updateSystem}} >
                                                     Update
                                                 </Button>
                                         </> 
@@ -74,6 +74,17 @@ const SystemPage = () => {
         borderColor: lightBg,
         background: '#ffffffca',
         backdropFilter: 'blur(7px)',
+    }
+
+        const updateSystem = ()=>{
+        this.setAttribute('load', '');
+        (async() => {
+            const res = await fetch('/system/update');
+            if(!res.ok) {
+                alert('error during update');
+            }
+            this.removeAttribute('load');
+        })();
     }
 
     return (
