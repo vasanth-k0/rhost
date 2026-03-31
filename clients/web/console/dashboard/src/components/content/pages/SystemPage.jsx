@@ -2,12 +2,14 @@ import { Flex, Radio, Card, Descriptions, Badge } from 'antd';
 import ThemeContext from '../../context/ThemeContext'
 import {useContext, useState, useEffect} from "react";
 import SystemContext from '../../context/SystemContext';
+import UserContext from '../../context/UserContext'
 
 const SystemPage = () => {
 
     const { theme, setTheme } = useContext(ThemeContext);
     const { settings } = useContext(SystemContext);
     const [ release , setRelease ] = useState({});
+    const { login } = useContext(UserContext);
 
     const onChange = e => {
         setTheme({...theme, active: e.target.value});
@@ -53,10 +55,11 @@ const SystemPage = () => {
         {
             label: '' ,
             span: 2,
-            children: ( new Date(release.published_at) > new Date(settings.rhost.last_update)
-                                &&  parseFloat(release.tag_name) > parseFloat(settings.rhost.release) ) 
-                            ? <Badge status="processing" text={`New version rHost-${release.tag_name} available for update`} /> 
-                            : <Badge status="success" text='Running on latest version' />,
+            children: login ? ( new Date(release.published_at) > new Date(settings.rhost.last_update)
+                                            &&  parseFloat(release.tag_name) > parseFloat(settings.rhost.release) ) 
+                                        ? <Badge status="processing" text={`New version rHost-${release.tag_name} available for update`} /> 
+                                        : <Badge status="success" text='Running on latest version' />
+                            : <Badge status="processing" text='Running on a previous version' />,
             labelStyle: {display: 'none', ...lightBgStyle }
         }
     ]
