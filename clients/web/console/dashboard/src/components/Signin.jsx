@@ -65,7 +65,7 @@ const SignIn = () => {
                             </Form.Item>
 
                             <Form.Item label={null}>
-                            <Button type="primary" variant="filled" htmlType="submit">
+                            <Button type="primary" size='small' variant="outlined" htmlType="submit">
                                 Submit
                             </Button>
                             
@@ -84,13 +84,13 @@ const SignIn = () => {
         const items = [
         {
             key: '1',
-            label: 'Social Login',
-            children: <div style={{ minWidth: 320, marginTop: '25px' }}>Social login</div>,
+            label: 'Local Login',
+            children: loginForm,
         },
         {
             key: '2',
-            label: 'Admin Login',
-            children: loginForm,
+            label: 'Social Login',
+            children: <div style={{ minWidth: 320, marginTop: '25px' }}>Social login</div>,
         },
         ];
         return (
