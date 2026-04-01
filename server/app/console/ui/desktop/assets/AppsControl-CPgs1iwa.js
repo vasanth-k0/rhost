@@ -1,1 +1,0 @@
-import{c as r,j as o}from"./index-Dd_EE5to.js";const n=()=>{const e=r.c(1);let t;return e[0]===Symbol.for("react.memo_cache_sentinel")?(t=o.jsx(o.Fragment,{children:"AppsControl"}),e[0]=t):t=e[0],t};export{n as default};

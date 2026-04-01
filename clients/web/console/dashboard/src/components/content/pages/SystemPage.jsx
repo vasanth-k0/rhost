@@ -70,7 +70,7 @@ const SystemPage = () => {
                                             &&  parseFloat(release.tag_name) > parseFloat(settings.rhost.release) ) 
                                         ? <>
                                                 <Badge status="processing" text={`New version rHost-${release.tag_name} available for update`} />
-                                                <Button type="primary" size='small' variant="outlined" onClick={updateSystem} style={{ margin: '0px 7px' }} >
+                                                <Button color="cyan" size='small' variant="filled" onClick={updateSystem} style={{ margin: '0px 7px', float: 'right' }} >
                                                     Update
                                                 </Button>
                                         </> 

@@ -63,7 +63,7 @@ const SignIn = () => {
                             </Form.Item>
 
                             <Form.Item label={null}>
-                            <Button type="primary" size='small' variant="outlined" htmlType="submit">
+                            <Button color="primary" size='small' variant="solid" htmlType="submit">
                                 Submit
                             </Button>
                             
