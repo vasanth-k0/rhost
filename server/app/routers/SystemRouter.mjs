@@ -109,12 +109,13 @@ SystemRouter.route('/theme')
                                         }
                                         if (parseInt(stdout1.trim())==1) {
                                             console.log("New release available locally");
-                                            exec(`npm install --prefix ../ && git checkout ${new_release} && sudo pm2 restart rhost`, (err3, stdout3, stderr3) => {
+                                            exec(`npm install && git checkout ${new_release} && sudo pm2 restart rhost`, (err3, stdout3, stderr3) => {
                                                 if (err3) {
                                                     res.status(500).json({ message: 'Unable to switch to new version', error: stderr3 });
                                                     return;
                                                 }
                                                 Entrypoint.settings.rhost.release = new_release.toString();
+                                                Entrypoint.settings.rhost.last_update = new Date().toISOString();
                                                 fs.writeFileSync('app/console/settings.json', JSON.stringify(Entrypoint.settings, null, 4), 'utf-8');
                                                 res.status(200).json({ message: 'Update successful' });
                                                 return;
