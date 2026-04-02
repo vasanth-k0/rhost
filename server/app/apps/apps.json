@@ -16,7 +16,7 @@
     "mongodb": {
         "name": "Mongo DB",
         "icon": "DatabaseFilled",
-        "published": false,
+        "published": true,
         "users": ["admin"]
     }
 }

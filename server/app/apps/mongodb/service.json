@@ -1,6 +1,7 @@
 {
     "type": "daemon",
     "readonly": false,
+    "autorun" : true,
     "dir": "app/apps/mongodb",
     "image": "mongo:latest",
     "ports": {
@@ -12,7 +13,13 @@
         "MONGO_INITDB_ROOT_PASSWORD" : "root"
     },
     "volumes": {
-        "host": "app/storage/internal/user/admin/apps/mongodb",
-        "container" : "/data/db"
+        "db" : {
+                "host": "./server/app/storage/internal/user/admin/apps/mongodb",
+                "container" : "/data/db"
+            },
+        "log":{
+                "host": "./server/app/storage/internal/user/admin/apps/mongodb/logs/",
+                "container" : "/var/log/mongodb/"
+        }
     }
 }
