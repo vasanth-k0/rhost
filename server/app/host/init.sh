@@ -138,4 +138,9 @@ server {
 
 // copy key
 cp /home/admin/.ssh/id_ed25519 /root/.ssh/id_ed25519
+
+
+Install and run ttyd with pm2
+sudo apt-get install ttyd
+
 EOF

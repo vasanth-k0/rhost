@@ -1,4 +1,4 @@
 node_modules/
 *.sqlite
 secrets.json
-app/storage/internal/user/*
+app/storage/*

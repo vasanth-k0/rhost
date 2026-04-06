@@ -7,16 +7,22 @@
             "admin"
         ]
     },
+    "shell": {
+        "name": "Shell",
+        "icon": "CodeFilled",
+        "published": false,
+        "users": ["admin"]
+    },
     "coderun-lite": {
         "name": "Coderun-Lite",
-        "icon": "CodeFilled",
+        "icon": "ThunderboltFilled",
         "published": true,
         "users": []
     },
     "mongodb": {
         "name": "Mongo DB",
         "icon": "DatabaseFilled",
-        "published": true,
+        "published": false,
         "users": ["admin"]
     }
 }

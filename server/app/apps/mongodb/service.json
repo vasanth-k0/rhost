@@ -6,7 +6,8 @@
     "image": "mongo:latest",
     "ports": {
         "host": 27017,
-        "container": 27017
+        "container": 27017,
+        "tty": 7172
     },
     "env": {
         "MONGO_INITDB_ROOT_USERNAME" : "root",

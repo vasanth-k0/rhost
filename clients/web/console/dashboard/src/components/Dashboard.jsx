@@ -305,7 +305,11 @@ if (Apps.length!=0) {
         },
         Tooltip: {
           colorBgSpotlight: CustomColor, 
-        }
+        },
+        Radio: {
+            buttonSolidCheckedHoverBg: CustomColorLite,
+            buttonSolidCheckedBg: CustomColor,
+        },
       },
     }}
   >

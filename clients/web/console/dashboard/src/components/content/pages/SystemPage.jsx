@@ -48,7 +48,9 @@ const SystemPage = () => {
         })();
     }
     
-    const lightBg = theme.available[theme.active][1] + "08";
+    const primaryColor = theme.available[theme.active][0];
+    const secondaryColor = theme.available[theme.active][1];
+    const lightBg = secondaryColor + "08";
     const lightBgStyle = { backgroundColor: lightBg }
     const systemData= [
         {
@@ -93,13 +95,13 @@ const SystemPage = () => {
                 justifyContent: 'center', 
                 alignContent: 'center' , 
                 overflow: 'scroll', 
-                margin: '3rem',
-                gap: '3rem'
+                margin: '1rem',
+                gap: '2rem'
         }}>
-            <Card style={cardStyle} bodyPadding='15' headerPadding='15' title='rHost Software' size='small' headerBg={lightBg} >
+            <Card style={{...cardStyle, width: '35%'}} bodyPadding='15' headerPadding='15' title='rHost Software' size='small' headerBg={lightBg} >
                 <Descriptions bordered title="System Info" items={systemData} size='small' />
             </Card>
-            <Card style={cardStyle} bodyPadding='15' headerPadding='15' title='Themes' size='small' headerBg={lightBg} >
+            <Card style={{...cardStyle, width: '65%'}} bodyPadding='15' headerPadding='15' title='Themes' size='small' headerBg={lightBg} >
                     <div style={{ marginLeft: 10}}>
                         <div style={{ fontSize: 16, fontWeight: 500, marginBottom: 10, marginTop: 15 }}>
                             <span style={{ color: theme.available[theme.active][0] }}>◈</span>  Color
@@ -116,15 +118,26 @@ const SystemPage = () => {
                                 }}
                             >
                                 <Radio.Group
+                                    style={{
+                                        display: 'flex',
+                                        flexWrap: 'wrap',
+                                        gap: '16px',
+                                        padding: '5px',
+                                    }}
                                     onChange={onChange} 
                                     defaultValue={theme.active}
-                                    options={colorOptions} 
+                                    //options={colorOptions} 
                                 >
-                                {/* {
-                                    colorThemesList.map((colour, index)=>{
-                                        return <Radio.Button value={colour}>{colour}</Radio.Button>
-                                    })
-                                } */}
+                                        {colorOptions.map(opt => (
+                                            <Radio
+                                                size='small'
+                                                key={opt.value} 
+                                                value={opt.value}
+                                                style={{ width: '7.5rem', marginInlineEnd: 0 }}
+                                            >
+                                                {opt.label}
+                                            </Radio>
+                                        ))}
                                 </Radio.Group>
                             </Flex>
                         </div>

@@ -28,6 +28,7 @@
     "codemirror": "^6.0.2",
     "express": "^5.2.1",
     "express-session": "^1.19.0",
+    "pm2": "^6.0.14",
     "sequelize": "^6.37.7",
     "sequelize-cli": "^6.6.5",
     "sqlite3": "^5.1.7",

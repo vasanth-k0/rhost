@@ -104,13 +104,13 @@ const ShowContent = ({content, tools='show', colorPalette, context}) => {
                     tools == 'show' 
                       && <div style={{
                                   position: 'absolute',
-                                  top: '10px',
-                                  right: '10px',
-                                  backgroundColor: colorPalette.CustomColorLite + '10',
-                                  borderColor: colorPalette.CustomColor + '10',
-                                  filter: 'brightness(0.8)',
-                                  borderRadius: '5px',
+                                  top: 0,
+                                  right: 3,
+                                  background: 'white',
+                                  margin: 'auto 5px',
+                                  borderRadius: '0px 0px 5px 5px',  
                                   padding: '5px',
+                                  boxShadow: '-1px 2px 17px 1px #9693935e'
                                 }}
                                 >
                                       <Tooltip title="Close" placement="left">
@@ -118,19 +118,19 @@ const ShowContent = ({content, tools='show', colorPalette, context}) => {
                                                   onClick={closeContent} {...commonProps('close')}
                                             />
                                           </Tooltip>
-                                      <Divider size="small" style={{ margin: '3px 0px' }} />
+                                      <Divider size="small" orientation="vertical" style={{ margin: '0px 7px' }} />
                                       <Tooltip title="Publish" placement="right"> 
                                               <PlusCircleFilled 
                                                     onClick={()=>{alert('published')}} {...commonProps('publish')}
                                               />
                                       </Tooltip>
-                                      <Divider size="small" style={{ margin: '3px 0px' }} />
+                                      <Divider size="small" orientation="vertical" style={{ margin: '0px 7px' }} />
                                       <Tooltip title="Open in new Tab" placement="right"> 
                                               <LayoutFilled 
                                                     onClick={()=>{open("/" + content, '_blank') }} {...commonProps('publish')}
                                               />
                                       </Tooltip>
-                                      <Divider size="small" style={{ margin: '3px 0px' }} />
+                                      <Divider size="small" orientation="vertical" style={{ margin: '0px 7px' }} />
                                       { iframeRef && <FullScreener element={iframeRef} icon='true' {...commonProps('fullscreen')} /> }
                             </div>   
                   }
@@ -173,7 +173,7 @@ const ShowContent = ({content, tools='show', colorPalette, context}) => {
                     }
                   ];
 
-              ContentComponent = <div style={{ display: 'block', overflow: 'scroll', fontSize: '13px' , height: '92.5%'}}>
+              ContentComponent = <div style={{ display: 'block', overflow: 'scroll', fontSize: '13px' , height: '100%'}}>
                     <iframe src={`/${content}/about`} style={{...iframeStyle, height: '75%', backgroundColor: "transparent"}}></iframe>
                     <Collapse size='small' ghost items={items} onChange={onChange} />
               </div>

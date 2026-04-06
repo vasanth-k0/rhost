@@ -56,8 +56,8 @@ const AppBrick = ({colorPalette, Icon, app, appName}) => {
                                     textAlign: 'center',
                                     background: '#ffffffca',
                                     backdropFilter: 'blur(7px)',
-                                    width: '4.1rem',
-                                    height: '4rem',
+                                    width: '3.8rem',
+                                    height: '4.1rem',
                                     ...itemStyle}}
                                     onClick={openApp}
                                     onMouseEnter={ () => { setAppHovered(true) }} 
@@ -65,12 +65,12 @@ const AppBrick = ({colorPalette, Icon, app, appName}) => {
                                     >
                                         <Icon style={{fontSize: '17px', filter: 'brightness(0.7)'}} />
                                         <span style={{
-                                                                color: 'rgb(50, 50, 50)', 
-                                                                height: '1rem', 
-                                                                width: '3rem',
-                                                                overflow: 'hidden', 
-                                                                textOverflow: 'ellipsis',
-                                                                whiteSpace: 'nowrap' 
+                                            color: 'rgb(50, 50, 50)', 
+                                            height: '1rem', 
+                                            width: '3rem',
+                                            overflow: 'hidden', 
+                                            textOverflow: 'ellipsis',
+                                            whiteSpace: 'nowrap' 
                                             }}>{appName}</span>
         </div>
 }

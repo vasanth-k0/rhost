@@ -93,7 +93,7 @@ const ShowContent = ({content, tools='show', colorPalette, context}) => {
                       </Suspense>
       } else {
         if (context=='pages') {
-            ContentComponent = <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+            ContentComponent = <div style={{ width: '100%', height: '100%', display: 'flex', }}>
                 <iframe 
                     ref = {iframeRef}
                     allow="fullscreen"
@@ -103,13 +103,10 @@ const ShowContent = ({content, tools='show', colorPalette, context}) => {
                   {
                     tools == 'show' 
                       && <div style={{
-                                  position: 'absolute',
                                   top: '10px',
                                   right: '10px',
-                                  backgroundColor: colorPalette.CustomColorLite + '10',
-                                  borderColor: colorPalette.CustomColor + '10',
-                                  filter: 'brightness(0.8)',
-                                  borderRadius: '5px',
+                                  background: 'white',
+                                  backdropFilter: 'blur(7px)',
                                   padding: '5px',
                                 }}
                                 >
