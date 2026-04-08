@@ -1,0 +1,200 @@
+import {theme, Spin, Flex, Divider, Tooltip, Collapse} from 'antd';
+import {Suspense, lazy, useRef, useEffect} from 'react';
+import { useContext, useState } from 'react';
+import MenuItemContext from './context/MenuItemContext';
+import {CloseCircleFilled, PlusCircleFilled, LayoutFilled} from '@ant-design/icons';
+import FullScreener from './sub_components/FullScreener.jsx'
+import ReactJsonView from '@microlink/react-json-view'
+import AppContext from './context/AppContext.jsx'
+
+/**
+ * Notice: Webpack requires static imports. no dynamic imports supported.
+ */
+const PageList = {
+  Apps: lazy(() => import('./content/pages/AppsPage.jsx')),
+  Files: lazy(() => import('./content/pages/FilesPage.jsx')),
+  Accounts: lazy(() => import('./content/pages/AccountsPage.jsx')),
+  Members: lazy(() => import('./content/pages/MembersPage.jsx')),
+  System: lazy(() => import('./content/pages/SystemPage.jsx')),
+};
+
+
+const ControlList = {
+  Apps: lazy(() => import('./content/controls/AppsControl.jsx')),
+  Files: lazy(() => import('./content/controls/FilesControl.jsx')),
+  Accounts: lazy(() => import('./content/controls/AccountsControl.jsx')),
+  Members: lazy(() => import('./content/controls/MembersControl.jsx')),
+  System: lazy(() => import('./content/controls/SystemControl.jsx')),
+};
+
+
+const ShowContent = ({content, tools='show', colorPalette, context}) => {
+
+    const [service, setService] = useState({"Data": "Not Available"});
+    const {Apps} = useContext(AppContext);
+
+      useEffect(()=>{
+          if (Object.keys(Apps).includes(content)) {
+                  (async()=>{
+                      let res = await fetch(`${content}/config`);
+                      setService(await res.json());
+                  })();
+          }
+      },[]);
+
+      const {showContentList, setShowContentList, setActiveContent} = useContext(MenuItemContext);
+      const [onHover, setOnHover] = useState({
+        close: false,
+        publish: false,
+        fullscreen:false
+      });
+      const {menuItems, setMenuItems} = useContext(MenuItemContext);
+
+      let ContentComponent;
+
+      const closeContent = ()=>{
+        let newShowContentList = structuredClone(showContentList);
+        let newMenuItems = menuItems.filter((item) => item.key != content);
+
+        delete newShowContentList[content];
+        setShowContentList(newShowContentList)
+        setActiveContent('Apps')
+        setMenuItems(newMenuItems)
+      }
+  
+      const commonStyle = (tool)=>{ 
+            return {
+                fontSize: '17px',
+                color:  ( onHover[tool] 
+                                  ? colorPalette.CustomColor
+                                  : colorPalette.CustomColorLite
+                            )              
+            }
+      }
+
+      const commonProps = (tool) => {
+        let styleProp = tool == 'fullscreen' ? 'fullscreenstyle':'style'
+          return {
+              [styleProp]: commonStyle(tool), 
+              onMouseEnter: ()=>{ setOnHover({...onHover, [tool]: true}) },
+              onMouseLeave: ()=>{ setOnHover({...onHover, [tool]: false}) }
+          }
+      }
+
+      const iframeStyle = { width: '100%', height: '100%', border: 'none', padding: '0px', background: 'white' }
+      const iframeRef = useRef(null);
+
+      if (Object.keys(showContentList.default).includes(content)) {
+          const Page = context=='pages' ?  PageList[content] : ControlList[content];
+          ContentComponent = <Suspense 
+                      fallback={<Flex align='center' style={{ width: '100%', justifyContent: 'center' }}><Spin /></Flex>}
+                      >
+                        {Page ? <Page colorPalette={colorPalette} /> : <div>Page not found</div>}
+                      </Suspense>
+      } else {
+        if (context=='pages') {
+            ContentComponent = <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+                <iframe 
+                    ref = {iframeRef}
+                    allow="fullscreen"
+                    src= {"/" + content} 
+                    style = {iframeStyle}
+                  ></iframe>
+                  {
+                    tools == 'show' 
+                      && <div style={{
+                                  position: 'absolute',
+                                  top: 0,
+                                  right: 3,
+                                  background: 'white',
+                                  margin: 'auto 5px',
+                                  borderRadius: '0px 0px 5px 5px',  
+                                  padding: '5px',
+                                  boxShadow: '-1px 2px 17px 1px #9693935e'
+                                }}
+                                >
+                                      <Tooltip title="Close" placement="left">
+                                            <CloseCircleFilled 
+                                                  onClick={closeContent} {...commonProps('close')}
+                                            />
+                                          </Tooltip>
+                                      <Divider size="small" orientation="vertical" style={{ margin: '0px 7px' }} />
+                                      <Tooltip title="Publish" placement="right"> 
+                                              <PlusCircleFilled 
+                                                    onClick={()=>{alert('published')}} {...commonProps('publish')}
+                                              />
+                                      </Tooltip>
+                                      <Divider size="small" orientation="vertical" style={{ margin: '0px 7px' }} />
+                                      <Tooltip title="Open in new Tab" placement="right"> 
+                                              <LayoutFilled 
+                                                    onClick={()=>{open("/" + content, '_blank') }} {...commonProps('publish')}
+                                              />
+                                      </Tooltip>
+                                      <Divider size="small" orientation="vertical" style={{ margin: '0px 7px' }} />
+                                      { iframeRef && <FullScreener element={iframeRef} icon='true' {...commonProps('fullscreen')} /> }
+                            </div>   
+                  }
+                  
+            </div>
+        } else {
+
+              const onChange = key => {
+                console.log(key);
+              };
+
+               const items = [
+                    {
+                        key: '1',
+                        label: 'Info',
+                        children: <ReactJsonView
+                                  style={{ fontSize: '11px' }}
+                                  theme='grayscale:inverted'
+                                  src={Apps[content]}
+                                  iconStyle='circle'
+                                  enableClipboard={false}
+                                  displayObjectSize={false}
+                                  displayDataTypes={false}
+                                  showComma={false}
+                                />,
+                    },
+                    {
+                        key: '2',
+                        label: 'Settings • ' + ( service.readonly ? "ReadOnly":"Read/Write"),
+                        children:  <ReactJsonView
+                                            style={{ fontSize: '11px' }}
+                                            theme='grayscale:inverted'
+                                            src={service}
+                                            iconStyle='circle'
+                                            enableClipboard={false}
+                                            displayObjectSize={false}
+                                            displayDataTypes={false}
+                                            showComma={false}
+                                        />,
+                    }
+                  ];
+
+              ContentComponent = <div style={{ display: 'block', overflow: 'scroll', fontSize: '13px' , height: '100%'}}>
+                    <iframe src={`/${content}/about`} style={{...iframeStyle, height: '75%', backgroundColor: "transparent"}}></iframe>
+                    <Collapse size='small' ghost items={items} onChange={onChange} />
+              </div>
+          }
+      }
+
+      const {
+          token: { colorBgContainer, borderRadiusLG },
+      } = theme.useToken();
+          
+      return (
+          <Flex 
+              style={{
+                height: '100%',
+                background: 'transparent',
+                borderRadius: borderRadiusLG,
+              }}
+            >
+            {ContentComponent}
+          </Flex>
+      );
+}
+
+export default ShowContent;

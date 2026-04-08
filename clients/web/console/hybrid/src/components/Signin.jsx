@@ -98,6 +98,7 @@ const SignIn = () => {
                         <Tabs style={{ 
                                                 height: '56%', 
                                                 width : '30rem',
+                                                padding: '3rem', 
                                                 borderRadius: '5px', 
                                                 backgroundColor: '#ffffffca',
                                                 backdropFilter: 'blur(7px)',

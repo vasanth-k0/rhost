@@ -36,25 +36,23 @@ function getItem(label, key, icon, children) {
   };
 }
 
-let  guestMenuItems = [
+const guestMenuItems = [
   getItem('Apps', 'Apps', <AppstoreOutlined />),
   getItem('User', 'Users', <UserOutlined />, [
     getItem('Account', 'Accounts')
   ]),
+  getItem('System Settings', 'System', <SettingOutlined />), 
 ];
 
 const adminMenuItems = [  
                                               ...guestMenuItems, 
                                               getItem('Files', 'Files', <FileOutlined />),
-                                              getItem('System Settings', 'System', <SettingOutlined />), 
                                           ];
 
 adminMenuItems[1] = getItem('User', 'Users', <UserOutlined />, [
     getItem('Account', 'Accounts'),
     getItem('Members', 'Members')
   ])
-
-guestMenuItems.push( getItem('System Settings', 'System', <SettingOutlined />) ) // Adding after admin
 
 const temp = {...adminMenuItems[1]};
 adminMenuItems[1] = {...adminMenuItems[2]}
@@ -210,93 +208,33 @@ if (Apps.length!=0) {
 
   const consoleLogin = (login && gotoConsole) || gotoConsole;
   const Dash = <>
-                            <div style={{ height: '100%', display: 'flex' , overflow: 'hidden', backgroundColor: 'transparent', }}>
-                            <div 
+                            <div style={{ height: '100%', display: 'flex' , overflow: 'hidden', backgroundColor: 'transparent' }}>
+                            <Sider 
+                                  trigger={null}
+                                  collapsible
+                                  collapsed={collapsed}
+                                  onCollapse={value => setCollapsed(value)}
+                                  width={'170px'}
+                                  collapsedWidth={'3.8rem'}
                                   style={{ 
-                                              position: 'absolute',
-                                                bottom: 0,
-                                                left: '5rem',
-                                                right: '5rem',
-                                                height: '60px',
-                                                width: '100% !important',
-                                                zIndex: 1000,
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                overflow: 'hidden'
+                                            height: '100%', 
+                                            margin: 'auto', 
+                                            overflow: 'hidden' 
                                           }}
                                   >
                                   <div className="demo-logo-vertical" />
                                   <Menu 
-                                      mode="horizontal"
                                       onClick={menuOnclick} 
                                       theme="dark" 
                                       selectedKeys={[activeContent]} 
                                       defaultSelectedKeys={['Apps']} 
+                                      mode="inline" 
                                       items={menuItems} 
-                                      style={{
-                                        width: '100%',
-                                        height: '2.9rem',
-                                        fontSize: '12px',
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                      }}
                                   />
-                            </div>
-
-                          {
-                              (consoleLogin) && <>
-                                <Content style={{ width: '100%', height: '90%', padding: '10px', display: 'flex', position:'absolute', top: 0    }} >
-                                  <div style={{ 
-                                                height: '100%', 
-                                                width: '100%', 
-                                                display: 'flex', 
-                                                overflow: 'hidden', 
-                                                border: activeContent=='Apps' ? 'none' : 'solid 1px #ffffff4d', 
-                                                backdropFilter: activeContent=='Apps' ? 'none' : 'blur(7px)' }} >
-                                      <ContentList context='pages' activeContent={activeContent} colorPalette={{CustomColor, CustomColorLite}} />
-                                  
-                                  <div style={{
-                                                    padding: '10px', 
-                                                    width: controlCollapsed ? '2.5rem' : '35%', 
-                                                    height: (controlCollapsed && activeContent=="Apps") ? '2.5rem' : 'auto', 
-                                                    alignContent: 'flex-start', 
-                                                    textAlign: 'left', 
-                                                    background: controlCollapsed && activeContent=="Apps" ? 'transparent' : '#ffffffca',
-                                                    backdropFilter: controlCollapsed && activeContent=="Apps" ? 'none' : 'blur(7px)' 
-                                  }}>
-                                      <Button
-                                            type="text"
-                                            icon={controlCollapsed ? <MenuFoldOutlined /> : <MenuUnfoldOutlined />}
-                                            onClick={() => setControlCollapsed(!controlCollapsed)}
-                                            style={{
-                                            fontSize: '16px',
-                                            width: 33,
-                                            height: 33,
-                                            outline: 'none',
-                                            color: antColour['grey'][6],
-                                            margin: -5,
-                                            float: 'right',
-                                            background: controlCollapsed && activeContent=="Apps" ? '#ffffffca' : 'transparent ',
-                                            borderRadius: activeContent=='Apps' ? '50%' : 'none'
-                                            }}
-                                        />
-                                          <span style={{ fontWeight: '500', padding: '0 7px', display: controlCollapsed ? 'none':'block' }}>
-                                              { showContentList['default'][activeContent] 
-                                                    ? showContentList['default'][activeContent] 
-                                                    : showContentList['user'][activeContent] }
-                                          </span>
-                                          <Divider style={{ margin: '10px 0px' }} />
-                                          <div style={{ display : controlCollapsed ? 'none':'block', height: '78vh' }} >
-                                                <ContentList context={consoleLogin ? 'controls':'pages'} activeContent={activeContent} colorPalette={{CustomColor, CustomColorLite}} />
-                                          </div>
-                                          
-                                      </div>
-                                  </div>
-                              </Content>
-                              </>
-                            }
-                            </div>
-                      </>
+                            </Sider>
+                            
+                      </div>
+  </>
   
   const [ siteApp, setSiteApp ] = useState(settings['defaultApp']);
 
@@ -371,7 +309,9 @@ if (Apps.length!=0) {
             darkItemHoverBg: CustomColorLite,
             darkSubMenuItemBg: CustomColor,
             darkPopupBg: CustomColor, 
-            itemBorderRadius: 0
+        },
+        MenuItem: {
+          paddingLeft : '1px'
         },
         Tooltip: {
           colorBgSpotlight: CustomColor, 
@@ -420,7 +360,7 @@ if (Apps.length!=0) {
                                 
                         </Space>
                         <Space style={{ height: '40px' }}>
-                                { deskRefReady && <FullScreener element={deskRef} fullscreenstyle={{ margin: '5px' }} /> }
+                                { deskRefReady && <FullScreener fullscreenstyle={{ margin: '5px' }} /> }
                                 { login 
                                       ? <>
                                               <Tooltip  title={"rHost © " + new Date().getFullYear() + " Created by Vasanth.K"} placement="right" >
@@ -454,7 +394,6 @@ if (Apps.length!=0) {
                 }}>
                     <div ref={deskRef}
                           style={{ 
-                                      position: 'relative',
                                       display: 'flex', 
                                       width: '100%',
                                       height: '100%' ,
@@ -470,6 +409,49 @@ if (Apps.length!=0) {
                             <Content style={{ display: (consoleLogin ? 'none' : 'block' ), ...contentStyle }} >
                                 { Site }
                             </Content>
+
+                            {
+                              (consoleLogin) && <>
+                                <Content style={{ width: '100%', height: 'auto'  }} >
+                                  <div style={{ height: '100%', display: 'flex' , overflow: 'hidden'}}>
+                                      <ContentList context='pages' activeContent={activeContent} colorPalette={{CustomColor, CustomColorLite}} />
+                                  </div>
+                              </Content>
+                              <div style={{
+                                                    padding: '10px', 
+                                                    width: controlCollapsed ? '2.5rem' : '35%', 
+                                                    height: 'auto', 
+                                                    alignContent: 'flex-start', 
+                                                    textAlign: 'left', 
+                                                    background: '#ffffffca',
+                                                    backdropFilter: 'blur(7px)' 
+                                  }}>
+                                      <Button
+                                            type="text"
+                                            icon={controlCollapsed ? <MenuFoldOutlined /> : <MenuUnfoldOutlined />}
+                                            onClick={() => setControlCollapsed(!controlCollapsed)}
+                                            style={{
+                                            fontSize: '19px',
+                                            width: 17,
+                                            height: 17,
+                                            outline: 'none',
+                                            color: antColour['grey'][6],
+                                            margin: 3,
+                                            float: 'right'
+                                            }}
+                                        />
+                                          <span style={{ fontWeight: '500', padding: '0 7px', display: controlCollapsed ? 'none':'block' }}>
+                                              { showContentList['default'][activeContent] 
+                                                    ? showContentList['default'][activeContent] 
+                                                    : showContentList['user'][activeContent] }
+                                          </span>
+                                          <Divider style={{ margin: '10px 0px' }} />
+                                          <div style={{ display : controlCollapsed ? 'none':'block', height: '78vh' }} >
+                                                <ContentList context={consoleLogin ? 'controls':'pages'} activeContent={activeContent} colorPalette={{CustomColor, CustomColorLite}} />
+                                          </div>
+                                          
+                                      </div></>
+                            }
                             
                         </div>
                 </div>

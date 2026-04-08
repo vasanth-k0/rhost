@@ -46,32 +46,31 @@ const AppBrick = ({colorPalette, Icon, app, appName}) => {
                                     display: 'flex',
                                     flexDirection: 'column',
                                     alignItems: 'center',
+                                    gap: '5px',
                                     cursor: 'pointer', 
                                     margin: '0', 
                                     border: 'solid 1px white',
+                                    borderRadius: 5,
+                                    padding: '14px 3px',
                                     fontSize: '10px',
                                     textAlign: 'center',
-                                    backdropFilter: 'blur(5px)',
+                                    background: '#ffffffca',
+                                    backdropFilter: 'blur(7px)',
                                     width: '3.8rem',
-                                    height: '4.3rem',
-                                    background: '#ffffffa0',
+                                    height: '4.1rem',
                                     ...itemStyle}}
                                     onClick={openApp}
                                     onMouseEnter={ () => { setAppHovered(true) }} 
                                     onMouseLeave={ () => { setAppHovered(false) }}
                                     >
-                                        <Icon style={{fontSize: '21px', filter: 'brightness(0.7)', margin: '11px'}} />
+                                        <Icon style={{fontSize: '17px', filter: 'brightness(0.7)'}} />
                                         <span style={{
                                             color: 'rgb(50, 50, 50)', 
-                                            background: '#ffffff9f',
-                                            minHeight: '1rem', 
-                                            width: '100%',
+                                            height: '1rem', 
+                                            width: '3rem',
                                             overflow: 'hidden', 
                                             textOverflow: 'ellipsis',
-                                            whiteSpace: 'nowrap',
-                                            fontSize: '12px',
-                                            padding: '3px',
-                                            minHeight: '25px'
+                                            whiteSpace: 'nowrap' 
                                             }}>{appName}</span>
         </div>
 }

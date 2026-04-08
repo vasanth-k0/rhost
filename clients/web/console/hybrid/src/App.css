@@ -61,6 +61,7 @@ body {
 
 .ant-menu-item-selected {
     border-color:  white !important;
+    border-radius: 7px !important;
 }
 
 .ant-breadcrumb-item, .ant-breadcrumb-separator {
@@ -68,7 +69,8 @@ body {
 }
 
 [data-menu-id="rc-menu-uuid-System"] {
-    margin-left: auto !important;
+    position: absolute !important;
+    bottom: 0px !important;
 }
 
 /* width */
