@@ -7,8 +7,8 @@
             "admin"
         ]
     },
-    "shell": {
-        "name": "Shell",
+    "terminal": {
+        "name": "Terminal",
         "icon": "CodeFilled",
         "published": false,
         "users": ["admin"]

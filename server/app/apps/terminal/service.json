@@ -2,7 +2,7 @@
     "type": "daemon",
     "readonly": true,
     "autorun" : false,
-    "dir": "app/apps/shell",
+    "dir": "app/apps/terminal",
     "image": false,
     "ports": {
         "tty": 7171
