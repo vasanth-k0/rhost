@@ -190,9 +190,10 @@ if (Apps.length!=0) {
     Crumb.path[1]['title'] = key;
     Crumb.setPath([...Crumb.path])
     setActiveContent(key);
-    if (key=='System') {
-        setCollapsed(!collapsed) 
-    }
+    setCollapsed(false);
+    setTimeout(()=>{
+      setCollapsed(true)
+    }, 1500);
   };
 
   const logStyle = { 
@@ -424,7 +425,8 @@ if (Apps.length!=0) {
                                                     alignContent: 'flex-start', 
                                                     textAlign: 'left', 
                                                     background: '#ffffffca',
-                                                    backdropFilter: 'blur(7px)' 
+                                                    backdropFilter: 'blur(7px)',
+                                                    transition: 'all 0.3s ease'
                                   }}>
                                       <Button
                                             type="text"

@@ -25,11 +25,13 @@ const FullScreener = ({element = document.documentElement,  onMouseEnter, onMous
                 {
                     icon ? <UpCircleFilled onClick= {toggleFullscreen} style={fullscreenstyle} onMouseEnter={onMouseEnter}
                         onMouseLeave={onMouseLeave} />
-                        : <FullscreenOutlined 
-                                            onClick= {toggleFullscreen} 
-                                            style={fullscreenstyle} 
-                                            onMouseEnter={onMouseEnter}
-                                            onMouseLeave={onMouseLeave} />
+                        : (
+                            fullscreen 
+                                ? <FullscreenExitOutlined onClick= {toggleFullscreen} style={fullscreenstyle} onMouseEnter={onMouseEnter}
+                        onMouseLeave={onMouseLeave} />
+                                :  <FullscreenOutlined onClick= {toggleFullscreen} style={fullscreenstyle} onMouseEnter={onMouseEnter}
+                        onMouseLeave={onMouseLeave} />
+                        )
                 }
             </Tooltip>
     </> 

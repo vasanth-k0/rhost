@@ -1,4 +1,4 @@
-import { Flex, Radio, Card, Descriptions, Badge, Button } from 'antd';
+import { Flex, Radio, Card, Descriptions, Badge, Button, Modal } from 'antd';
 import ThemeContext from '../../context/ThemeContext'
 import {useContext, useState, useEffect} from "react";
 import SystemContext from '../../context/SystemContext';
@@ -7,12 +7,27 @@ import UserContext from '../../context/UserContext'
 const SystemPage = () => {
 
     const { theme, setTheme } = useContext(ThemeContext);
-    const { settings } = useContext(SystemContext);
+    const { settings, setSettings } = useContext(SystemContext);
     const [ release , setRelease ] = useState({});
     const { login } = useContext(UserContext);
+    const [ modalStatus, setModalStatus ] = useState(false);
+    const [ preferredLayout, setPreferredLayout ] = useState(settings.ui);
 
-    const onChange = e => {
+    const onColorChange = e => {
         setTheme({...theme, active: e.target.value});
+    };
+    
+    const onLayoutChange = async (e) => {
+        await fetch('/system/settings', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ ui: preferredLayout })
+        }).then(()=>{
+            setModalStatus(false);
+            location.href = '/';
+        })
     };
 
     const colorThemesList = Object.keys(theme.available)
@@ -27,6 +42,13 @@ const SystemPage = () => {
                                     value: color,
                                     style: labelStyle,
                                     label: color
+                                }
+                            })
+    const layoutOptions = settings.layoutOptions.map((layout, index)=>{
+                                return {
+                                    value: layout.toLowerCase(),
+                                    style: labelStyle,
+                                    label: layout
                                 }
                             })
 
@@ -48,7 +70,9 @@ const SystemPage = () => {
         })();
     }
     
-    const lightBg = theme.available[theme.active][1] + "08";
+    const primaryColor = theme.available[theme.active][0];
+    const secondaryColor = theme.available[theme.active][1];
+    const lightBg = secondaryColor + "08";
     const lightBgStyle = { backgroundColor: lightBg }
     const systemData= [
         {
@@ -85,7 +109,17 @@ const SystemPage = () => {
         borderColor: lightBg,
         background: '#ffffffca',
         backdropFilter: 'blur(7px)',
+        borderRadius: 0
     }
+
+    const themeStyle = { 
+                                    backgroundColor: lightBg,
+                                    fontSize: '13px',
+                                    padding: 12,
+                                    borderRadius: 10,
+                                    overflow: 'hidden',
+                                    maxWidth: '98%'
+                                };
 
     return (
         <div style={{ 
@@ -102,36 +136,67 @@ const SystemPage = () => {
                 <Descriptions bordered title="System Info" items={systemData} size='small' />
             </Card>
             <Card style={cardStyle} bodyPadding='15' headerPadding='15' title='Themes' size='small' headerBg={lightBg} >
+                                    <div>
+                        <div style={{ fontSize: 16, fontWeight: 500, marginBottom: 10, marginTop: 15 }}>
+                            <span style={{ color: theme.available[theme.active][0] }}>◈</span>  Layout
+                        </div>
+                        <Flex gap="middle"
+                                style={themeStyle}
+                            >
+                        <Radio.Group
+                                style={{
+                                        display: 'flex',
+                                        flexWrap: 'wrap',
+                                        gap: '16px',
+                                        padding: '5px',
+                                    }}
+                                    onChange={(e)=>{setPreferredLayout(e.target.value); setModalStatus(true);}} 
+                                    defaultValue={preferredLayout}
+                                    options={layoutOptions} 
+                                    value={preferredLayout}
+                                ></Radio.Group>
+                            </Flex>
+                    </div>
                     <div style={{ marginLeft: 10}}>
                         <div style={{ fontSize: 16, fontWeight: 500, marginBottom: 10, marginTop: 15 }}>
-                            <span style={{ color: theme.available[theme.active][0] }}>◈</span>  Color
+                            <span style={{ color: theme.available[theme.active][0] }}>◈</span>  Colour Palette
                         </div>
                         <div>
                             <Flex gap="middle"
-                                style={{ 
-                                    backgroundColor: lightBg,
-                                    fontSize: '13px',
-                                    padding: 12,
-                                    borderRadius: 10,
-                                    overflow: 'hidden',
-                                    maxWidth: '98%'
-                                }}
+                                style={themeStyle}
                             >
                                 <Radio.Group
-                                    onChange={onChange} 
+                                    onChange={onColorChange} 
                                     defaultValue={theme.active}
-                                    options={colorOptions} 
+                                    //options={colorOptions} 
                                 >
-                                {/* {
-                                    colorThemesList.map((colour, index)=>{
-                                        return <Radio.Button value={colour}>{colour}</Radio.Button>
-                                    })
-                                } */}
+                                {colorOptions.map(opt => (
+                                            <Radio
+                                                size='small'
+                                                key={opt.value} 
+                                                value={opt.value}
+                                                style={{ width: '7.5rem', marginInlineEnd: 0 }}
+                                            >
+                                                {opt.label}
+                                            </Radio>
+                                        ))}
                                 </Radio.Group>
                             </Flex>
                         </div>
                     </div>
             </Card>
+            
+            <Modal
+                    title="System Settings Update"
+                    closable={{ 'aria-label': 'Custom Close Button' }}
+                    open={modalStatus}
+                    onOk={onLayoutChange}
+                    onCancel={()=>{setPreferredLayout(settings.ui);setModalStatus(false)} }
+                >
+                    <p>Please note that the session will be reloaded with the new Layout</p>
+                    <p>Any unsaved changes will be lost.</p>
+            </Modal>
+
         </div>
     );
 

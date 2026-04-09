@@ -176,13 +176,23 @@ if (Apps.length!=0) {
         display: 'flex',
         justifyContent: 'flex-start',
         alignItems: 'left',
-        zIndex: 1000,
         marginRight: 20,
-        height: '3.5rem'
+        height: '100%'
         };
 
   const [collapsed, setCollapsed] = useState(true);
   const [controlCollapsed, setControlCollapsed] = useState(true);
+  const [headerDock, setHeaderDock] = useState(false);
+
+  const dockHeader = ()=>{
+    setTimeout(()=>{
+        setHeaderDock(true);
+      }, 2100);
+  };
+
+  useEffect(()=>{
+    dockHeader();
+  }, []);
 
     const {
         token: { colorBgContainer },
@@ -245,7 +255,7 @@ if (Apps.length!=0) {
 
                           {
                               (consoleLogin) && <>
-                                <Content style={{ width: '100%', height: '90%', padding: '10px', display: 'flex', position:'absolute', top: 0    }} >
+                                <Content style={{ width: '100%', height: '92.1%', padding: '10px', display: 'flex', position:'absolute', top: 0 }} >
                                   <div style={{ 
                                                 height: '100%', 
                                                 width: '100%', 
@@ -258,7 +268,8 @@ if (Apps.length!=0) {
                                   <div style={{
                                                     padding: '10px', 
                                                     width: controlCollapsed ? '2.5rem' : '35%', 
-                                                    height: (controlCollapsed && activeContent=="Apps") ? '2.5rem' : 'auto', 
+                                                    height: (controlCollapsed && activeContent=="Apps") ? '2.5rem' : '100%', 
+                                                    transition: 'all 0.3s ease',
                                                     alignContent: 'flex-start', 
                                                     textAlign: 'left', 
                                                     background: controlCollapsed && activeContent=="Apps" ? 'transparent' : '#ffffffca',
@@ -302,7 +313,7 @@ if (Apps.length!=0) {
 
   const Site = <div style={{ 
                               width: '100%', 
-                              height: '100%', 
+                              height: headerDock ? '97.5%' : '92.5%', 
                               display: 'flex', 
                               gap: '0.21rem', 
                 }}>
@@ -356,7 +367,22 @@ if (Apps.length!=0) {
     padding: '0'
   }
 
-  const deskStyle = consoleLogin ? {position: 'absolute', width: '100%', bottom: 6 } : {}
+  const parentHeaderStyle = {
+                                                  top: 0,
+                                                  zIndex: 1, 
+                                                  position: 'absolute', 
+                                                  transform: 'translateX(-50%)',
+                                                  left: '50%',
+                                                  padding: 0, 
+                                                  background: '#ffffffa2', 
+                                                  height: '2.7rem', 
+                                                  overflow: 'hidden',
+                                                  backdropFilter: 'blur(7px)',
+                                                  transition: 'top 0.5s ease-in-out'
+                                           }
+  parentHeaderStyle.top = consoleLogin ? (headerDock ? '-2.1rem' : '0px') : (headerDock ? '97.5%' : '92.5%') ;
+  parentHeaderStyle.borderRadius = consoleLogin ? '0 0 5px 5px' : '0';
+  parentHeaderStyle.width = consoleLogin ? '75%' : '100%';
 
   return (
     <ConfigProvider
@@ -390,66 +416,17 @@ if (Apps.length!=0) {
           setSelectedKeys
           }}>     
               <Layout style={{ 
+                  position: 'relative',
                   display: 'block', 
                   height: '100%', 
                   width: '100%', 
                   backgroundColor: CustomColorLite + "08"
                   }} 
               >
-                <Header style={{ padding: 0, background: consoleLogin ? 'transparent':'#ffffffca', height: '35px', overflow: 'hidden', ...deskStyle }} >
-                    <div style={ headerStyle }>
-                        <Space size="large" style={{ marginRight: 'auto', height: '35px' }}>
-                                <span style={{ marginLeft: 10, fontWeight:500, fontSize: '19px', color: antColour['grey'][6] }} >
-                                   { consoleLogin
-                                        ? <>{settings['name']}  <small style={{marginLeft: '15px'}}>rHost <span style={{ fontSize: '14px' }}> Console </span></small></> 
-                                        : settings['name'] 
-                                    }
-                                </span>
-                                {
-                                  login 
-                                    && <Breadcrumb style={{ 
-                                    margin: '12px 21px', 
-                                    fontWeight: 500, 
-                                    fontSize: '13px',
-                                    borderRadius: '5rem',
-                                    border: 'solid 1px ' + CustomColor+'10',
-                                    backgroundColor : CustomColorLite+'08',
-                                    padding: '5px 15px'
-                                    }} items={ (activeContent!='Files') ? Crumb.path.slice(0,2): Crumb.path } />
-                                }
-                                
-                        </Space>
-                        <Space style={{ height: '40px' }}>
-                                { deskRefReady && <FullScreener element={deskRef} fullscreenstyle={{ margin: '5px' }} /> }
-                                { login 
-                                      ? <>
-                                              <Tooltip  title={"rHost © " + new Date().getFullYear() + " Created by Vasanth.K"} placement="right" >
-                                                      <InfoCircleOutlined onClick={ ()=>{  notification.info({
-                                                          message: 'rHost',
-                                                          description: `Cloudpc.in is powered by rHost web operating system. Designed, developed and managed by Vasanth.K`,
-                                                          placement: 'bottomRight',
-                                                          duration: 3, 
-                                                      });} }/>
-                                              </Tooltip>
-                                              <div onClick={toggleSite} style={logStyle} >
-                                                    <span>{ gotoConsole ? 'Home •' : 'Console •'  }</span>
-                                              </div>
-                                              <div onClick={confirm} style={logStyle} >
-                                                    <span>Logout •</span>
-                                                    <LogoutOutlined  style={{color: CustomColor}} />
-                                              </div>
-                                        </> 
-                                      : <div onClick={toggleSite} style={logStyle} >
-                                              <span>{ consoleLogin ? 'Home • ' : 'Login •' }</span>
-                                              <LoginOutlined style={{color: CustomColor}} />
-                                        </div>
-                                  }
-                        </Space>
-                    </div>    
-                </Header>
+                
                 <div style={{
                     width: '100%',
-                    height: 'calc(100% - 40px)',
+                    height: '100%',
                     padding: '10px',
                 }}>
                     <div ref={deskRef}
@@ -470,6 +447,58 @@ if (Apps.length!=0) {
                             <Content style={{ display: (consoleLogin ? 'none' : 'block' ), ...contentStyle }} >
                                 { Site }
                             </Content>
+
+                            <Header style={ parentHeaderStyle } onMouseEnter={()=>{setHeaderDock(false);}} onMouseLeave={dockHeader} >
+                                  <div style={ headerStyle }>
+                                      <Space size="large" style={{ marginRight: 'auto', }}>
+                                              <span style={{ marginLeft: 10, fontWeight:500, fontSize: '19px', color: antColour['grey'][6] }} >
+                                                { consoleLogin
+                                                      ? <>{settings['name']}  <small style={{marginLeft: '15px'}}>rHost <span style={{ fontSize: '14px' }}> Console </span></small></> 
+                                                      : settings['name'] 
+                                                  }
+                                              </span>
+                                              {
+                                                login 
+                                                  && <Breadcrumb style={{ 
+                                                  margin: '12px 21px', 
+                                                  fontWeight: 500, 
+                                                  fontSize: '13px',
+                                                  borderRadius: '5rem',
+                                                  border: 'solid 1px ' + CustomColor+'10',
+                                                  backgroundColor : CustomColorLite+'08',
+                                                  padding: '5px 15px'
+                                                  }} items={ (activeContent!='Files') ? Crumb.path.slice(0,2): Crumb.path } />
+                                              }
+                                              
+                                      </Space>
+                                      <Space style={{ height: '40px' }}>
+                                              { deskRefReady && <FullScreener element={deskRef} fullscreenstyle={{ margin: '5px' }} /> }
+                                              { login 
+                                                    ? <>
+                                                            <Tooltip  title={"rHost © " + new Date().getFullYear() + " Created by Vasanth.K"} placement="right" >
+                                                                    <InfoCircleOutlined onClick={ ()=>{  notification.info({
+                                                                        message: 'rHost',
+                                                                        description: `Cloudpc.in is powered by rHost web operating system. Designed, developed and managed by Vasanth.K`,
+                                                                        placement: 'bottomRight',
+                                                                        duration: 3, 
+                                                                    });} }/>
+                                                            </Tooltip>
+                                                            <div onClick={toggleSite} style={logStyle} >
+                                                                  <span>{ gotoConsole ? 'Home •' : 'Console •'  }</span>
+                                                            </div>
+                                                            <div onClick={confirm} style={logStyle} >
+                                                                  <span>Logout •</span>
+                                                                  <LogoutOutlined  style={{color: CustomColor}} />
+                                                            </div>
+                                                      </> 
+                                                    : <div onClick={toggleSite} style={logStyle} >
+                                                            <span>{ consoleLogin ? 'Home • ' : 'Login •' }</span>
+                                                            <LoginOutlined style={{color: CustomColor}} />
+                                                      </div>
+                                                }
+                                      </Space>
+                                  </div>    
+                              </Header>
                             
                         </div>
                 </div>
