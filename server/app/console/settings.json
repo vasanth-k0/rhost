@@ -16,7 +16,7 @@
     "defaultApp": "coderun-lite",
     "wallp": "1",
     "env": {
-        "type": "dev"
+        "type": "prod"
     },
     "theme": {
         "default": "Geekblue",
