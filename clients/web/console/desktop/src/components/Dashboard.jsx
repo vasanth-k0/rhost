@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, useMemo, useRef } from 'react';
+import { useState, useEffect, useContext, useMemo, useRef, useCallback } from 'react';
 import {
   SettingOutlined,
   FileOutlined,
@@ -198,23 +198,23 @@ if (Apps.length!=0) {
         token: { colorBgContainer },
     } = Themer.useToken();
 
-  const menuOnclick = ({ key,keyPath })=>{
+  const menuOnclick = useCallback(({ key,keyPath })=>{
     Crumb.path[1]['title'] = key;
     Crumb.setPath([...Crumb.path])
     setActiveContent(key);
     if (key=='System') {
         setCollapsed(!collapsed) 
     }
-  };
+  }, [Crumb, collapsed]);
 
   const logStyle = { 
                                 cursor: 'pointer',
-                                backgroundColor: CustomColorLite + '08',
+                                backgroundColor: 'white',
                                 height: '27px',
-                                padding: '6px 12px',
+                                padding: '0 12px',
                                 display: 'flex',
                                 alignItems: 'center',
-                                borderRadius: '3rem',
+                                borderRadius: '0 0 5px 5px',
                                 gap: '5px'
                             };
 
@@ -229,10 +229,11 @@ if (Apps.length!=0) {
                                                 right: '5rem',
                                                 height: '60px',
                                                 width: '100% !important',
-                                                zIndex: 1000,
+                                                zIndex: 10,
                                                 display: 'flex',
                                                 alignItems: 'center',
-                                                overflow: 'hidden'
+                                                overflow: 'hidden',
+                                                transition: 'all 0.5s ease',
                                           }}
                                   >
                                   <div className="demo-logo-vertical" />
@@ -255,7 +256,7 @@ if (Apps.length!=0) {
 
                           {
                               (consoleLogin) && <>
-                                <Content style={{ width: '100%', height: '92.1%', padding: '10px', display: 'flex', position:'absolute', top: 0 }} >
+                                <Content style={{ width: '100%', height: '90%', padding: '7px', display: 'flex', position:'absolute', top: 5 }} >
                                   <div style={{ 
                                                 height: '100%', 
                                                 width: '100%', 
@@ -313,7 +314,7 @@ if (Apps.length!=0) {
 
   const Site = <div style={{ 
                               width: '100%', 
-                              height: headerDock ? '97.5%' : '92.5%', 
+                              height: '100%',
                               display: 'flex', 
                               gap: '0.21rem', 
                 }}>
@@ -368,8 +369,7 @@ if (Apps.length!=0) {
   }
 
   const parentHeaderStyle = {
-                                                  top: 0,
-                                                  zIndex: 1, 
+                                                  zIndex: 30, 
                                                   position: 'absolute', 
                                                   transform: 'translateX(-50%)',
                                                   left: '50%',
@@ -378,11 +378,12 @@ if (Apps.length!=0) {
                                                   height: '2.7rem', 
                                                   overflow: 'hidden',
                                                   backdropFilter: 'blur(7px)',
-                                                  transition: 'top 0.5s ease-in-out'
+                                                  transition: 'all 0.5s ease',
+                                                  top: headerDock ? '-2.1rem' : '7px',
+                                                  borderRadius: '0 0 5px 5px',
+                                                  boxShadow: '1px 1px 15px 1px #00000033',
+                                                  width: '75%' 
                                            }
-  parentHeaderStyle.top = consoleLogin ? (headerDock ? '-2.1rem' : '0px') : (headerDock ? '97.5%' : '92.5%') ;
-  parentHeaderStyle.borderRadius = consoleLogin ? '0 0 5px 5px' : '0';
-  parentHeaderStyle.width = consoleLogin ? '75%' : '100%';
 
   return (
     <ConfigProvider

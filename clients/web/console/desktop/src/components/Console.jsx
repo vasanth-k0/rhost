@@ -36,6 +36,7 @@ const Console = () => {
         const themeUrl= "/system/theme"
         let res = await fetch(themeUrl);
         res = await res.json();
+        res.available = availableThemes();
         setTheme(res);
         localStorage.setItem('theme', JSON.stringify(res));
     }
@@ -106,3 +107,68 @@ const Console = () => {
 }
 
 export default Console;
+
+const availableThemes = () =>{
+    return {
+            "Geekblue": [
+                4,
+                3
+            ],
+            "Lime": [
+                5,
+                4
+            ],
+            "Orange": [
+                "#efa04b",
+                "#f7a854"
+            ],
+            "Green": [
+                "#009485",
+                "#0ab2a0"
+            ],
+            "Red": [
+                6,
+                5
+            ],
+            "Purple": [
+                4,
+                3
+            ],
+            "Teal": [
+                "#008894",
+                "#07a0ae"
+            ],
+            "Brown": [
+                "#9c6603",
+                "#c98404"
+            ],
+            "Gray": [
+                1,
+                0
+            ],
+            "Black": [
+                "#30353b",
+                "#575f69"
+            ],
+            "Grey • Green": [
+                "#666B6A",
+                "#72A276"
+            ],
+            "Grey • Blue": [
+                "#666B6A",
+                "#6c89d9"
+            ],
+            "Grey • Teal": [
+                "#666B6A",
+                "#1B9AAA"
+            ],
+            "Grey • Brown": [
+                "#666B6A",
+                "#c98404"
+            ],
+            "Black • Red": [
+                "#000000",
+                "#FF0000"
+            ]
+        }
+}
