@@ -14,7 +14,7 @@
         "Hybrid"
     ],
     "defaultApp": "coderun-lite",
-    "wallp": "5",
+    "wallp": "10",
     "env": {
         "type": "prod"
     },
