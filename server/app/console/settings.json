@@ -14,8 +14,9 @@
         "Dashboard",
         "Hybrid"
     ],
+    "gotoConsole": true,
     "defaultApp": "coderun-lite",
-    "wallp": "3",
+    "wallp": "7",
     "env": {
         "type": "prod"
     },

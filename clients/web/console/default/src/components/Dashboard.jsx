@@ -13,6 +13,7 @@ import { Breadcrumb, Layout, Menu, Button, Space, ConfigProvider, Modal, Divider
 import {theme as Themer, Spin, Tooltip, notification } from 'antd' ;
 import * as antColour from '@ant-design/colors'
 import * as AntIcons from '@ant-design/icons';
+import { useEffect } from 'react';
 
 
 const { Header, Content, Sider } = Layout;
@@ -76,6 +77,10 @@ const Dashboard = () => {
       }
       return false;
   });
+
+  useEffect(()=>{
+    setGotoConsole(Boolean(settings.gotoConsole));
+  },[settings]);
 
   const wallp = '/resources/vx-' + settings.wallp + '.webp';
     
