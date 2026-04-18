@@ -274,7 +274,6 @@ const [ siteApp, setSiteApp ] = useState(settings['defaultApp']);
 const Site = <div id="site" style={{ 
                   ...fit,
                   alignItems: 'normal',
-                  gap: '0.21rem', 
               }}>
                 <Sider 
                       trigger={null}
@@ -282,13 +281,13 @@ const Site = <div id="site" style={{
                       collapsed={true}
                       width={'170px'}
                       collapsedWidth={'3.8rem'}
-                      style= {{ background: colorBgContainer }}
                       >
                       <div className="demo-logo-vertical" />
                       <Menu
                             onClick={(item)=>{ setSiteApp(item.key); }}
                             defaultSelectedKeys={[siteApp]}
                             mode="inline"
+                            theme="dark" 
                             items={siteMenuItems}
                       />
                 </Sider>
