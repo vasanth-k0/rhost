@@ -71,8 +71,7 @@ SystemRouter.route('/theme')
     })
     .post((req, res)=>{    
        const activeTheme = req.body.active;
-        const availableThemes = Object.keys(Entrypoint.settings.theme.available)
-        if (availableThemes.includes(activeTheme)) {
+        if (activeTheme !== null) {
             Entrypoint.settings.theme.active = activeTheme;
             fs.writeFileSync('app/console/settings.json', JSON.stringify(Entrypoint.settings, null, 4), 'utf-8');
             res.sendStatus(200);

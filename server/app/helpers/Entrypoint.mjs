@@ -14,11 +14,11 @@ class Entrypoint{
     static secrets = JSON.parse(fs.readFileSync(path.join(Entrypoint.consolePath, 'secrets.json')));
     static apps = JSON.parse(fs.readFileSync(path.join(Entrypoint.appsPath, 'apps.json'), 'utf-8'));
 
-    static uiPath = path.join(Entrypoint.consolePath, 'ui/' + Entrypoint.settings.ui);
+    static fePath = path.join(Entrypoint.consolePath, 'ui/' + Entrypoint.settings.fe);
     static port = Entrypoint.settings.port;
 
     static showIndex(req, res) {
-        res.sendFile(path.join(Entrypoint.uiPath, 'index.html'));
+        res.sendFile(path.join(Entrypoint.fePath, 'index.html'));
     }
 }
 
