@@ -52,7 +52,7 @@ adminMenuItems[2] = temp;
 const Dashboard = () => {
 
   const deskRef = useRef(null);
-  const [deskRefReady, setDeskRefReady] = useState(false);
+  const [deskRefReady, setDeskRefReady] = useState(true); // Need to check
   const { theme } = useContext(ThemeContext);
   const { Apps } = useContext(AppContext);
   const [ modal, contextHolder ] = Modal.useModal();
