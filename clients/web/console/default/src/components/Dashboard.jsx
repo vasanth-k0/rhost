@@ -206,11 +206,27 @@ const Dashboard = () => {
     }
   }
 
+
+  const [headerDock, setHeaderDock] = useState(false);
+
+  const dockHeader = ()=>{
+    if (settings.ui == 'desktop') {
+      setTimeout(()=>{
+        setHeaderDock(true);
+      }, 2100);
+    }
+  };
+
+  useEffect(()=>{
+    dockHeader();
+  }, [settings]);
+
+
   const consoleLogin = (login && gotoConsole) || gotoConsole;
 
   const Controls = <div id="controls" style={{
                         padding: '10px', 
-                        width: controlCollapsed ? '2.5rem' : '35%', 
+                        width: controlCollapsed ? '2.5rem' : '30%', 
                         height: '100%', 
                         alignContent: 'flex-start', 
                         textAlign: 'left', 
@@ -247,24 +263,43 @@ const Dashboard = () => {
 
   const Dash = <>
                 <div id="dash" style={style != null ? style.dash: ""}>
-                <Sider 
-                      trigger={null}
-                      collapsible
-                      collapsed={collapsed}
-                      onCollapse={value => setCollapsed(value)}
-                      width={'170px'}
-                      collapsedWidth={'3.8rem'}
-                      >
-                      <div className="demo-logo-vertical" />
-                      <Menu 
-                          onClick={menuOnclick} 
-                          theme="dark" 
-                          selectedKeys={[activeContent]} 
-                          defaultSelectedKeys={['Apps']} 
-                          mode="inline" 
-                          items={menuItems} 
-                      />
-                </Sider>
+                  <div id="task" style={settings.ui == 'desktop' ? style.task : {height: '100%'}}>
+                  { 
+                    settings.ui != 'desktop' &&
+                      <Sider 
+                          trigger={null}
+                          collapsible
+                          collapsed={collapsed}
+                          onCollapse={value => setCollapsed(value)}
+                          width={'170px'}
+                          collapsedWidth={'3.8rem'}
+                          style={{height: '100%'}}
+                          >
+                          <div className="demo-logo-vertical" />
+                          <Menu 
+                              onClick={menuOnclick} 
+                              theme="dark" 
+                              selectedKeys={[activeContent]} 
+                              defaultSelectedKeys={['Apps']} 
+                              mode="inline" 
+                              items={menuItems}
+                          />
+                    </Sider>
+                  }
+                  {
+                    settings.ui == 'desktop' &&
+                    <Menu 
+                      mode="horizontal"
+                      onClick={menuOnclick} 
+                      theme="dark" 
+                      selectedKeys={[activeContent]} 
+                      defaultSelectedKeys={['Apps']} 
+                      items={menuItems}
+                      style={ style!=null ? style.toolmenu:{} }
+                  />
+                  }
+                  </div>
+                
                 {(settings.ui=='dashboard') && Controls}
                 {(settings.ui=='dashboard') && <Divider orientation="vertical" style={{height: '100%'}} />}
                 <Content style={fill} >
@@ -362,7 +397,7 @@ const Site = <div id="site" style={{
                  backgroundColor: 'linear-gradient(to top, ' + CustomColor + '05, ' + CustomColor + '07' + ')'
                  }} 
              >
-               <Header style={style.headr} >
+               <Header style={{...style.headr, ...(settings.ui=='desktop' ? {top : headerDock ? '-2.1rem' : '7px'}:{})}} onMouseEnter={()=>{setHeaderDock(false);}} onMouseLeave={dockHeader} >
                    <div style={ style.header }>
                        <Space size="large" style={{ marginRight: 'auto', height: '40px' }}>
                                <span style={{ marginLeft: 10, fontWeight:500, fontSize: '19px', color: antColour['grey'][6] }} >
@@ -413,12 +448,12 @@ const Site = <div id="site" style={{
                        </Space>
                    </div>    
                </Header>
-               <div id="body" style={{
+               <div id="body" layout={settings.ui} style={{
                                     ...style.body, 
                                     ...(consoleLogin 
                                         ? {padding: settings.ui == 'dashboard' 
                                             ? '0px 10px 0px 10px' 
-                                            : '10px'} 
+                                            : settings.ui == 'hybrid' ? '10px' : 0} 
                                         : {}) }}>
                    <div id="base" ref={deskRef}
                          style={{...style.base, backgroundImage: `url(${wallp})`}}>

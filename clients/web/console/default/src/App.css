@@ -59,18 +59,28 @@ body {
   overflow: hidden;
 }
 
-.ant-menu-item-selected {
+#body[layout="dashboard"] .ant-menu-item-selected,
+#body[layout="hybrid"] .ant-menu-item-selected {
     border-color:  white !important;
     border-radius: 7px !important;
+}
+
+#body[layout="desktop"] .ant-menu-item-selected {
+  border-color:  white !important;
 }
 
 .ant-breadcrumb-item, .ant-breadcrumb-separator {
   color: #00000070 !important;
 }
 
-[data-menu-id="rc-menu-uuid-System"] {
+#body[layout="dashboard"] [data-menu-id="rc-menu-uuid-System"],
+#body[layout="hybrid"]  [data-menu-id="rc-menu-uuid-System"] {
     position: absolute !important;
     bottom: 0px !important;
+}
+
+#body[layout="desktop"] [data-menu-id="rc-menu-uuid-System"] {
+  margin-left: auto !important;
 }
 
 /* width */
