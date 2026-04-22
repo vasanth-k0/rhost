@@ -5,6 +5,7 @@ sudo apt install git
 : <<'EOF'
     Create init script based on initial setup
 
+/// only for dev
     1  ssh-keygen -t ed25519 -C "vasanth.k08@gmail.com"
     2  eval "$(ssh-agent -s)"
     3  ssh-add ~/.ssh/id_ed25519
@@ -16,6 +17,7 @@ sudo apt install git
     9  sudo apt install git
    10  git status
    11  git --version
+
 
 
 Install Docker

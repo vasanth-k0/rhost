@@ -260,7 +260,6 @@ const Dashboard = () => {
 
                     </div>
 
-
   const Dash = <>
                 <div id="dash" style={style != null ? style.dash: ""}>
                   <div id="task" style={settings.ui == 'desktop' ? style.task : {height: '100%'}}>
@@ -301,7 +300,12 @@ const Dashboard = () => {
                   </div>
                 
                 {(settings.ui=='dashboard') && Controls}
-                {(settings.ui=='dashboard') && <Divider orientation="vertical" style={{height: '100%'}} />}
+                {(settings.ui=='dashboard') 
+                    && <Divider orientation="vertical" style={{
+                                                                height: '100%',
+                                                                margin: '0 3px',
+                                                                borderColor: 'transparent'
+                                                                }} />}
                 <Content style={fill} >
                     <ContentList context='pages' activeContent={activeContent} colorPalette={{CustomColor, CustomColorLite}} />
                 </Content>
@@ -448,6 +452,7 @@ const Site = <div id="site" style={{
                        </Space>
                    </div>    
                </Header>
+               
                <div id="body" layout={settings.ui} style={{
                                     ...style.body, 
                                     ...(consoleLogin 
@@ -455,8 +460,15 @@ const Site = <div id="site" style={{
                                             ? '0px 10px 0px 10px' 
                                             : settings.ui == 'hybrid' ? '10px' : 0} 
                                         : {}) }}>
+
                    <div id="base" ref={deskRef}
-                         style={{...style.base, backgroundImage: `url(${wallp})`}}>
+                         style={{
+                                ...style.base,
+                                ...( settings.ui!='dashboard' 
+                                        ? {backgroundImage: `url(${wallp})`} 
+                                        : {backgroundImage: 'unset'} ),
+                                ...( !consoleLogin ? {borderRadius:0} : {} )
+                          }}>
                        
                            <Content style={{ display: (consoleLogin ? 'block' : 'none' ), ...fill, width: 'auto' }} >
                                { Dash }

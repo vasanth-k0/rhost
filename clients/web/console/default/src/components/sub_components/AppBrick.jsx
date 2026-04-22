@@ -9,6 +9,9 @@ const AppBrick = ({colorPalette, Icon, app, appName}) => {
     const {setActiveContent} = useContext(MenuItemContext);
     const {setSelectedKeys} = useContext(MenuItemContext);
     const {login} = useContext(UserContext);
+    const {settings} = useContext(SystemContext);
+
+    const style = css[settings.ui];
 
     const openApp = ()=>{
         let newMenuItems = [...menuItems];
@@ -39,33 +42,19 @@ const AppBrick = ({colorPalette, Icon, app, appName}) => {
         borderColor: (isAppHovered? colorPalette.CustomColor+'33':'transparent'),
     }
     return <div 
+                                id="appbrick"
                                 align="start" 
                                 direction="vertical" 
                                 style={{
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    alignItems: 'center',
-                                    gap: '8px',
-                                    cursor: 'pointer', 
-                                    margin: '7px', 
-                                    border: 'solid 1px transparent',
-                                    borderRadius: 5,
-                                    padding: '10px 7px',
-                                    fontSize: '12px',
-                                    textAlign: 'center',
-                                    ...itemStyle}}
+                                    ...style.appbrick,
+                                    ...itemStyle
+                                    }}
                                     onClick={openApp}
                                     onMouseEnter={ () => { setAppHovered(true) }} 
                                     onMouseLeave={ () => { setAppHovered(false) }}
                                     >
-                                        <Icon style={{fontSize: '17px', filter: 'brightness(0.7)'}} />
-                                        <span style={{
-                                            color: 'rgb(50, 50, 50)', 
-                                            maxWidth: '4.5rem',
-                                            minWidth: '3.5rem',
-                                            overflow: 'hidden', 
-                                            textOverflow: 'ellipsis',
-                                            whiteSpace: 'pre-wrap' }}>{appName}</span>
+                                        <Icon style={style.icon} />
+                                        <span id="appname" style={style.appname}>{appName}</span>
         </div>
 }
 

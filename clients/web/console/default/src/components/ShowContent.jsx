@@ -191,7 +191,6 @@ const ShowContent = ({content, tools='show', colorPalette, context}) => {
               style={{
                 height: '100%',
                 background: settings.ui != 'dashboard' ? 'transparent' : 'white',
-                borderRadius: settings.ui != 'dashboard' ? '0' : '8px',
               }}
             >
             {ContentComponent}

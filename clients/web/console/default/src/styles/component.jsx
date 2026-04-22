@@ -48,3 +48,33 @@ export const iframe = {
     padding: '0px', 
     background: 'white' 
 }
+
+export const app = {
+    display: 'flex',
+    width: '100%',
+    height: '100%',
+    padding: '8px',
+    transition: 'all 0.5s ease',
+}
+
+export const appflex = {
+    padding: 15,
+    gap: 15,
+    flexWrap: 'wrap',
+    transition: 'all 0.5s ease',
+    alignContent: 'flex-start'
+}
+
+export const appbrick = {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    cursor: 'pointer', 
+    margin: '0',
+    transition: 'all 0.5s ease',
+}
+
+export const appname = {
+    overflow: 'hidden', 
+    textOverflow: 'ellipsis',
+}

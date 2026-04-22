@@ -15,15 +15,38 @@ const dashboardcss = () => {
         dash: {
             ...dash,
             borderRadius: '7px',
-            backgroundColor: "white"
         },
         body: {
             width: '100%',
             height: 'calc(100vh - 9.3vh)',
         },
-        base : base,
+        base : {
+            ...base,
+            borderRadius: '8px'
+        },
         iframe: iframe,
-        toolmenu: {}
+        toolmenu: {},
+        appflex : appflex,
+        appbrick : {
+            ...appbrick,
+            gap: '8px',
+            margin: '7px', 
+            border: 'solid 1px transparent',
+            borderRadius: 5,
+            padding: '10px 7px',
+            fontSize: '12px',
+            textAlign: 'center',
+        },
+        appname : {
+            ...appname,
+            color: 'rgb(50, 50, 50)', 
+            maxWidth: '4.5rem',
+            minWidth: '3.5rem',
+            whiteSpace: 'pre-wrap' 
+        },
+        icon  : {
+            fontSize: '17px', filter: 'brightness(0.7)'
+        }
     }
 }
 
@@ -78,7 +101,42 @@ const desktopcss = () => {
             width: '100%',
             height: '2.9rem',
             fontSize: '12px',
-          }
+          },
+        appflex : {
+            ...appflex,
+            padding: 15,
+            gap: 21,
+            flexDirection: 'column',
+            alignContent: 'flex-start',
+            justifyContent: 'flex-start',
+            flexWrap: 'wrap',
+            width: 'fit-content'
+        },
+        appbrick : {
+            ...appbrick,
+            border: 'solid 1px white',
+            fontSize: '10px',
+            textAlign: 'center',
+            backdropFilter: 'blur(5px)',
+            width: '3.8rem',
+            height: '4.3rem',
+            background: '#ffffffa0',
+        },
+        appname : {
+            ...appname,
+            color: 'rgb(50, 50, 50)', 
+            background: '#ffffff9f',
+            width: '100%',
+            whiteSpace: 'nowrap',
+            fontSize: '12px',
+            padding: '3px',
+            minHeight: '25px'
+        },
+        icon : {
+            fontSize: '21px',
+            filter: 'brightness(0.7)',
+            margin: '11px'
+        }
     }
 }
 
@@ -108,7 +166,38 @@ const hybridcss = () => {
             backgroundSize: 'cover',
         },
         iframe: iframe,
-        toolmenu: {}
+        toolmenu: {},
+        appflex : {
+            ...appflex,
+            padding: 15,
+            gap: 15,
+            flexDirection: 'column',
+            alignContent: 'flex-start'
+        },
+        appbrick : {
+            ...appbrick,
+            gap: '5px',
+            border: 'solid 1px white',
+            borderRadius: 5,
+            padding: '14px 3px',
+            fontSize: '10px',
+            textAlign: 'center',
+            background: '#ffffffca',
+            backdropFilter: 'blur(7px)',
+            width: '3.8rem',
+            height: '4.1rem',
+        },
+        appname : {
+            ...appname,
+            color: 'rgb(50, 50, 50)', 
+            height: '1rem', 
+            width: '3rem',
+            whiteSpace: 'nowrap' 
+        },
+        icon : {
+            fontSize: '17px',
+            filter: 'brightness(0.7)'
+        }
     }
 }
 
