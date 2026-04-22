@@ -15,6 +15,7 @@ const dashboardcss = () => {
         dash: {
             ...dash,
             borderRadius: '7px',
+            background: 'white'
         },
         body: {
             width: '100%',

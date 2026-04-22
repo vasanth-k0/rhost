@@ -13,7 +13,7 @@ import { Breadcrumb, Layout, Menu, Button, Space, ConfigProvider, Modal, Divider
 import {theme as Themer, Spin, Tooltip, notification } from 'antd' ;
 import * as antColour from '@ant-design/colors'
 import * as AntIcons from '@ant-design/icons';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 
 
 const { Header, Content, Sider } = Layout;
@@ -78,11 +78,11 @@ const Dashboard = () => {
       return false;
   });
 
+  const wallp = `url("/resources/vx-${settings.wallp}.webp")`;
+
   useEffect(()=>{
     setGotoConsole(Boolean(settings.gotoConsole));
   },[settings]);
-
-  const wallp = '/resources/vx-' + settings.wallp + '.webp';
     
   let siteMenuItems = Object
                         .keys(Apps)
@@ -181,7 +181,7 @@ const Dashboard = () => {
     };
 
   const [collapsed, setCollapsed] = useState(true);
-  const [controlCollapsed, setControlCollapsed] = useState(settings.ui != 'desktop' ? false : true);
+  const [controlCollapsed, setControlCollapsed] = useState(false);
 
     const {
         token: { colorBgContainer },
@@ -206,7 +206,6 @@ const Dashboard = () => {
     }
   }
 
-
   const [headerDock, setHeaderDock] = useState(false);
 
   const dockHeader = ()=>{
@@ -217,36 +216,65 @@ const Dashboard = () => {
     }
   };
 
+  const ControlStyle = {
+                        
+                        width: controlCollapsed ? '2.5rem' : '30%', 
+                        height: '100%', 
+                        background: 'white',
+                        backdropFilter: 'blur(7px)',
+                    }
+  const CommonControlStyle = {
+                              padding: '10px', 
+                              alignContent: 'flex-start',
+                              textAlign: 'left',
+                              transition: 'all 0.3s ease',
+  }
+  const DeskControlStyle = {
+                          width: controlCollapsed ? '2.5rem' : '35%', 
+                          height: (controlCollapsed) ? '2.5rem' : '100%', 
+                          background: controlCollapsed ? 'transparent' : '#ffffffca',
+                          backdropFilter: controlCollapsed ? 'none' : 'blur(7px)' 
+                        }
+  const CommonControlBtnStyle = {
+    outline: 'none',
+    color: antColour['grey'][6],
+    float: 'right',
+  }
+  const ControlBtnStyle = {
+                    fontSize: '19px',
+                    width: 17,
+                    height: 17,
+                    margin: 3,
+                    }
+  const DeskControlBtnStyle = {
+                                fontSize: '16px',
+                                width: 33,
+                                height: 33,
+                                margin: -5,
+                                background: controlCollapsed && activeContent=="Apps" ? '#ffffffca' : 'transparent ',
+                                borderRadius: activeContent=='Apps' ? '50%' : 'none'
+                              }
   useEffect(()=>{
     dockHeader();
   }, [settings]);
 
+  useEffect(()=>{
+    if (settings.ui=='dashboard') {
+      setControlCollapsed(false);
+    } else {
+      setControlCollapsed(true);
+    }
+  }, [settings.ui]);
+
 
   const consoleLogin = (login && gotoConsole) || gotoConsole;
 
-  const Controls = <div id="controls" style={{
-                        padding: '10px', 
-                        width: controlCollapsed ? '2.5rem' : '30%', 
-                        height: '100%', 
-                        alignContent: 'flex-start', 
-                        textAlign: 'left', 
-                        background: '#ffffffca',
-                        backdropFilter: 'blur(7px)',
-                        transition: 'all 0.3s ease'
-                    }}>
+  const Controls = <div id="controls" style={{...CommonControlStyle , ...(settings.ui == 'desktop' ? DeskControlStyle: ControlStyle)}}>
                     <Button
                     type="text"
                     icon={controlCollapsed ? <MenuFoldOutlined /> : <MenuUnfoldOutlined />}
                     onClick={onControlCollapse}
-                    style={{
-                    fontSize: '19px',
-                    width: 17,
-                    height: 17,
-                    outline: 'none',
-                    color: antColour['grey'][6],
-                    margin: 3,
-                    float: 'right'
-                    }}
+                    style={{...CommonControlBtnStyle, ...(settings.ui == 'desktop' ? DeskControlBtnStyle : ControlBtnStyle)}}
                     />
                     <span style={{ fontWeight: '500', padding: '0 7px', display: controlCollapsed ? 'none':'block' }}>
                     { showContentList['default'][activeContent] 
@@ -300,12 +328,7 @@ const Dashboard = () => {
                   </div>
                 
                 {(settings.ui=='dashboard') && Controls}
-                {(settings.ui=='dashboard') 
-                    && <Divider orientation="vertical" style={{
-                                                                height: '100%',
-                                                                margin: '0 3px',
-                                                                borderColor: 'transparent'
-                                                                }} />}
+                {(settings.ui=='dashboard') && <Divider orientation="vertical" style={{ height: '100%' }} />}
                 <Content style={fill} >
                     <ContentList context='pages' activeContent={activeContent} colorPalette={{CustomColor, CustomColorLite}} />
                 </Content>
@@ -401,7 +424,14 @@ const Site = <div id="site" style={{
                  backgroundColor: 'linear-gradient(to top, ' + CustomColor + '05, ' + CustomColor + '07' + ')'
                  }} 
              >
-               <Header style={{...style.headr, ...(settings.ui=='desktop' ? {top : headerDock ? '-2.1rem' : '7px'}:{})}} onMouseEnter={()=>{setHeaderDock(false);}} onMouseLeave={dockHeader} >
+               <Header style={{
+                          ...style.headr, 
+                          ...(settings.ui=='desktop' 
+                              ? {top : headerDock ? '-2.1rem' : '7px'}
+                              :{})
+                          }} 
+                        onMouseEnter={()=>{setHeaderDock(false);}} 
+                        onMouseLeave={dockHeader} >
                    <div style={ style.header }>
                        <Space size="large" style={{ marginRight: 'auto', height: '40px' }}>
                                <span style={{ marginLeft: 10, fontWeight:500, fontSize: '19px', color: antColour['grey'][6] }} >
@@ -464,9 +494,7 @@ const Site = <div id="site" style={{
                    <div id="base" ref={deskRef}
                          style={{
                                 ...style.base,
-                                ...( settings.ui!='dashboard' 
-                                        ? {backgroundImage: `url(${wallp})`} 
-                                        : {backgroundImage: 'unset'} ),
+                                backgroundImage: wallp,
                                 ...( !consoleLogin ? {borderRadius:0} : {} )
                           }}>
                        
