@@ -23,6 +23,7 @@ const Console = () => {
       return <Spin />;
     }
 
+    console.log('Apps: ', Apps);
     return (Apps !== null) ? (
     <div id='console' ref={consoleRef} style={fit}>
                         <PathCrumb.Provider value={{'path': path, 'setPath': setPath}} >

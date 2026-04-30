@@ -7,7 +7,7 @@ class Exe {
     static TIMEOUT = 300000 // 5 mins
 
     static container = Object.freeze({
-        DOCKER : 'docker',
+        DOCKER: 'docker',
         PODMAN: 'podman'
     });
 

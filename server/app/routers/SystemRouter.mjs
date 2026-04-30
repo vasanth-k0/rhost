@@ -86,8 +86,10 @@ SystemRouter.route('/theme')
         })
         .post((req, res) => {
             console.log(req.body);
-            const newSettings = {...Entrypoint.settings, "ui": req.body.ui}
-            fs.writeFileSync('app/console/settings.json', JSON.stringify(newSettings, null, 4), 'utf-8');
+            Object.entries(req.body).forEach(([prop, value])=>{
+                Entrypoint.settings[prop] = value;
+            });
+            fs.writeFileSync('app/console/settings.json', JSON.stringify(Entrypoint.settings, null, 4), 'utf-8');
             res.sendStatus(200);
         });
 

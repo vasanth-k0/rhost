@@ -4,16 +4,16 @@ const availableColours = {
                 3
             ],
             "Lime": [
-                5,
-                4
+                "#37d637",
+                "#3ae43a",
             ],
             "Orange": [
                 "#efa04b",
                 "#f7a854"
             ],
             "Green": [
-                "#009485",
-                "#0ab2a0"
+                "#2f9400",
+                "#3daf08"
             ],
             "Red": [
                 6,
@@ -41,7 +41,7 @@ const availableColours = {
             ],
             "Grey • Green": [
                 "#666B6A",
-                "#72A276"
+                "#6fb374"
             ],
             "Grey • Blue": [
                 "#666B6A",
@@ -56,8 +56,8 @@ const availableColours = {
                 "#c98404"
             ],
             "Black • Red": [
-                "#000000",
-                "#FF0000"
+                "#3b3b3b",
+                "#db0404"
             ]
         }
 

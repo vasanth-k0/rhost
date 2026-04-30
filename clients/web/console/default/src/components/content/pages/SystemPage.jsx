@@ -11,25 +11,37 @@ const SystemPage = () => {
         setTheme({...theme, active: e.target.value});
     };
 
-    const onLayoutChange = async (e) => {
+    const onSetChange = async (e, setting) => {
         await fetch('/system/settings', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ ui: e.target.value })
+            body: JSON.stringify({ [setting]: e.target.value })
         }).then(()=>{
-            settings.ui = e.target.value;
+            settings[setting] = e.target.value;
             setSettings({...settings})
+            if (setting == 'wallp') {
+                document.getElementById('base').style.backgroundImage = `url(resources/vx-${e.target.value}.webp)`;
+            }
         })
     };
 
     const colorThemesList = Object.keys(theme.available)
+    const wallpList = [1,3,5,7,10,15,17,19]
 
     const labelStyle = {
         height: 32,
         lineHeight: '32px',
         };
+
+    const wallpOptions = wallpList.map((wallp, index)=>{
+                                return {
+                                    value: wallp,
+                                    style: labelStyle,
+                                    label: wallp
+                                }
+                            })
 
     const colorOptions = colorThemesList.map((color, index)=>{
                                 return {
@@ -127,7 +139,7 @@ const SystemPage = () => {
                 <Descriptions bordered title="System Info" items={systemData} size='small' />
             </Card>
             <Card style={{...cardStyle, width: '65%'}} bodyPadding='15' headerPadding='15' title='Themes' size='small' headerBg={lightBg} >
-                <div>
+                    <div>
                         <div style={{ fontSize: 16, fontWeight: 500, marginBottom: 10, marginTop: 15 }}>
                             <span style={{ color: theme.available[theme.active][0] }}>◈</span>  Layout
                         </div>
@@ -141,10 +153,31 @@ const SystemPage = () => {
                                         gap: '16px',
                                         padding: '5px',
                                     }}
-                                    onChange={onLayoutChange} 
+                                    onChange={e => {onSetChange(e, 'ui')}} 
                                     defaultValue={settings.ui}
                                     options={layoutOptions} 
                                     value={settings.ui}
+                                ></Radio.Group>
+                            </Flex>
+                    </div>
+                    <div>
+                        <div style={{ fontSize: 16, fontWeight: 500, marginBottom: 10, marginTop: 15 }}>
+                            <span style={{ color: theme.available[theme.active][0] }}>◈</span>  Wallpaper
+                        </div>
+                        <Flex gap="middle"
+                                style={themeStyle}
+                            >
+                        <Radio.Group
+                                style={{
+                                        display: 'flex',
+                                        flexWrap: 'wrap',
+                                        gap: '16px',
+                                        padding: '5px',
+                                    }}
+                                    onChange={e => {onSetChange(e, 'wallp')}} 
+                                    defaultValue={settings.wallp}
+                                    options={wallpOptions} 
+                                    value={settings.wallp}
                                 ></Radio.Group>
                             </Flex>
                     </div>

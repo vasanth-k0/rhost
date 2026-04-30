@@ -47,7 +47,8 @@ const dashboardcss = () => {
         },
         icon  : {
             fontSize: '17px', filter: 'brightness(0.7)'
-        }
+        },
+        contents: fill
     }
 }
 
@@ -71,13 +72,16 @@ const desktopcss = () => {
             top: '5px',
             borderRadius: '0 0 5px 5px',
             boxShadow: '1px 1px 15px 1px #00000033',
-            width: '75%' 
+            width: '65%' 
         },
         login: login,
-        dash: dash,
+        dash: {
+            ... dash,
+            padding: '3rem 5rem 7rem'
+        },
         task: { 
             position: 'absolute',
-            bottom: 0,
+            bottom: '2.5rem',
             left: '5rem',
             right: '5rem',
             height: '60px',
@@ -105,8 +109,8 @@ const desktopcss = () => {
           },
         appflex : {
             ...appflex,
-            padding: 15,
-            gap: 21,
+            padding: 0,
+            gap: 30,
             flexDirection: 'column',
             alignContent: 'flex-start',
             justifyContent: 'flex-start',
@@ -121,7 +125,7 @@ const desktopcss = () => {
             backdropFilter: 'blur(5px)',
             width: '3.8rem',
             height: '4.3rem',
-            background: '#ffffffa0',
+            background: '#ffffff30',
         },
         appname : {
             ...appname,
@@ -137,6 +141,11 @@ const desktopcss = () => {
             fontSize: '21px',
             filter: 'brightness(0.7)',
             margin: '11px'
+        },
+        contents: {
+            ...fill,
+            background: "#ffffffca",
+            backdropFilter: 'blur(7px)',
         }
     }
 }
@@ -198,7 +207,8 @@ const hybridcss = () => {
         icon : {
             fontSize: '17px',
             filter: 'brightness(0.7)'
-        }
+        },
+        contents: fill
     }
 }
 

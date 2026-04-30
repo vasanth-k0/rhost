@@ -4,7 +4,6 @@ import Entrypoint from './helpers/Entrypoint.mjs';
 import './helpers/Globals.mjs';
 import { specs, swaggerUi }  from './helpers/swagger.mjs';
 
-
 import SystemRouter from './routers/SystemRouter.mjs';
 import FilesRouter from './routers/FilesRouter.mjs';
 import AppRouter from './routers/AppRouter.mjs';
@@ -16,7 +15,7 @@ app.use(session({
     secret : Entrypoint.secrets.sessionSecret,
     resave: false,
     saveUninitialized: true,
-    cookie: { httpOnly: true, maxAge: 60 * 60 * 1000 }
+    cookie: { secure: false, maxAge: 60 * 60 * 1000 }
 }));
 
 app.use(express.json());

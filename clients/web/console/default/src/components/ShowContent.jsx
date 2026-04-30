@@ -1,7 +1,7 @@
 import {theme, Spin, Flex, Divider, Tooltip, Collapse} from 'antd';
 
 import MenuItemContext from './context/MenuItemContext';
-import {CloseCircleFilled, PlusCircleFilled, LayoutFilled} from '@ant-design/icons';
+
 import FullScreener from './sub_components/FullScreener.jsx'
 import ReactJsonView from '@microlink/react-json-view'
 import css from "../styles/css.jsx"
@@ -26,7 +26,7 @@ const ControlList = {
   System: lazy(() => import('./content/controls/SystemControl.jsx')),
 };
 
-const ShowContent = ({content, tools='show', colorPalette, context}) => {
+const ShowContent = ({content, colorPalette, context}) => {
 
     const [service, setService] = useState({"Data": "Not Available"});
     const {Apps} = useContext(AppContext);
@@ -41,45 +41,10 @@ const ShowContent = ({content, tools='show', colorPalette, context}) => {
           }
       },[]);
 
-      const {showContentList, setShowContentList, setActiveContent} = useContext(MenuItemContext);
-      const [onHover, setOnHover] = useState({
-        close: false,
-        publish: false,
-        fullscreen:false
-      });
-      const {menuItems, setMenuItems} = useContext(MenuItemContext);
+      const {showContentList} = useContext(MenuItemContext);
 
       let ContentComponent;
-
-      const closeContent = ()=>{
-        let newShowContentList = structuredClone(showContentList);
-        let newMenuItems = menuItems.filter((item) => item.key != content);
-
-        delete newShowContentList[content];
-        setShowContentList(newShowContentList)
-        setActiveContent('Apps')
-        setMenuItems(newMenuItems)
-      }
   
-      const commonStyle = (tool)=>{ 
-            return {
-                fontSize: '17px',
-                color:  ( onHover[tool] 
-                                  ? colorPalette.CustomColor
-                                  : colorPalette.CustomColorLite
-                            )              
-            }
-      }
-
-      const commonProps = (tool) => {
-        let styleProp = tool == 'fullscreen' ? 'fullscreenstyle':'style'
-          return {
-              [styleProp]: commonStyle(tool), 
-              onMouseEnter: ()=>{ setOnHover({...onHover, [tool]: true}) },
-              onMouseLeave: ()=>{ setOnHover({...onHover, [tool]: false}) }
-          }
-      }
-
       const style = css[settings.ui];
       
       const iframeRef = useRef(null);
@@ -104,39 +69,6 @@ const ShowContent = ({content, tools='show', colorPalette, context}) => {
                     src = {"/" + content} 
                     style = {style.iframe}
                   ></iframe>
-                  {
-                    tools == 'show' 
-                      && <div style={{
-                                  top: '10px',
-                                  right: '10px',
-                                  background: 'white',
-                                  backdropFilter: 'blur(7px)',
-                                  padding: '5px',
-                                }}
-                                >
-                                      <Tooltip title="Close" placement="left">
-                                            <CloseCircleFilled 
-                                                  onClick={closeContent} {...commonProps('close')}
-                                            />
-                                          </Tooltip>
-                                      <Divider size="small" style={{ margin: '3px 0px' }} />
-                                      <Tooltip title="Publish" placement="right"> 
-                                              <PlusCircleFilled 
-                                                    onClick={()=>{alert('published')}} {...commonProps('publish')}
-                                              />
-                                      </Tooltip>
-                                      <Divider size="small" style={{ margin: '3px 0px' }} />
-                                      <Tooltip title="Open in new Tab" placement="right"> 
-                                              <LayoutFilled 
-                                                    onClick={()=>{open("/" + content, '_blank') }} {...commonProps('publish')}
-                                              />
-                                      </Tooltip>
-                                      <Divider size="small" style={{ margin: '3px 0px' }} />
-                                      <FullScreener element={iframeRef} icon='true' {...commonProps('fullscreen')} />
-
-                            </div>   
-                  }
-                  
             </div>
         } else {
 

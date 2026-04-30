@@ -7,7 +7,10 @@ import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   LogoutOutlined,
-  InfoCircleOutlined
+  InfoCircleOutlined,
+  CloseCircleFilled,
+  PlusCircleFilled,
+  LayoutFilled
 } from '@ant-design/icons';
 import { Breadcrumb, Layout, Menu, Button, Space, ConfigProvider, Modal, Divider } from 'antd';
 import {theme as Themer, Spin, Tooltip, notification } from 'antd' ;
@@ -77,6 +80,12 @@ const Dashboard = () => {
       }
       return false;
   });
+        
+  const [onHover, setOnHover] = useState({
+        close: false,
+        publish: false,
+        fullscreen:false
+      });
 
   const wallp = `url("/resources/vx-${settings.wallp}.webp")`;
 
@@ -131,8 +140,17 @@ const Dashboard = () => {
   const Crumb = useContext(PathCrumb)
   const FirstRender = useRef(true);
 
-  const putTheme =  async () => {
-          await fetch('/system/theme',
+
+  useEffect(()=>{
+
+      if (FirstRender.current) {
+        FirstRender.current = false;
+        return
+      }
+
+      if (login) {
+        const putTheme =  async () => {
+            await fetch('/system/theme',
                 {
                     'method': 'POST',
                      headers: {
@@ -143,20 +161,11 @@ const Dashboard = () => {
                     })
                 }
             )};
-
-  useEffect(()=>{
-
-      if (FirstRender.current) {
-        FirstRender.current = false;
-        return
-      }
-
-      if (login) {
         putTheme();
       }
       localStorage.setItem('theme', JSON.stringify(theme));
 
-  },[theme]);
+  },[theme.active]);
 
     useEffect(()=>{
       if(deskRef.current) {
@@ -188,9 +197,13 @@ const Dashboard = () => {
     } = Themer.useToken();
 
   const menuOnclick = ({ key,keyPath })=>{
-    Crumb.path[1]['title'] = key;
-    Crumb.setPath([...Crumb.path])
-    setActiveContent(key);
+    if (key != activeContent) {
+      Crumb.path[1]['title'] = key;
+      Crumb.setPath([...Crumb.path])
+      setActiveContent(key);
+    } else if (key != 'Apps') {
+      setActiveContent('Apps');
+    }
   }
 
   const style = css[settings.ui];
@@ -216,6 +229,24 @@ const Dashboard = () => {
     }
   };
 
+  const commonStyle = (tool)=>{ 
+       return {
+            color:  ( onHover[tool] 
+                        ? CustomColor
+                        : CustomColorLite
+                  )              
+        }
+  }
+  
+  const commonProps = (tool) => {
+    let styleProp = tool == 'fullscreen' ? 'fullscreenstyle':'style'
+      return {
+          [styleProp]: commonStyle(tool), 
+          onMouseEnter: ()=>{ setOnHover({...onHover, [tool]: true}) },
+          onMouseLeave: ()=>{ setOnHover({...onHover, [tool]: false}) }
+      }
+  }
+
   const ControlStyle = {
                         
                         width: controlCollapsed ? '2.5rem' : '30%', 
@@ -224,6 +255,7 @@ const Dashboard = () => {
                         backdropFilter: 'blur(7px)',
                     }
   const CommonControlStyle = {
+                              position: 'relative',
                               padding: '10px', 
                               alignContent: 'flex-start',
                               textAlign: 'left',
@@ -231,8 +263,14 @@ const Dashboard = () => {
   }
   const DeskControlStyle = {
                           width: controlCollapsed ? '2.5rem' : '35%', 
-                          height: (controlCollapsed) ? '2.5rem' : '100%', 
-                          background: controlCollapsed ? 'transparent' : '#ffffffca',
+                          height: controlCollapsed ? ( activeContent=='Apps' ? '2.5rem' : '100%' ) : '100%', 
+                          background: controlCollapsed 
+                                        ? ( activeContent=='Apps' 
+                                              ? 'transparent' 
+                                              : 'white' ) 
+                                        : ( activeContent=='Apps' 
+                                              ? '#ffffffca' 
+                                              : '#ffffffca' ),
                           backdropFilter: controlCollapsed ? 'none' : 'blur(7px)' 
                         }
   const CommonControlBtnStyle = {
@@ -246,17 +284,25 @@ const Dashboard = () => {
                     height: 17,
                     margin: 3,
                     }
-  const DeskControlBtnStyle = {
+  let DeskControlBtnStyle = {
                                 fontSize: '16px',
                                 width: 33,
                                 height: 33,
                                 margin: -5,
                                 background: controlCollapsed && activeContent=="Apps" ? '#ffffffca' : 'transparent ',
-                                borderRadius: activeContent=='Apps' ? '50%' : 'none'
+                                borderRadius: activeContent=='Apps' ? '1' : 'none'
                               }
+
   useEffect(()=>{
     dockHeader();
-  }, [settings]);
+  }, [settings.ui]);
+
+  useEffect(()=>{
+    if (settings.ui == 'desktop') {
+      const delay = activeContent == 'Apps' ? 100 : 750;
+      setTimeout(()=>{ setControlCollapsed(activeContent == 'Apps') }, delay);
+    }
+  },[activeContent]);
 
   useEffect(()=>{
     if (settings.ui=='dashboard') {
@@ -269,28 +315,86 @@ const Dashboard = () => {
 
   const consoleLogin = (login && gotoConsole) || gotoConsole;
 
-  const Controls = <div id="controls" style={{...CommonControlStyle , ...(settings.ui == 'desktop' ? DeskControlStyle: ControlStyle)}}>
-                    <Button
-                    type="text"
-                    icon={controlCollapsed ? <MenuFoldOutlined /> : <MenuUnfoldOutlined />}
-                    onClick={onControlCollapse}
-                    style={{...CommonControlBtnStyle, ...(settings.ui == 'desktop' ? DeskControlBtnStyle : ControlBtnStyle)}}
-                    />
-                    <span style={{ fontWeight: '500', padding: '0 7px', display: controlCollapsed ? 'none':'block' }}>
-                    { showContentList['default'][activeContent] 
-                        ? showContentList['default'][activeContent] 
-                        : showContentList['user'][activeContent] }
-                    </span>
-                    <Divider style={{ margin: '10px 0px' }} />
-                    <div style={{ display : controlCollapsed ? 'none':'block', height: '78vh' }} >
-                    <ContentList context={consoleLogin ? 'controls':'pages'} activeContent={activeContent} colorPalette={{CustomColor, CustomColorLite}} />
-                    </div>
+      const closeContent = ()=>{
+        if (!Object.keys(showContentList.default).includes(activeContent)) {
+          let newShowContentList = structuredClone(showContentList);
+          let newMenuItems = menuItems.filter((item) => item.key != activeContent);
+
+          delete newShowContentList.user[activeContent];
+          setShowContentList(newShowContentList)
+          setMenuItems(newMenuItems)
+        }
+        setActiveContent('Apps')
+      }
+
+  const Controls = <div id="controls" style={{
+                        ...CommonControlStyle,
+                        ...(settings.ui == 'desktop' 
+                              ? DeskControlStyle
+                              : ControlStyle)
+                        }}>
+                        <Button
+                        type="text"
+                        icon={controlCollapsed ? <MenuFoldOutlined /> : <MenuUnfoldOutlined />}
+                        onClick={onControlCollapse}
+                        style={{
+                            ...CommonControlBtnStyle
+                            , ...(settings.ui == 'desktop' 
+                                  ? DeskControlBtnStyle 
+                                  : ControlBtnStyle)
+                            }}
+                        />
+                        <span style={{ fontWeight: '500', padding: '0 7px', display: controlCollapsed ? 'none':'block' }}>
+                        { showContentList['default'][activeContent] 
+                            ? showContentList['default'][activeContent] 
+                            : showContentList['user'][activeContent] }
+                        </span>
+                        {
+                            activeContent != 'Apps'
+                              && <div id="tools" style={{
+                                          top: '3rem',
+                                          right: '3px',
+                                          padding: '10px',
+                                          position: 'absolute',
+                                          zIndex: 10,
+                                          fontSize: '19px'
+                                        }}
+                                        >
+                                              <Tooltip title="Close" placement="left">
+                                                    <CloseCircleFilled 
+                                                          onClick={closeContent} {...commonProps('close')}
+                                                    />
+                                                  </Tooltip>
+                                              <Divider size="small" style={{ margin: '3px 0px' }} />
+                                              <Tooltip title="Publish" placement="right"> 
+                                                      <PlusCircleFilled 
+                                                            onClick={()=>{alert('published')}} {...commonProps('publish')}
+                                                      />
+                                              </Tooltip>
+                                              <Divider size="small" style={{ margin: '3px 0px' }} />
+                                              <Tooltip title="Open in new Tab" placement="right"> 
+                                                      <LayoutFilled 
+                                                            onClick={()=>{open("/" + content, '_blank') }} {...commonProps('publish')}
+                                                      />
+                                              </Tooltip>
+                                              <Divider size="small" style={{ margin: '3px 0px' }} />
+                                              <FullScreener icon='true' {...commonProps('fullscreen')} />
+                        
+                                    </div>   
+                                          }
+                        <Divider style={{ margin: '10px 0px' }} />
+                        <div style={{ display : controlCollapsed ? 'none':'block', height: '78vh', padding: '0 1.5rem 0 0' }} >
+                        <ContentList 
+                            context={consoleLogin ? 'controls':'pages'} 
+                            activeContent={activeContent} 
+                            colorPalette={{CustomColor, CustomColorLite}} />
+                        </div>
 
                     </div>
 
   const Dash = <>
                 <div id="dash" style={style != null ? style.dash: ""}>
-                  <div id="task" style={settings.ui == 'desktop' ? style.task : {height: '100%'}}>
+                  <div id="task" style={settings.ui == 'desktop' ? (activeContent=='Apps' ? {...style.task, bottom: '1rem'} : style.task) : {height: '100%'}}>
                   { 
                     settings.ui != 'desktop' &&
                       <Sider 
@@ -329,9 +433,21 @@ const Dashboard = () => {
                 
                 {(settings.ui=='dashboard') && Controls}
                 {(settings.ui=='dashboard') && <Divider orientation="vertical" style={{ height: '100%' }} />}
-                <Content style={fill} >
-                    <ContentList context='pages' activeContent={activeContent} colorPalette={{CustomColor, CustomColorLite}} />
-                </Content>
+                <div id="contents" style={
+                                      style!=null 
+                                          ? (settings.ui == 'desktop' 
+                                              && activeContent == 'Apps' 
+                                                ? {...style.contents , background: 'transparent', backdropFilter: 'none'} 
+                                                : style.contents):{}
+                                                } >
+                  <Content style={fill} >
+                    <ContentList 
+                        context='pages' 
+                        activeContent={activeContent} 
+                        colorPalette={{CustomColor, CustomColorLite}} />
+                  </Content>
+                </div>
+                
                 {(settings.ui!='dashboard') && Controls}
               </div>
               </>
@@ -364,7 +480,7 @@ const Site = <div id="site" style={{
                         .filter( app => Apps[app].published )
                         .map((app) => {
                             return <div style={{ ...fill, display: (app == siteApp) ? 'block': 'none'}} >
-                                  <ShowContent content={app} tools='hide' colorPalette={{CustomColor, CustomColorLite}} context='pages' />
+                                  <ShowContent content={app} colorPalette={{CustomColor, CustomColorLite}} context='pages' />
                                 </div>
                         })
                   }
@@ -427,7 +543,7 @@ const Site = <div id="site" style={{
                <Header style={{
                           ...style.headr, 
                           ...(settings.ui=='desktop' 
-                              ? {top : headerDock ? '-2.1rem' : '7px'}
+                              ? {top : headerDock ? '-2.5rem' : '5px'}
                               :{})
                           }} 
                         onMouseEnter={()=>{setHeaderDock(false);}} 
