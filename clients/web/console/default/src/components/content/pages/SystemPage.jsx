@@ -30,7 +30,7 @@ const SystemPage = () => {
     };
 
     const colorThemesList = Object.keys(theme.available)
-    const wallpList = [1,3,5,7,10,15,17,19]
+    const wallpList = [1,3,5,7,10,15,17,19,21]
 
     const labelStyle = {
         height: 32,
