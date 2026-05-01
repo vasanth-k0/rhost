@@ -4,8 +4,6 @@ import { User } from '../db/models/user.mjs';
 class Authorizer {
 
     static async validateSession(req){
-            console.log(req.session)
-            console.log(req.cookies)
         if (req.session && req.session.user && req.session.user.username == "admin") {
             return true; 
         } else if(req.query.username

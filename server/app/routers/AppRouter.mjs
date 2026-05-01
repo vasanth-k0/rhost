@@ -114,7 +114,7 @@ appRouter.route('/{:action}')
                     } else {
 
                                 if (req.params.action) {
-                                    let AppExecutorPath = `${process.cwd()}/${relativePath}/controller/exe.mjs`;
+                                    let AppExecutorPath = `${process.cwd()}/app/helpers/Exe.mjs`;
                                     if (fs.existsSync(AppExecutorPath)) {
                                         let AppExecutorModule = await import(AppExecutorPath);
                                         let param = JSON.stringify({ ...req.query, ...req.body});

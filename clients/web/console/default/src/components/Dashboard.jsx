@@ -16,8 +16,7 @@ import { Breadcrumb, Layout, Menu, Button, Space, ConfigProvider, Modal, Divider
 import {theme as Themer, Spin, Tooltip, notification } from 'antd' ;
 import * as antColour from '@ant-design/colors'
 import * as AntIcons from '@ant-design/icons';
-import { useEffect, useMemo } from 'react';
-import wallp_0 from '../../public/resources/vx-0.webp';
+import { use, useEffect, useMemo } from 'react';
 
 
 const { Header, Content, Sider } = Layout;
@@ -88,7 +87,8 @@ const Dashboard = () => {
         fullscreen:false
       });
 
-  let wallp = `url("/resources/vx-${settings.wallp}.webp")`;
+  const wallpUrl = `resources/vx-${settings.wallp}.webp`
+  let wallp = settings.wallp ? `url("${wallpUrl}")` : undefined;
 
   useEffect(()=>{
     setGotoConsole(Boolean(settings.gotoConsole));
