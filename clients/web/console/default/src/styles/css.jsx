@@ -177,18 +177,18 @@ const solidcss = ()=>{
         task: {
             ...desktopcss().task,
             border: '2px solid rgba(255, 255, 255, 0.3)',
-            borderRadius: '21px',
+            borderRadius: '7px',
             height: '41px',
         },
         contents: {
             ...fill,
-            borderRadius: '15px 0 0 15px',
+            borderRadius: '7px 0 0 7px',
             overflow: 'hidden',
             background: 'white',
         },
         controls: {
             ...controls,
-            borderRadius: '0 15px 15px 0',
+            borderRadius: '0 7px 7px 0',
         },
         appflex : {
             ...desktopcss().appflex,

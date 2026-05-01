@@ -8,7 +8,6 @@ import { useState } from 'react';
 
 const FullScreener = ({element = document.documentElement,  onMouseEnter, onMouseLeave, fullscreenstyle = {}, icon = null})=>{
     const [fullscreen, setFullScreen] = useState(false);
-    element = element.current || element;
     const toggleFullscreen = () => {
         setFullScreen(!fullscreen)
         if (!fullscreen) {

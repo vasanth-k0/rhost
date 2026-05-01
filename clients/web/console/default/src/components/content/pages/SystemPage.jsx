@@ -1,4 +1,5 @@
 import { Flex, Radio, Card, Descriptions, Badge, Button, Modal } from 'antd';
+import MenuItemContext from '../../context/MenuItemContext';
 
 const SystemPage = () => {
 
@@ -6,6 +7,7 @@ const SystemPage = () => {
     const { settings, setSettings } = useContext(SystemContext);
     const [ release , setRelease ] = useState({});
     const { login } = useContext(UserContext);
+    const { setWallp } = useContext(MenuItemContext)
 
     const onColorChange = e => {
         setTheme({...theme, active: e.target.value});
@@ -19,11 +21,11 @@ const SystemPage = () => {
             },
             body: JSON.stringify({ [setting]: e.target.value })
         }).then(()=>{
+            if (setting == 'wallp') {
+                location.reload();
+            }
             settings[setting] = e.target.value;
             setSettings({...settings})
-            if (setting == 'wallp') {
-                document.getElementById('base').style.backgroundImage = `url(resources/vx-${e.target.value}.webp)`;
-            }
         })
     };
 

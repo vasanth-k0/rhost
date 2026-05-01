@@ -85,7 +85,6 @@ SystemRouter.route('/theme')
             res.json(result);
         })
         .post((req, res) => {
-            console.log(req.body);
             Object.entries(req.body).forEach(([prop, value])=>{
                 Entrypoint.settings[prop] = value;
             });

@@ -8,7 +8,7 @@
     "port": 3000,
     "contactAdmin": "vasanth.k08@gmail.com",
     "fe": "default",
-    "ui": "desktop",
+    "ui": "solid",
     "layoutOptions": [
         "Desktop",
         "Dashboard",
@@ -17,7 +17,7 @@
     ],
     "gotoConsole": true,
     "defaultApp": "coderun-lite",
-    "wallp": 7,
+    "wallp": 15,
     "env": {
         "type": "prod"
     },

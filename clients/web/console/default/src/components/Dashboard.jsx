@@ -87,12 +87,11 @@ const Dashboard = () => {
         fullscreen:false
       });
 
-  const wallpUrl = `resources/vx-${settings.wallp}.webp`
-  let wallp = settings.wallp ? `url("${wallpUrl}")` : undefined;
+  const [wallp, setWallp] = useState(undefined);
 
   useEffect(()=>{
     setGotoConsole(Boolean(settings.gotoConsole));
-  },[settings]);
+  },[settings.gotoConsole]);
     
   let siteMenuItems = Object
                         .keys(Apps)
@@ -313,6 +312,10 @@ const Dashboard = () => {
     }
   }, [settings.ui]);
 
+  useEffect(()=>{
+    setWallp(`url("resources/vx-${settings.wallp}.webp")`)
+  },[settings.wallp]);
+
 
   const consoleLogin = (login && gotoConsole) || gotoConsole;
 
@@ -368,11 +371,11 @@ const Dashboard = () => {
                                               <Divider size="small" style={{ margin: '3px 0px' }} />
                                               <Tooltip title="Open in new Tab" placement="right"> 
                                                       <LayoutFilled 
-                                                            onClick={()=>{open("/" + content, '_blank') }} {...commonProps('publish')}
+                                                            onClick={()=>{open("/" + activeContent, '_blank') }} {...commonProps('publish')}
                                                       />
                                               </Tooltip>
                                               <Divider size="small" style={{ margin: '3px 0px' }} />
-                                              <FullScreener icon='true' {...commonProps('fullscreen')} />
+                                              <FullScreener element={document.getElementById(activeContent)} icon='true' {...commonProps('fullscreen')} />
                         
                                     </div>   
                                           }
@@ -537,7 +540,8 @@ const Site = <div id="site" style={{
          activeContent, 
          setActiveContent,
          selectedKeys,
-         setSelectedKeys
+         setSelectedKeys,
+         setWallp
          }}>     
              <Layout style={{ 
                  ...fit,

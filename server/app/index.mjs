@@ -7,6 +7,7 @@ import { specs, swaggerUi }  from './helpers/swagger.mjs';
 import SystemRouter from './routers/SystemRouter.mjs';
 import FilesRouter from './routers/FilesRouter.mjs';
 import AppRouter from './routers/AppRouter.mjs';
+import cors from 'cors';
 
 log("Initializing rhost");
 const app = express();
@@ -17,7 +18,7 @@ app.use(session({
     saveUninitialized: true,
     cookie: { secure: false, maxAge: 60 * 60 * 1000 }
 }));
-
+app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(Entrypoint.fePath));
