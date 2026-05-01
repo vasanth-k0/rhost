@@ -65,7 +65,8 @@ body {
     border-radius: 7px !important;
 }
 
-#body[layout="desktop"] .ant-menu-item-selected {
+#body[layout="desktop"] .ant-menu-item-selected,
+#body[layout="solid"] .ant-menu-item-selected {
   border-color:  white !important;
 }
 
@@ -79,7 +80,8 @@ body {
     bottom: 0px !important;
 }
 
-#body[layout="desktop"] [data-menu-id="rc-menu-uuid-System"] {
+#body[layout="desktop"] [data-menu-id="rc-menu-uuid-System"],
+#body[layout="solid"] [data-menu-id="rc-menu-uuid-System"] {
   margin-left: auto !important;
 }
 

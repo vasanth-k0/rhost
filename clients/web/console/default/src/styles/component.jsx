@@ -78,3 +78,21 @@ export const appname = {
     overflow: 'hidden', 
     textOverflow: 'ellipsis',
 }
+
+export const controls = {
+    position: 'relative',
+    padding: '10px', 
+    alignContent: 'flex-start',
+    textAlign: 'left',
+    transition: 'all 0.3s ease',
+    overflow: 'hidden',
+}
+
+export const tools = {
+                        top: '3rem',
+                        right: '3px',
+                        padding: '10px',
+                        position: 'absolute',
+                        zIndex: 10,
+                        fontSize: '19px'
+}

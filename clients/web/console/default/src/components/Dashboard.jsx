@@ -17,6 +17,7 @@ import {theme as Themer, Spin, Tooltip, notification } from 'antd' ;
 import * as antColour from '@ant-design/colors'
 import * as AntIcons from '@ant-design/icons';
 import { useEffect, useMemo } from 'react';
+import wallp_0 from '../../public/resources/vx-0.webp';
 
 
 const { Header, Content, Sider } = Layout;
@@ -87,7 +88,7 @@ const Dashboard = () => {
         fullscreen:false
       });
 
-  const wallp = `url("/resources/vx-${settings.wallp}.webp")`;
+  let wallp = `url("/resources/vx-${settings.wallp}.webp")`;
 
   useEffect(()=>{
     setGotoConsole(Boolean(settings.gotoConsole));
@@ -206,6 +207,12 @@ const Dashboard = () => {
     }
   }
 
+  let desky = false;
+  const deskyTypeLayouts = ['desktop', 'solid'];
+  if (deskyTypeLayouts.includes(settings.ui)) {
+    desky = true;
+  }
+
   const style = css[settings.ui];
   if (style != null) {
     style.login = {...style.login, backgroundColor: CustomColorLite + '08'}
@@ -222,12 +229,16 @@ const Dashboard = () => {
   const [headerDock, setHeaderDock] = useState(false);
 
   const dockHeader = ()=>{
-    if (settings.ui == 'desktop') {
+    if (desky) {
       setTimeout(()=>{
         setHeaderDock(true);
       }, 2100);
     }
   };
+
+  useEffect(()=>{
+    dockHeader();
+  }, [settings.ui]);
 
   const commonStyle = (tool)=>{ 
        return {
@@ -247,20 +258,14 @@ const Dashboard = () => {
       }
   }
 
-  const ControlStyle = {
+  const DefaultLayoutControlStyle = {
                         
                         width: controlCollapsed ? '2.5rem' : '30%', 
                         height: '100%', 
                         background: 'white',
                         backdropFilter: 'blur(7px)',
                     }
-  const CommonControlStyle = {
-                              position: 'relative',
-                              padding: '10px', 
-                              alignContent: 'flex-start',
-                              textAlign: 'left',
-                              transition: 'all 0.3s ease',
-  }
+
   const DeskControlStyle = {
                           width: controlCollapsed ? '2.5rem' : '35%', 
                           height: controlCollapsed ? ( activeContent=='Apps' ? '2.5rem' : '100%' ) : '100%', 
@@ -294,11 +299,7 @@ const Dashboard = () => {
                               }
 
   useEffect(()=>{
-    dockHeader();
-  }, [settings.ui]);
-
-  useEffect(()=>{
-    if (settings.ui == 'desktop') {
+    if (desky) {
       const delay = activeContent == 'Apps' ? 100 : 750;
       setTimeout(()=>{ setControlCollapsed(activeContent == 'Apps') }, delay);
     }
@@ -328,10 +329,10 @@ const Dashboard = () => {
       }
 
   const Controls = <div id="controls" style={{
-                        ...CommonControlStyle,
+                        ...(style != null ? style.controls : {}),
                         ...(settings.ui == 'desktop' 
                               ? DeskControlStyle
-                              : ControlStyle)
+                              : DefaultLayoutControlStyle)
                         }}>
                         <Button
                         type="text"
@@ -351,14 +352,7 @@ const Dashboard = () => {
                         </span>
                         {
                             activeContent != 'Apps'
-                              && <div id="tools" style={{
-                                          top: '3rem',
-                                          right: '3px',
-                                          padding: '10px',
-                                          position: 'absolute',
-                                          zIndex: 10,
-                                          fontSize: '19px'
-                                        }}
+                              && <div id="tools" style={style != null ? style.tools : {}}
                                         >
                                               <Tooltip title="Close" placement="left">
                                                     <CloseCircleFilled 
@@ -393,10 +387,22 @@ const Dashboard = () => {
                     </div>
 
   const Dash = <>
-                <div id="dash" style={style != null ? style.dash: ""}>
-                  <div id="task" style={settings.ui == 'desktop' ? (activeContent=='Apps' ? {...style.task, bottom: '1rem'} : style.task) : {height: '100%'}}>
+                <div id="dash" style={style != null 
+                                        ? ( settings.ui == 'solid' 
+                                              ? {
+                                                  ...style.dash, 
+                                                  background: `linear-gradient(to bottom, ${CustomColorLite} 75%, ${CustomColor} 25%)`
+                                                } 
+                                              : style.dash )
+                                        : ""}>
+                  <div id="task" style={
+                                    desky 
+                                    ? (activeContent=='Apps' && settings.ui=='desktop'
+                                          ? {...style.task, bottom: '1rem'} 
+                                          : style.task) 
+                                    : {height: '100%'}}>
                   { 
-                    settings.ui != 'desktop' &&
+                    !desky &&
                       <Sider 
                           trigger={null}
                           collapsible
@@ -418,7 +424,7 @@ const Dashboard = () => {
                     </Sider>
                   }
                   {
-                    settings.ui == 'desktop' &&
+                    desky &&
                     <Menu 
                       mode="horizontal"
                       onClick={menuOnclick} 
@@ -426,7 +432,7 @@ const Dashboard = () => {
                       selectedKeys={[activeContent]} 
                       defaultSelectedKeys={['Apps']} 
                       items={menuItems}
-                      style={ style!=null ? style.toolmenu:{} }
+                      style={ style!=null ? style.taskmenu:{} }
                   />
                   }
                   </div>
@@ -435,8 +441,7 @@ const Dashboard = () => {
                 {(settings.ui=='dashboard') && <Divider orientation="vertical" style={{ height: '100%' }} />}
                 <div id="contents" style={
                                       style!=null 
-                                          ? (settings.ui == 'desktop' 
-                                              && activeContent == 'Apps' 
+                                          ? (activeContent == 'Apps' && settings.ui=='desktop'
                                                 ? {...style.contents , background: 'transparent', backdropFilter: 'none'} 
                                                 : style.contents):{}
                                                 } >
@@ -542,7 +547,7 @@ const Site = <div id="site" style={{
              >
                <Header style={{
                           ...style.headr, 
-                          ...(settings.ui=='desktop' 
+                          ...(desky 
                               ? {top : headerDock ? '-2.5rem' : '5px'}
                               :{})
                           }} 

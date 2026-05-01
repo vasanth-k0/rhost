@@ -1,4 +1,4 @@
-import {head, login, dash, headr, base} from "./component"
+import {head, login, dash, headr, base, controls, appbrick, tools} from "./component"
 
 const dashboardcss = () => {
     return {
@@ -26,7 +26,7 @@ const dashboardcss = () => {
             borderRadius: '8px'
         },
         iframe: iframe,
-        toolmenu: {},
+        taskmenu: {},
         appflex : appflex,
         appbrick : {
             ...appbrick,
@@ -48,7 +48,9 @@ const dashboardcss = () => {
         icon  : {
             fontSize: '17px', filter: 'brightness(0.7)'
         },
-        contents: fill
+        contents: fill,
+        controls: controls,
+        tools: tools
     }
 }
 
@@ -102,7 +104,7 @@ const desktopcss = () => {
             backgroundSize: 'cover',
         },
         iframe: iframe,
-        toolmenu: {
+        taskmenu: {
             width: '100%',
             height: '2.9rem',
             fontSize: '12px',
@@ -146,8 +148,54 @@ const desktopcss = () => {
             ...fill,
             background: "#ffffffca",
             backdropFilter: 'blur(7px)',
+        },
+        controls: controls,
+        tools: {
+            ...tools,
+            top: 0,
+            right: '32px',
+            padding: '13px',
+            position: 'absolute',
+            zIndex: '10',
+            fontSize: '16px',
+            display: 'inline-flex',
+            width: '2.3rem',
+            gap: 4,
+            flexFlow: 'row-reverse',
+            opacity: 0.7,
         }
     }
+}
+
+const solidcss = ()=>{
+    return {
+        ...desktopcss(),
+        dash: {
+            ...desktopcss().dash,
+            background: 'transparent'
+        },
+        task: {
+            ...desktopcss().task,
+            border: '2px solid rgba(255, 255, 255, 0.3)',
+            borderRadius: '21px',
+            height: '41px',
+        },
+        contents: {
+            ...fill,
+            borderRadius: '15px 0 0 15px',
+            overflow: 'hidden',
+            background: 'white',
+        },
+        controls: {
+            ...controls,
+            borderRadius: '0 15px 15px 0',
+        },
+        appflex : {
+            ...desktopcss().appflex,
+            padding: '15px',
+        },
+        
+    } 
 }
 
 const hybridcss = () => {
@@ -176,7 +224,7 @@ const hybridcss = () => {
             backgroundSize: 'cover',
         },
         iframe: iframe,
-        toolmenu: {},
+        taskmenu: {},
         appflex : {
             ...appflex,
             padding: 15,
@@ -208,14 +256,17 @@ const hybridcss = () => {
             fontSize: '17px',
             filter: 'brightness(0.7)'
         },
-        contents: fill
+        contents: fill,
+        controls: controls,
+        tools: tools
     }
 }
 
 const css = {
     dashboard: dashboardcss(),
     desktop: desktopcss(),
-    hybrid: hybridcss()
+    hybrid: hybridcss(),
+    solid: solidcss()
 }
 
 export default css;
