@@ -17,12 +17,12 @@
     ],
     "gotoConsole": true,
     "defaultApp": "coderun-lite",
-    "wallp": 19,
+    "wallp": 10,
     "env": {
         "type": "prod"
     },
     "theme": {
         "default": "Geekblue",
-        "active": "Purple"
+        "active": "Grey • Green"
     }
 }
