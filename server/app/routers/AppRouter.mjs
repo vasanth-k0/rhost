@@ -65,30 +65,38 @@ appRouter.route('/{:action}')
                                 } else {
                                     const ttyIframe = `
                                                     <!DOCTYPE html>
-                                                    <html lang="en">
-                                                        <iframe 
+                                                    <html style="height:100%;" lang="en">
+                                                    <body style="height: 100%; margin:0; padding:0; overflow:hidden;">
+                                                        <iframe
+                                                            id="${appTitle}-tty"
                                                             src="http://localhost:${service.ports.tty}" 
                                                             style="
                                                                 width:100%; 
-                                                                height:96vh; 
+                                                                height:100%; 
                                                                 border:none; 
-                                                                border-radius: 5px; 
                                                                 overflow: hidden;
                                                                 box-shadow: 0 0 10px rgba(0, 0, 0, 0.1)">
                                                         </iframe>
+                                                    </body>
                                                     </html>
                                                 `;
                                     if (app.length == 0 || app[0].pm2_env.status != 'online') {
 
                                         const customTheme = [
-                                                                                '-t', 'fontFamily=DejaVu Sans Mono, monospace', 
-                                                                                '-t', 'fontSize=14', 
-                                                                                '-t', 'scrollback=3000',
-                                                                                '-t', 'theme={"background": "#193535", "foreground": "#ffffff", "cursor": "#ffffff"}'
-                                                                            ]
-                                        const terminalArgs = (appName=='shell')
-                                                                                ? ['-p', service.ports.tty, ...customTheme, 'bash'] 
-                                                                                : ['-p', service.ports.tty, ...customTheme, 'docker', 'exec', '-it', appName, 'bash']
+                                                '-t', 'fontFamily=DejaVu Sans Mono, monospace', 
+                                                '-t', 'fontSize=14', 
+                                                '-t', 'scrollback=3000',
+                                                '-t', 'cursorBlink=true',
+                                                '-t', 'padding=10px',
+                                                '-t', 'theme={"background": "black", "foreground": "#ffffff", "cursor": "#ffffff"}'
+                                        ]
+                                        const ttydArgs = [
+                                            '-W', 
+                                            '-p', service.ports.tty,
+                                        ]
+                                        const terminalArgs = (appName=='terminal')
+                                                ? [...ttydArgs, ...customTheme, 'bash'] 
+                                                : [...ttydArgs, ...customTheme, 'docker', 'exec', '-it', appName, 'bash']
                                         pm2.start({
                                                     name: appTitle,
                                                     script: 'ttyd',

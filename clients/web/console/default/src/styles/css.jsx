@@ -1,4 +1,7 @@
-import {head, login, dash, headr, base, controls, appbrick, tools} from "./component"
+import {
+    head, login, dash, 
+    headr, base, controls, 
+    appbrick, tools, controlbtn} from "./component"
 
 const dashboardcss = () => {
     return {
@@ -50,7 +53,8 @@ const dashboardcss = () => {
         },
         contents: fill,
         controls: controls,
-        tools: tools
+        tools: tools,
+        controlbtn: controlbtn
     }
 }
 
@@ -149,20 +153,29 @@ const desktopcss = () => {
             background: "#ffffffca",
             backdropFilter: 'blur(7px)',
         },
-        controls: controls,
+        controls: {
+            ...controls,
+            padding: 0,
+        },
         tools: {
             ...tools,
             top: 0,
-            right: '32px',
-            padding: '13px',
+            right: '2.3rem',
             position: 'absolute',
             zIndex: '10',
             fontSize: '16px',
-            display: 'inline-flex',
-            width: '2.3rem',
-            gap: 4,
             flexFlow: 'row-reverse',
-            opacity: 0.7,
+            padding: '5px 8px',
+
+        },
+        controlbtn: {
+            ...controlbtn,
+            fontSize: '16px',
+            width: 33,
+            height: 33,
+            margin: '-6px -3px 0 auto',
+            float: 'right',
+            padding: '5px',
         }
     }
 }
@@ -172,27 +185,34 @@ const solidcss = ()=>{
         ...desktopcss(),
         dash: {
             ...desktopcss().dash,
-            background: 'transparent'
+            background: 'transparent',
+            gap: 7
         },
         task: {
             ...desktopcss().task,
             border: '2px solid rgba(255, 255, 255, 0.3)',
-            borderRadius: '7px',
+            borderRadius: '5px',
             height: '41px',
+            left: '15rem',
+            right: '15rem'
         },
         contents: {
             ...fill,
-            borderRadius: '7px 0 0 7px',
+            borderRadius: '5px',
             overflow: 'hidden',
             background: 'white',
         },
         controls: {
             ...controls,
-            borderRadius: '0 7px 7px 0',
+            borderRadius: '5px',
         },
         appflex : {
             ...desktopcss().appflex,
             padding: '15px',
+        },
+        tools : {
+            ...desktopcss().tools,
+            right: '0.3rem',
         },
         
     } 
@@ -253,19 +273,26 @@ const hybridcss = () => {
             whiteSpace: 'nowrap' 
         },
         icon : {
-            fontSize: '17px',
+            fontSize: '16px',
             filter: 'brightness(0.7)'
         },
         contents: fill,
         controls: controls,
-        tools: tools
+        tools: {
+            ...tools,
+            right: '-1px',
+            fontSize: '17px',
+            padding: 5,
+            border: 'solid 1px lightgray'
+        },
+        controlbtn: controlbtn
     }
 }
 
 const css = {
     dashboard: dashboardcss(),
     desktop: desktopcss(),
-    hybrid: hybridcss(),
+    'hybrid-console': hybridcss(),
     solid: solidcss()
 }
 

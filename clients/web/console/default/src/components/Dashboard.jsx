@@ -258,7 +258,6 @@ const Dashboard = () => {
   }
 
   const DefaultLayoutControlStyle = {
-                        
                         width: controlCollapsed ? '2.5rem' : '30%', 
                         height: '100%', 
                         background: 'white',
@@ -266,7 +265,7 @@ const Dashboard = () => {
                     }
 
   const DeskControlStyle = {
-                          width: controlCollapsed ? '2.5rem' : '35%', 
+                          width: controlCollapsed ? (activeContent == 'Apps' ? '3.5rem' : '3rem') : '35%', 
                           height: controlCollapsed ? ( activeContent=='Apps' ? '2.5rem' : '100%' ) : '100%', 
                           background: controlCollapsed 
                                         ? ( activeContent=='Apps' 
@@ -277,35 +276,26 @@ const Dashboard = () => {
                                               : '#ffffffca' ),
                           backdropFilter: controlCollapsed ? 'none' : 'blur(7px)' 
                         }
-  const CommonControlBtnStyle = {
-    outline: 'none',
-    color: antColour['grey'][6],
-    float: 'right',
-  }
-  const ControlBtnStyle = {
-                    fontSize: '19px',
-                    width: 17,
-                    height: 17,
-                    margin: 3,
-                    }
+
   let DeskControlBtnStyle = {
-                                fontSize: '16px',
-                                width: 33,
-                                height: 33,
-                                margin: -5,
-                                background: controlCollapsed && activeContent=="Apps" ? '#ffffffca' : 'transparent ',
-                                borderRadius: activeContent=='Apps' ? '1' : 'none'
-                              }
+        ...(style ? style.controlbtn : {}),
+        background: controlCollapsed && activeContent=="Apps" ? '#ffffffca' : 'transparent ',
+        color: controlCollapsed && activeContent=="Apps" ? 'black' : 'white ',
+        borderRadius: activeContent=='Apps' ? '1' : 'none'
+      }
 
   useEffect(()=>{
-    if (desky) {
+    if (['desktop'].includes(settings.ui)) {
       const delay = activeContent == 'Apps' ? 100 : 750;
       setTimeout(()=>{ setControlCollapsed(activeContent == 'Apps') }, delay);
+    }
+    if (settings.ui == 'hybrid-console' && activeContent == 'Apps') {
+      setControlCollapsed(true);
     }
   },[activeContent]);
 
   useEffect(()=>{
-    if (settings.ui=='dashboard') {
+    if (['dashboard', 'solid'].includes(settings.ui)) {
       setControlCollapsed(false);
     } else {
       setControlCollapsed(true);
@@ -337,49 +327,70 @@ const Dashboard = () => {
                               ? DeskControlStyle
                               : DefaultLayoutControlStyle)
                         }}>
-                        <Button
-                        type="text"
-                        icon={controlCollapsed ? <MenuFoldOutlined /> : <MenuUnfoldOutlined />}
-                        onClick={onControlCollapse}
-                        style={{
-                            ...CommonControlBtnStyle
-                            , ...(settings.ui == 'desktop' 
-                                  ? DeskControlBtnStyle 
-                                  : ControlBtnStyle)
-                            }}
-                        />
-                        <span style={{ fontWeight: '500', padding: '0 7px', display: controlCollapsed ? 'none':'block' }}>
-                        { showContentList['default'][activeContent] 
-                            ? showContentList['default'][activeContent] 
-                            : showContentList['user'][activeContent] }
-                        </span>
-                        {
-                            activeContent != 'Apps'
-                              && <div id="tools" style={style != null ? style.tools : {}}
-                                        >
-                                              <Tooltip title="Close" placement="left">
-                                                    <CloseCircleFilled 
-                                                          onClick={closeContent} {...commonProps('close')}
-                                                    />
-                                                  </Tooltip>
-                                              <Divider size="small" style={{ margin: '3px 0px' }} />
-                                              <Tooltip title="Publish" placement="right"> 
-                                                      <PlusCircleFilled 
-                                                            onClick={()=>{alert('published')}} {...commonProps('publish')}
-                                                      />
-                                              </Tooltip>
-                                              <Divider size="small" style={{ margin: '3px 0px' }} />
-                                              <Tooltip title="Open in new Tab" placement="right"> 
-                                                      <LayoutFilled 
-                                                            onClick={()=>{open("/" + activeContent, '_blank') }} {...commonProps('publish')}
-                                                      />
-                                              </Tooltip>
-                                              <Divider size="small" style={{ margin: '3px 0px' }} />
-                                              <FullScreener element={document.getElementById(activeContent)} icon='true' {...commonProps('fullscreen')} />
                         
-                                    </div>   
-                                          }
-                        <Divider style={{ margin: '10px 0px' }} />
+                        <span style={{ 
+                            fontWeight: '500', 
+                            padding: '10px', 
+                            display: 'inline-flex',
+                            height: '2.5rem',
+                            background: controlCollapsed && activeContent=="Apps" 
+                                          ? 'transparent ' 
+                                          : (desky ? CustomColor + "aa":'white'),
+                            color: desky ? 'white' : 'black',
+                            width: '100%'
+                            }}>
+                              <span style={{
+                                display: controlCollapsed ? 'none':'block',
+                                float: 'left'
+                              }}>
+                                  { showContentList['default'][activeContent] 
+                                      ? showContentList['default'][activeContent] 
+                                      : showContentList['user'][activeContent] 
+                                    }
+                              </span>
+                              <span style={{
+                                display: controlCollapsed 
+                                            ? (['dashboard', 'hybrid-console'].includes(settings.ui) 
+                                                    ? 'block' : 'none')
+                                            :  'block',
+                                float: 'left'
+                              }}>
+                                {  activeContent != 'Apps'
+                                    && <div id="tools" style={style != null ? style.tools : {}} >
+                                            <Tooltip title="Close" placement="left">
+                                                  <CloseCircleFilled 
+                                                        onClick={closeContent} {...commonProps('close')}
+                                                  />
+                                                </Tooltip>
+                                            <Tooltip title="Publish" placement="right"> 
+                                                    <PlusCircleFilled 
+                                                          onClick={()=>{alert('published')}} {...commonProps('publish')}
+                                                    />
+                                            </Tooltip>
+                                            <Tooltip title="Open in new Tab" placement="right"> 
+                                                    <LayoutFilled 
+                                                          onClick={()=>{open("/" + activeContent, '_blank') }} {...commonProps('publish')}
+                                                    />
+                                            </Tooltip>
+                                            <FullScreener element={document.getElementById(activeContent)} icon='true' {...commonProps('fullscreen')} />
+                              
+                                        </div>   
+                                  }
+                              </span>
+                            { settings.ui != 'solid' && 
+                                <Button
+                                  type="text"
+                                  icon={controlCollapsed ? <MenuFoldOutlined /> : <MenuUnfoldOutlined />}
+                                  onClick={onControlCollapse}
+                                  style={{
+                                      ...(desky 
+                                            ? DeskControlBtnStyle 
+                                            : style ? style.controlbtn : {})
+                                      }}
+                                />
+                            } 
+                        </span>
+                        
                         <div style={{ display : controlCollapsed ? 'none':'block', height: '78vh', padding: '0 1.5rem 0 0' }} >
                         <ContentList 
                             context={consoleLogin ? 'controls':'pages'} 
@@ -613,7 +624,7 @@ const Site = <div id="site" style={{
                                     ...(consoleLogin 
                                         ? {padding: settings.ui == 'dashboard' 
                                             ? '0px 10px 0px 10px' 
-                                            : settings.ui == 'hybrid' ? '10px' : 0} 
+                                            : settings.ui == 'hybrid-console' ? '10px' : 0} 
                                         : {}) }}>
 
                    <div id="base" ref={deskRef}

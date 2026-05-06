@@ -66,7 +66,7 @@ const ShowContent = ({content, colorPalette, context}) => {
                 <iframe 
                     ref = {iframeRef}
                     allow = "fullscreen"
-                    src = {"/" + content} 
+                    src = {"/" + content}
                     style = {style.iframe}
                   ></iframe>
             </div>
@@ -123,6 +123,7 @@ const ShowContent = ({content, colorPalette, context}) => {
               style={{
                 height: '100%',
                 background: settings.ui != 'dashboard' ? 'transparent' : 'white',
+                padding: context=='controls' ? '3px':0,
               }}
             >
             {ContentComponent}

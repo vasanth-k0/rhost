@@ -81,7 +81,6 @@ export const appname = {
 
 export const controls = {
     position: 'relative',
-    padding: '10px', 
     alignContent: 'flex-start',
     textAlign: 'left',
     transition: 'all 0.3s ease',
@@ -89,10 +88,26 @@ export const controls = {
 }
 
 export const tools = {
-                        top: '3rem',
-                        right: '3px',
-                        padding: '10px',
-                        position: 'absolute',
-                        zIndex: 10,
-                        fontSize: '19px'
+    top: '3rem',
+    right: '3px',
+    position: 'absolute',
+    zIndex: 10,
+    fontSize: '19px',
+    width: 'auto',
+    background: '#ffffffdd',
+    borderRadius: '15px',
+    margin: 7,
+    gap: 8,
+    display: 'inline-flex',
+    flexFlow: 'column'
+}
+
+export const controlbtn = {
+    outline: 'none',
+    color: 'black',
+    transition: 'all 0.3s ease',
+    fontSize: '19px',
+    width: 17,
+    height: 17,
+    margin: '3px 0 0 auto'
 }

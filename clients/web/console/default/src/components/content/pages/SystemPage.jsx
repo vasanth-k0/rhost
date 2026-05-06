@@ -21,9 +21,6 @@ const SystemPage = () => {
             },
             body: JSON.stringify({ [setting]: e.target.value })
         }).then(()=>{
-            if (setting == 'wallp') {
-                location.reload();
-            }
             settings[setting] = e.target.value;
             setSettings({...settings})
         })

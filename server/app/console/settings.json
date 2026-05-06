@@ -8,16 +8,16 @@
     "port": 3000,
     "contactAdmin": "vasanth.k08@gmail.com",
     "fe": "default",
-    "ui": "desktop",
+    "ui": "hybrid-console",
     "layoutOptions": [
         "Desktop",
         "Dashboard",
-        "Hybrid",
+        "Hybrid-Console",
         "Solid"
     ],
     "gotoConsole": true,
     "defaultApp": "coderun-lite",
-    "wallp": 10,
+    "wallp": 1,
     "env": {
         "type": "prod"
     },

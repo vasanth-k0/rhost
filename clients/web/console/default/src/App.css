@@ -60,7 +60,7 @@ body {
 }
 
 #body[layout="dashboard"] .ant-menu-item-selected,
-#body[layout="hybrid"] .ant-menu-item-selected {
+#body[layout="hybrid-console"] .ant-menu-item-selected {
     border-color:  white !important;
     border-radius: 7px !important;
 }
@@ -75,7 +75,7 @@ body {
 }
 
 #body[layout="dashboard"] [data-menu-id="rc-menu-uuid-System"],
-#body[layout="hybrid"]  [data-menu-id="rc-menu-uuid-System"] {
+#body[layout="hybrid-console"]  [data-menu-id="rc-menu-uuid-System"] {
     position: absolute !important;
     bottom: 0px !important;
 }

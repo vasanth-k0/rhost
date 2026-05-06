@@ -143,6 +143,10 @@ cp /home/admin/.ssh/id_ed25519 /root/.ssh/id_ed25519
 
 
 Install and run ttyd with pm2
-sudo apt-get install ttyd
+
+sudo rm /etc/apt/preferences.d/nosnap.pref
+sudo apt install snapd
+sudo snap install ttyd --classic
+
 
 EOF
