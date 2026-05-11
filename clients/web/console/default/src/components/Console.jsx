@@ -10,7 +10,6 @@ const Console = () => {
     const [path, setPath] = useState([{ 
                                               title: <HomeOutlined style={{ color: 'rgb(43 43 43)', fontSize: '12px' }} /> }, 
                                               { title: 'Apps' }, 
-                                              {title: 'Internal'}
                                           ])
 
     useEffect(()=>{

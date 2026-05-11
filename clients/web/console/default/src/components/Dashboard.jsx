@@ -198,8 +198,6 @@ const Dashboard = () => {
 
   const menuOnclick = ({ key,keyPath })=>{
     if (key != activeContent) {
-      Crumb.path[1]['title'] = key;
-      Crumb.setPath([...Crumb.path])
       setActiveContent(key);
     } else if (key != 'Apps') {
       setActiveContent('Apps');
@@ -292,6 +290,24 @@ const Dashboard = () => {
     if (settings.ui == 'hybrid-console' && activeContent == 'Apps') {
       setControlCollapsed(true);
     }
+
+    if (Object.keys(showContentList.default).includes(activeContent)) {
+      Crumb.path[1] = {
+          title : showContentList['default'][activeContent]
+      };
+      if (Crumb.path.length > 1) {
+        Crumb.path = Crumb.path.slice(0,2);
+      }
+    } else {
+      Crumb.path[1] = {
+          title : 'Apps'
+      };
+      Crumb.path[2] = {
+          title : showContentList['user'][activeContent]
+      };
+    }
+    
+    Crumb.setPath([...Crumb.path])
   },[activeContent]);
 
   useEffect(()=>{
@@ -586,7 +602,7 @@ const Site = <div id="site" style={{
                                    border: 'solid 1px ' + CustomColor+'10',
                                    backgroundColor : CustomColorLite+'08',
                                    padding: '5px 15px'
-                                   }} items={ (activeContent!='Files') ? Crumb.path.slice(0,2): Crumb.path } />
+                                   }} items={ Crumb.path } />
                                }
                                
                        </Space>

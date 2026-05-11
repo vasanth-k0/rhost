@@ -280,7 +280,7 @@ const hybridcss = () => {
         controls: controls,
         tools: {
             ...tools,
-            right: '-1px',
+            right: '-2px',
             fontSize: '17px',
             padding: 5,
             border: 'solid 1px lightgray'
