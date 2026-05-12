@@ -17,6 +17,7 @@ const ContentList = ({activeContent, colorPalette, context})=>{
                                                                 content={page}
                                                                 colorPalette={colorPalette}
                                                                 context={context} 
+                                                                pvt={true}
                                                             />
                                                 </div> 
                                         });    

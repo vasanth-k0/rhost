@@ -40,7 +40,7 @@ const SignIn = () => {
                             name="basic"
                             labelCol={{ span: 8 }}
                             wrapperCol={{ span: 16 }}
-                            style={{ minWidth: 320, alignItems: 'center', margin: '15px' }}
+                            style={{ minWidth: 320, alignItems: 'center', margin: '3rem 3rem 3rem 1rem' }}
                             onFinish={onFinish}
                             onFinishFailed={onFinishFailed}
                             autoComplete="off"
@@ -75,7 +75,7 @@ const SignIn = () => {
             display: 'flex',
             justifyContent: 'center',
             marginTop: '6rem',
-            minWidth: '400px'
+            minWidth: '400px',
         }
 
         const items = [
@@ -94,14 +94,19 @@ const SignIn = () => {
         
         <div style={{ position: 'relative', width: '100%' }}>
                 <div style={ loginFormStyle }>
-                        <Tabs style={{ 
-                                                height: '56%', 
-                                                width : '30rem',
-                                                padding: '3rem', 
-                                                borderRadius: '5px', 
-                                                alignItems: 'center'
-                                            }} 
-                        tabPlacement='top'  defaultActiveKey="1" items={items} onChange={()=>{console.log('')}} />
+                        <Tabs 
+                        style={{ 
+                                height: '65%', 
+                                width : '70%',
+                                padding: '3rem', 
+                                borderRadius: '5px', 
+                                alignItems: 'center',
+                                background: 'white',
+                            }} 
+                        tabPlacement='top'  
+                        defaultActiveKey="1" 
+                        items={items} 
+                        onChange={()=>{console.log('')}} />
                 </div>
         </div>
         

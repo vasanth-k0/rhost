@@ -17,7 +17,7 @@
     ],
     "gotoConsole": true,
     "defaultApp": "coderun-lite",
-    "wallp": 26,
+    "wallp": 1,
     "env": {
         "type": "prod"
     },

@@ -1,10 +1,9 @@
 import {theme, Spin, Flex, Divider, Tooltip, Collapse} from 'antd';
-
 import MenuItemContext from './context/MenuItemContext';
-
 import FullScreener from './sub_components/FullScreener.jsx'
 import ReactJsonView from '@microlink/react-json-view'
 import css from "../styles/css.jsx"
+import {UserContext} from './context/UserContext';
 
 /**
  * Notice: Webpack requires static imports. no dynamic imports using variables supported.
@@ -26,11 +25,12 @@ const ControlList = {
   System: lazy(() => import('./content/controls/SystemControl.jsx')),
 };
 
-const ShowContent = ({content, colorPalette, context}) => {
+const ShowContent = ({content, colorPalette, context, pvt=false}) => {
 
     const [service, setService] = useState({"Data": "Not Available"});
     const {Apps} = useContext(AppContext);
     const {settings} = useContext(SystemContext);
+    const {login} = useContext(UserContext);
 
       useEffect(()=>{
           if (Object.keys(Apps).includes(content)) {
@@ -64,9 +64,10 @@ const ShowContent = ({content, colorPalette, context}) => {
         if (context=='pages') {
             ContentComponent = <div style={fit}>
                 <iframe 
+                    id = "application-container"
                     ref = {iframeRef}
                     allow = "fullscreen"
-                    src = {"/" + content}
+                    src = { `/${content}` + (pvt && login ? "/pvt" : "")}
                     style = {style.iframe}
                   ></iframe>
             </div>
@@ -108,7 +109,16 @@ const ShowContent = ({content, colorPalette, context}) => {
                   ];
 
               ContentComponent = <div style={{ display: 'block', overflow: 'scroll', fontSize: '13px' , height: '92.5%'}}>
-                    <iframe src={`/${content}/about`} style={{...style.iframe, height: '75%', ...((settings.ui!='dashboard')? {background:'transparent'}:{}) }}></iframe>
+                    <iframe 
+                        id="about-application" 
+                        src={`/${content}/about`} 
+                        style={{
+                            ...style.iframe, 
+                            height: '75%', 
+                            ...((settings.ui!='dashboard')
+                                ? {background:'transparent'}
+                                :{}) }}>
+                      </iframe>
                     <Collapse size='small' ghost items={items} onChange={onChange} />
               </div>
           }

@@ -611,7 +611,7 @@ const Site = <div id="site" style={{
                                <Tooltip  title={"rHost © " + new Date().getFullYear() + " - by Vasanth.K"} placement="right" >
                                     <InfoCircleOutlined onClick={ ()=>{  notification.info({
                                         message: 'rHost',
-                                        description: `This site is powered by rHost web operating system`,
+                                        description: `This site is powered by rHost, web host manager`,
                                         placement: 'bottomRight',
                                         duration: 3, 
                                     });} }/>
@@ -619,7 +619,7 @@ const Site = <div id="site" style={{
                                { login 
                                      ? <>
                                              <div onClick={toggleSite} style={style.login} >
-                                                   <span>{ gotoConsole ? 'Home •' : 'Console •'  }</span>
+                                                   <span>{ gotoConsole ? 'Insite •' : 'Console •'  }</span>
                                              </div>
                                              <div onClick={confirm} style={style.login} >
                                                    <span>Logout •</span>
